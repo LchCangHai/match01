@@ -1,0 +1,16 @@
+html
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'PingRe';
+}
+
+@font-face {
+    font-family: "PingRe";
+    src: url("./font/PingFang Regular.ttf")
+}
+
+.__view {
+    height: 100%;
+}
+
