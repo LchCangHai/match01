@@ -8,6 +8,7 @@ import 'vue-beauty/package/style/vue-beauty.min.css'
 import vuescroll from 'vuescroll'
 import vueBeauty from 'vue-beauty'
 import './assets/icon/font/iconfont.css'
+import './assets/icon/font/iconfont.js'
 // import VueSocketIO from 'vue-socket.io'
 // import SocketIO from 'socket.io-client'
 

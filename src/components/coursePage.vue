@@ -59,6 +59,14 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+/* eslint-disable */
+let vm
+function getHash () {
+  let hash = 'none'
+  hash = window.location.hash
+  console.log(hash)
+  return hash
+}
 
 export default {
   name: 'coursesPage.vue',
@@ -109,6 +117,22 @@ export default {
     }
   },
   components: {
+  },
+  mounted: function () {
+    const that = this
+    const hash = getHash()
+    if (hash === '#/courses/home') {
+      that.item = 1
+    } else if (hash === '#/courses/study') {
+      that.item = 2
+    } else if (hash === '#/courses/exam') {
+      that.item = 3
+    } else if (hash === '#/courses/discuss') {
+      that.item = 4
+    } else if (hash === '#/courses/sourse') {
+      that.item = 5
+    }
+    vm = this
   }
 }
 </script>
@@ -117,7 +141,7 @@ export default {
 #coursePage {
   width: 100%;
   height: 100%;
-  min-width: 860px;
+  min-width: 1060px;
 }
 
 nav {
@@ -133,6 +157,8 @@ nav {
   padding: 0;
   color: black;
   border-bottom: 1px solid lightgrey;
+  background-color: white;
+  z-index: 2020;
   .navlogo {
     display: flex;
     flex-direction: row;
@@ -190,6 +216,10 @@ nav {
         top: -15px;
         /*transform: translate(-50%, -50%);*/
         font-size: 25px;
+        color: #61c7fc;
+      }
+      >span.messageIcon:hover {
+        color: #2492eb;
       }
     }
     .btn01{
@@ -276,6 +306,10 @@ nav {
       }
     }
   }
+}
+
+#footer {
+  width: 100%;
 }
 
 .coursePage-enter-active,

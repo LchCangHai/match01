@@ -200,11 +200,11 @@ export default {
     ]),
     fbshow () {
       this.isShowfb = true
-      console.log(this.isShowfb)
+      // console.log(this.isShowfb)
     },
     fbhide () {
       this.isShowfb = false
-      console.log(this.isShowfb)
+      // console.log(this.isShowfb)
     },
     bsfont () {
       // console.log('font')

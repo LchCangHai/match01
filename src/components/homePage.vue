@@ -18,7 +18,6 @@
           <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
           <div class="headerNum" v-show="isCnt99">99+</div>
           <span class="iconfont messageIcon">&#xe606;</span>
-          <!--            <v-icon class="messageIcon" type="message"></v-icon>-->
         </div>
       </div>
     </nav>
@@ -160,6 +159,9 @@ export default {
           /*transform: translate(-50%, -50%);*/
           font-size: 25px;
           color: #61c7fc;
+        }
+        >span.messageIcon:hover {
+          color: #2492eb;
         }
       }
       .btn01{

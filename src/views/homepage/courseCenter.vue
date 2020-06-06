@@ -1,7 +1,10 @@
 <template>
   <div id="hcourse1">
     <div class="oneTitle">
-      <span class="iconfont">&#xe61f;</span>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-tubiao-"></use>
+      </svg>
+<!--      <span class="iconfont">&#xe61f;</span>-->
       <span>课程中心</span>
     </div>
     <div>
@@ -203,9 +206,11 @@ export default {
       font-size: 20px;
       margin: 0 3px;
     }
-    >span:first-child {
-      color: #3575ca;
-      font-size: 30px;
+    >svg {
+      /*color: #3575ca;*/
+      /*font-size: 30px;*/
+      width: 30px;
+      height: 30px;
     }
     >span:last-child {
       font-size: 16px;
