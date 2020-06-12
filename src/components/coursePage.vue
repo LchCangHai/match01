@@ -10,8 +10,8 @@
           </div>
         </div>
         <div class="navbtn">
-          <div class="btn01 tabActive" @click="courseBtn()">课程</div>
-          <div class="btn01">个人中心</div>
+          <div class="btn01 tabActive">课程</div>
+          <div class="btn01" @click="toPCBtn()">个人中心</div>
           <div class="avatarC1">
             <img class="avatarI" src="../assets/avatar01.jpg">
           </div>
@@ -51,7 +51,9 @@
     </div>
     <div id="footer">
       <transition name="coursePage">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </transition>
     </div>
   </div>
@@ -64,7 +66,7 @@ let vm
 function getHash () {
   let hash = 'none'
   hash = window.location.hash
-  console.log(hash)
+  // console.log(hash)
   return hash
 }
 
@@ -95,6 +97,9 @@ export default {
       'retrievePop',
       'otherWayPop'
     ]),
+    toPCBtn () {
+      this.$router.push('/pCenter')
+    },
     BtnHome () {
       this.item = 1
       this.$router.push('/courses/home')
@@ -118,6 +123,29 @@ export default {
   },
   components: {
   },
+  watch: {
+    $route: {
+      handler: (val, oldVal) => {
+        const that = vm
+        const hash = getHash()
+        if (hash === '#/courses/home') {
+          that.item = 1
+        } else if (hash === '#/courses/study') {
+          that.item = 2
+        } else if (hash === '#/courses/exam') {
+          that.item = 3
+        } else if (hash === '#/courses/discuss') {
+          that.item = 4
+        } else if (hash === '#/courses/sourse') {
+          that.item = 5
+        } else if (hash === '#/courses/oneDiscuss') {
+          that.item = 4
+        }
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   mounted: function () {
     const that = this
     const hash = getHash()
@@ -131,6 +159,8 @@ export default {
       that.item = 4
     } else if (hash === '#/courses/sourse') {
       that.item = 5
+    } else if (hash === '#/courses/oneDiscuss') {
+      that.item = 4
     }
     vm = this
   }

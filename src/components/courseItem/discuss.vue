@@ -172,7 +172,7 @@
         </div>
       </div>
       <div id="four3Content">
-        <div class="four3Item">
+        <div class="four3Item" @click="toOneDiscuss('12')">
           <div class="ftItemNav">
             <div class="ftInfo">
               <div>
@@ -343,6 +343,9 @@ export default {
     },
     typeMypart () {
       this.type = 2
+    },
+    toOneDiscuss (id) {
+      this.$router.push('/courses/oneDiscuss')
     }
   },
   components: {
@@ -628,6 +631,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
     .ftItemNav {
       width: 100%;
       height: 40px;
@@ -711,6 +715,9 @@ export default {
       color: #bcbaba;
       font-size: 13px;
     }
+  }
+  .four3Item:active {
+    box-shadow: -1px -1px 5px 0px rgba(213,213,213,0.6);
   }
 
   img {

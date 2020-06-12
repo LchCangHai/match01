@@ -45,7 +45,8 @@
                     <div class="foFilename">9.4幂级数PPT</div>
                   </div>
                   <div>
-                    <v-icon class="item2Icon" type="right"></v-icon>
+                    <v-icon class="item2Icon" type="right"
+                    :class="{ choosed: item2id === 'try2-1' ? true : false}"></v-icon>
                   </div>
                 </div>
                 <div class="item2-1Child"  v-show="item2id === 'try2-1' ? true : false">
@@ -76,7 +77,8 @@
                     <div class="foFilename">9.4幂级数PPT</div>
                   </div>
                   <div>
-                    <v-icon class="item2Icon" type="right"></v-icon>
+                    <v-icon class="item2Icon" type="right"
+                            :class="{ choosed: item2id === 'try2-2' ? true : false}"></v-icon>
                   </div>
                 </div>
                 <div class="item2-1Child"  v-show="item2id === 'try2-2' ? true : false">
@@ -262,6 +264,8 @@ export default {
           flex-direction: row;
           justify-content: flex-start;
           align-items: center;
+          .choosed {
+            transform: rotate(0.25turn);}
         }
       }
       .item2Active {

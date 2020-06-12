@@ -9,6 +9,8 @@ import vuescroll from 'vuescroll'
 import vueBeauty from 'vue-beauty'
 import './assets/icon/font/iconfont.css'
 import './assets/icon/font/iconfont.js'
+import './assets/icon/font2/iconfont.css'
+import './assets/icon/font2/iconfont.js'
 // import VueSocketIO from 'vue-socket.io'
 // import SocketIO from 'socket.io-client'
 

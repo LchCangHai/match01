@@ -9,6 +9,7 @@ import Study from '../components/courseItem/study.vue'
 import Exam from '../components/courseItem/exam.vue'
 import Discuss from '../components/courseItem/discuss.vue'
 import Sourse from '../components/courseItem/sourse.vue'
+import OneDiscuss from '../components/courseItem/discuss/oneDiscuss.vue'
 
 // import
 
@@ -55,6 +56,10 @@ const routes = [
       {
         path: 'sourse',
         component: Sourse
+      },
+      {
+        path: 'oneDiscuss',
+        component: OneDiscuss
       }
     ]
   }
