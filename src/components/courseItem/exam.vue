@@ -10,28 +10,169 @@
     </div>
     <div id="threeHandle">
       <div>
-        <v-button class="typeBtn" type="ghost"
-                  :class="{ activeBtn: type === 1 ? true : false}"
-                  @click="typeAll()">全部</v-button>
+<!--        <v-button class="typeBtn" type="ghost"-->
+<!--                  :class="{ activeBtn: type === 1 ? true : false}"-->
+<!--                  @click="typeAll()">全部</v-button>-->
         <v-button  class="typeBtn" type="ghost"
-                   :class="{ activeBtn: type === 2 ? true : false}"
+                   :class="{ activeBtn: type === 1 ? true : false}"
                    @click="typeTasks()">作业</v-button>
         <v-button  class="typeBtn" type="ghost"
-                   :class="{ activeBtn: type === 3 ? true : false}"
+                   :class="{ activeBtn: type === 2 ? true : false}"
                    @click="typeExam()">考试</v-button>
       </div>
     </div>
-    <div id="threeContent">
-      <div class="three3Item">
+    <div class="threeContent" v-show="type === 1 ? true : false">
+      <div class="three3Item" @click="openPop()">
         <div class="three3Nav">
           <div class="three3header">
-            <div class="three3type"
-                 v-show="'作业' === '作业' ? true : false"
-                 :class="{ taskType : '作业' === '作业' ? true : false}"
+            <div class="three3type taskType"
             ><div>作业</div></div>
-            <div class="three3type"
-                 v-show="'作业' === '考试' ? true : false"
-                 :class="{ examType : '作业' === '考试' ? true : false}"
+            <div class="three3Title1">第一节的作业</div>
+          </div>
+          <div class="three3Status"
+               v-show="'finished' === 'finished' ? true : false"
+               :class="{ finished : 'finished' === 'finished' ? true : false}"
+          ><div>已完成</div></div>
+          <div class="three3Status"
+               v-show="'unfinished' === 'finished' ? true : false"
+               :class="{ unFinished : 'unfinished' === 'finished' ? true : false}"
+          ><div>未完成</div></div>
+        </div>
+        <div class="three3Info">
+          <div>秃头的直接原因是什么？</div>
+        </div>
+        <div class="three3Time">
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-jiezhishijian-"></use>
+            </svg>
+          </div>
+          <div>截止时间：2020-6-1 23：50</div>
+        </div>
+      </div>
+      <div class="three3Item" @click="openPop()">
+        <div class="three3Nav">
+          <div class="three3header">
+            <div class="three3type taskType"
+            ><div>作业</div></div>
+            <div class="three3Title1">第一节的作业</div>
+          </div>
+          <div class="three3Status"
+               v-show="'finished' === 'finished' ? true : false"
+               :class="{ finished : 'finished' === 'finished' ? true : false}"
+          ><div>已完成</div></div>
+          <div class="three3Status"
+               v-show="'unfinished' === 'finished' ? true : false"
+               :class="{ unFinished : 'unfinished' === 'finished' ? true : false}"
+          ><div>未完成</div></div>
+        </div>
+        <div class="three3Info">
+          <div>秃头的直接原因是什么？</div>
+        </div>
+        <div class="three3Time">
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-jiezhishijian-"></use>
+            </svg>
+          </div>
+          <div>截止时间：2020-6-1 23：50</div>
+        </div>
+      </div>
+      <div class="three3Item" @click="openPop()">
+        <div class="three3Nav">
+          <div class="three3header">
+            <div class="three3type taskType"
+            ><div>作业</div></div>
+            <div class="three3Title1">第一节的作业</div>
+          </div>
+          <div class="three3Status"
+               v-show="'finished' === 'finished' ? true : false"
+               :class="{ finished : 'finished' === 'finished' ? true : false}"
+          ><div>已完成</div></div>
+          <div class="three3Status"
+               v-show="'unfinished' === 'finished' ? true : false"
+               :class="{ unFinished : 'unfinished' === 'finished' ? true : false}"
+          ><div>未完成</div></div>
+        </div>
+        <div class="three3Info">
+          <div>秃头的直接原因是什么？</div>
+        </div>
+        <div class="three3Time">
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-jiezhishijian-"></use>
+            </svg>
+          </div>
+          <div>截止时间：2020-6-1 23：50</div>
+        </div>
+      </div>
+      <div class="three3Item" @click="openPop()">
+        <div class="three3Nav">
+          <div class="three3header">
+            <div class="three3type taskType"
+            ><div>作业</div></div>
+            <div class="three3Title1">第一节的作业</div>
+          </div>
+          <div class="three3Status"
+               v-show="'finished' === 'finished' ? true : false"
+               :class="{ finished : 'finished' === 'finished' ? true : false}"
+          ><div>已完成</div></div>
+          <div class="three3Status"
+               v-show="'unfinished' === 'finished' ? true : false"
+               :class="{ unFinished : 'unfinished' === 'finished' ? true : false}"
+          ><div>未完成</div></div>
+        </div>
+        <div class="three3Info">
+          <div>秃头的直接原因是什么？</div>
+        </div>
+        <div class="three3Time">
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-jiezhishijian-"></use>
+            </svg>
+          </div>
+          <div>截止时间：2020-6-1 23：50</div>
+        </div>
+      </div>
+      <div class="three3Item" @click="openPop()">
+        <div class="three3Nav">
+          <div class="three3header">
+            <div class="three3type taskType"
+            ><div>作业</div></div>
+            <div class="three3Title1">第一节的作业</div>
+          </div>
+          <div class="three3Status"
+               v-show="'finished' === 'finished' ? true : false"
+               :class="{ finished : 'finished' === 'finished' ? true : false}"
+          ><div>已完成</div></div>
+          <div class="three3Status"
+               v-show="'unfinished' === 'finished' ? true : false"
+               :class="{ unFinished : 'unfinished' === 'finished' ? true : false}"
+          ><div>未完成</div></div>
+        </div>
+        <div class="three3Info">
+          <div>秃头的直接原因是什么？</div>
+        </div>
+        <div class="three3Time">
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-jiezhishijian-"></use>
+            </svg>
+          </div>
+          <div>截止时间：2020-6-1 23：50</div>
+        </div>
+      </div>
+      <div>
+        <v-pagination v-model="pageVal" @change="loadPage"
+                      :total="50">
+        </v-pagination>
+      </div>
+    </div>
+    <div class="threeContent" v-show="type === 2 ? true : false">
+      <div class="three3Item" @click="openPop()">
+        <div class="three3Nav">
+          <div class="three3header">
+            <div class="three3type examType"
             ><div>考试</div></div>
             <div class="three3Title1">第一节的作业</div>
           </div>
@@ -56,16 +197,10 @@
           <div>截止时间：2020-6-1 23：50</div>
         </div>
       </div>
-      <div class="three3Item">
+      <div class="three3Item" @click="openPop()">
         <div class="three3Nav">
           <div class="three3header">
-            <div class="three3type"
-                 v-show="'作业' === '作业' ? true : false"
-                 :class="{ taskType : '作业' === '作业' ? true : false}"
-            ><div>作业</div></div>
-            <div class="three3type"
-                 v-show="'作业' === '考试' ? true : false"
-                 :class="{ examType : '作业' === '考试' ? true : false}"
+            <div class="three3type examType"
             ><div>考试</div></div>
             <div class="three3Title1">第一节的作业</div>
           </div>
@@ -90,16 +225,10 @@
           <div>截止时间：2020-6-1 23：50</div>
         </div>
       </div>
-      <div class="three3Item">
+      <div class="three3Item" @click="openPop()">
         <div class="three3Nav">
           <div class="three3header">
-            <div class="three3type"
-                 v-show="'作业' === '作业' ? true : false"
-                 :class="{ taskType : '作业' === '作业' ? true : false}"
-            ><div>作业</div></div>
-            <div class="three3type"
-                 v-show="'作业' === '考试' ? true : false"
-                 :class="{ examType : '作业' === '考试' ? true : false}"
+            <div class="three3type examType"
             ><div>考试</div></div>
             <div class="three3Title1">第一节的作业</div>
           </div>
@@ -124,19 +253,10 @@
           <div>截止时间：2020-6-1 23：50</div>
         </div>
       </div>
-      <v-pagination v-model="pageVal" @change="loadPage"
-                    :total="50">
-      </v-pagination>
-      <div class="three3Item">
+      <div class="three3Item" @click="openPop()">
         <div class="three3Nav">
           <div class="three3header">
-            <div class="three3type"
-                 v-show="'作业' === '作业' ? true : false"
-                 :class="{ taskType : '作业' === '作业' ? true : false}"
-            ><div>作业</div></div>
-            <div class="three3type"
-                 v-show="'作业' === '考试' ? true : false"
-                 :class="{ examType : '作业' === '考试' ? true : false}"
+            <div class="three3type examType"
             ><div>考试</div></div>
             <div class="three3Title1">第一节的作业</div>
           </div>
@@ -161,26 +281,20 @@
           <div>截止时间：2020-6-1 23：50</div>
         </div>
       </div>
-      <div class="three3Item">
+      <div class="three3Item" @click="openPop()">
         <div class="three3Nav">
           <div class="three3header">
-            <div class="three3type"
-                 v-show="'作业' === '考试' ? true : false"
-                 :class="{ taskType : '作业' === '考试' ? true : false}"
-            ><div>作业</div></div>
-            <div class="three3type"
-                 v-show="'考试' === '考试' ? true : false"
-                 :class="{ examType : '考试' === '考试' ? true : false}"
+            <div class="three3type examType"
             ><div>考试</div></div>
             <div class="three3Title1">第一节的作业</div>
           </div>
           <div class="three3Status"
-               v-show="'finished' === 'unfinished' ? true : false"
-               :class="{ finished : 'finished' === 'unfinished' ? true : false}"
+               v-show="'finished' === 'finished' ? true : false"
+               :class="{ finished : 'finished' === 'finished' ? true : false}"
           ><div>已完成</div></div>
           <div class="three3Status"
-               v-show="'unfinished' === 'unfinished' ? true : false"
-               :class="{ unFinished : 'unfinished' === 'unfinished' ? true : false}"
+               v-show="'unfinished' === 'finished' ? true : false"
+               :class="{ unFinished : 'unfinished' === 'finished' ? true : false}"
           ><div>未完成</div></div>
         </div>
         <div class="three3Info">
@@ -194,6 +308,11 @@
           </div>
           <div>截止时间：2020-6-1 23：50</div>
         </div>
+      </div>
+      <div>
+        <v-pagination v-model="pageVal" @change="loadPage"
+                      :total="50">
+        </v-pagination>
       </div>
     </div>
   </div>
@@ -212,22 +331,37 @@ export default {
   },
   computed: {
     ...mapState([
+      'coursePop',
+      'coursePopType'
     ])
   },
   methods: {
     ...mapMutations([
+      'openCoursePop',
+      'closeCoursePop',
+      'chooseCourseType'
     ]),
     typeAll () {
-      this.type = 1
+      this.type = 0
     },
     typeTasks () {
-      this.type = 2
+      this.type = 1
     },
     typeExam () {
-      this.type = 3
+      this.type = 2
     },
     loadPage () {
       console.log(this.pageVal)
+    },
+    openPop () {
+      this.chooseCourseType(2)
+      this.openCoursePop()
+    },
+    openExam (id) {
+      const routeUrl = this.$router.resolve({
+        path: '/Answer'
+      })
+      window.open(routeUrl.href, '_blank')
     }
   },
   components: {
@@ -295,7 +429,7 @@ export default {
     }
   }
 
-  #threeContent {
+  .threeContent {
     width: 100%;
   }
 

@@ -56,11 +56,18 @@
         </keep-alive>
       </transition>
     </div>
+    <div id="cover" v-show="coursePop"></div>
+    <div id="popBox" v-show="coursePop">
+      <my-inform v-show="coursePopType === 1 ? true : false"></my-inform>
+      <my-taskDetail v-show="coursePopType === 2 ? true : false"></my-taskDetail>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import Inform from '../views/coursePop/inform.vue'
+import TaskDetail from '../views/coursePop/taskDetail.vue'
 /* eslint-disable */
 let vm
 function getHash () {
@@ -86,7 +93,9 @@ export default {
   computed: {
     ...mapState([
       'showPopUp',
-      'popUpType'
+      'popUpType',
+      'coursePop',
+      'coursePopType'
     ])
   },
   methods: {
@@ -95,7 +104,9 @@ export default {
       'loginPop',
       'signUpPop',
       'retrievePop',
-      'otherWayPop'
+      'otherWayPop',
+      'openCoursePop',
+      'closeCoursePop'
     ]),
     toPCBtn () {
       this.$router.push('/pCenter')
@@ -122,6 +133,8 @@ export default {
     }
   },
   components: {
+    'my-inform': Inform,
+    'my-taskDetail': TaskDetail
   },
   watch: {
     $route: {
@@ -349,7 +362,31 @@ nav {
 .coursePage-enter {
   transform: translateX(100%);
 }
+#cover{
+  /*display: none;*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(240,240,240,0.35);
+  z-index: 2000;
+}
+#popBox {
+  position: fixed;
+  width: 700px;
+  height: 400px;
+  border-radius: 4px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: white;
+  z-index: 2001;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
+}
   img {
     object-fit: cover;
   }

@@ -88,56 +88,71 @@
                   课程通知
                 </div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openPop()">
+                <div class="one3">
+                  <div class="one3icon" v-show="false"></div>
+                  <div class="one3iconed" v-show="true"></div>
+                  <div class="one3info">关于熬夜秃头实验的通知</div>
+                </div>
+                <div class="one3time">2020.6.1</div>
+              </div>
+              <div class="one3item" @click="openPop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openPop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openCoursePop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openCoursePop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openCoursePop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openCoursePop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openCoursePop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
-              <div class="one3item">
+              <div class="one3item" @click="openCoursePop()">
+                <div class="one3">
+                  <div class="one3icon"></div>
+                  <div class="one3info">关于熬夜秃头实验的通知</div>
+                </div>
+                <div class="one3time">2020.6.1</div>
+              </div>
+              <div class="one3item" @click="openCoursePop()">
                 <div class="one3">
                   <div class="one3icon"></div>
                   <div class="one3info">关于熬夜秃头实验的通知</div>
@@ -221,11 +236,20 @@ export default {
   },
   computed: {
     ...mapState([
+      'coursePop',
+      'coursePopType'
     ])
   },
   methods: {
     ...mapMutations([
-    ])
+      'openCoursePop',
+      'closeCoursePop',
+      'chooseCourseType'
+    ]),
+    openPop () {
+      this.chooseCourseType(1)
+      this.openCoursePop()
+    }
   },
   components: {
   }
@@ -353,6 +377,7 @@ export default {
       justify-content: flex-start;
       align-items: center;
       .one3item {
+        cursor: pointer;
         width: 90%;
         display: flex;
         flex-direction: column;
@@ -369,6 +394,12 @@ export default {
             border-radius: 50%;
             background-color: red;
           }
+          .one3iconed {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: transparent;
+          }
           .one3info {
             margin: 2px 0;
             margin-left: 5px;
@@ -381,6 +412,9 @@ export default {
           width: 100%;
           text-align: right;
         }
+      }
+      .one3item:hover {
+        font-size: 13px;
       }
     }
   }

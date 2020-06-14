@@ -9,6 +9,8 @@ export default new Vuex.Store({
     popUpType: 1, // 未登录主页弹窗类型
     showPopUp01: false, // 学生编辑资料弹窗
     showPopUp02: false, // 学生学校认证弹窗
+    coursePop: false, // 课程界面弹窗
+    coursePopType: 1, // 课程界面弹窗类型
     currentUser: { // 当前登录的用户信息
       avatarURL: ''
     },
@@ -54,6 +56,15 @@ export default new Vuex.Store({
     },
     closePop02 (state) {
       state.showPopUp02 = false
+    },
+    openCoursePop (state) {
+      state.coursePop = true
+    },
+    closeCoursePop (state) {
+      state.coursePop = false
+    },
+    chooseCourseType (state, type) {
+      state.coursePopType = type
     }
   },
   actions: {

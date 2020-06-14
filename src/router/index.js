@@ -4,6 +4,8 @@ import unHomePage from '../components/homePage_unlogin'
 import homepage from '../components/homePage.vue'
 import personalCenter from '../components/personalCenter'
 import coursePage from '../components/coursePage.vue'
+import Video from '../components/video.vue'
+import Answer from '../components/answer.vue'
 import Home from '../components/courseItem/home.vue'
 import Study from '../components/courseItem/study.vue'
 import Exam from '../components/courseItem/exam.vue'
@@ -31,6 +33,14 @@ const routes = [
   {
     path: '/pCenter',
     component: personalCenter
+  },
+  {
+    path: '/video',
+    component: Video
+  },
+  {
+    path: '/answer',
+    component: Answer
   },
   {
     path: '/courses',

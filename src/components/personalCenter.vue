@@ -18,6 +18,12 @@
                 <img class="avatarI" src="../assets/avatar01.jpg">
               </a>
             </v-dropdown>
+            <div class="messageShow">
+              <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
+              <div class="headerNum" v-show="isCnt99">99+</div>
+              <span class="iconfont messageIcon">&#xe606;</span>
+              <!--            <v-icon class="messageIcon" type="message"></v-icon>-->
+            </div>
           </div>
         </nav>
         <div id="personInfo">
@@ -115,7 +121,8 @@ export default {
       confirmResult: {
         show: false,
         type: 1
-      }
+      },
+      counter: 5
     }
   },
   computed: {
@@ -301,6 +308,36 @@ export default {
       align-items: center;
       width: 250px;
       font-size: 16px;
+      .messageShow {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        .headerNum{
+          width: 23px;
+          height: 15px;
+          position: absolute;
+          background-color: #f04134;
+          color: white;
+          font-size: 12px;
+          border-radius: 50px;
+          position: relative;
+          left: 100%;
+          top: 0;
+          transform: translate(-50%, -20%);
+          text-align: center;
+        }
+        >span.messageIcon {
+          position: relative;
+          left: 0;
+          top: -15px;
+          /*transform: translate(-50%, -50%);*/
+          font-size: 25px;
+          color: whitesmoke;
+        }
+        >span.messageIcon:hover {
+          color: white;
+        }
+      }
       .btn01{
         cursor: pointer;
       }
