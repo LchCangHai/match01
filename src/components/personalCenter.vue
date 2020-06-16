@@ -122,7 +122,8 @@ export default {
         show: false,
         type: 1
       },
-      counter: 5
+      counter: 5,
+      isCnt99: false
     }
   },
   computed: {
@@ -275,6 +276,7 @@ export default {
     margin: 0;
     padding: 0;
     color: white;
+    box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
     .navlogo {
       display: flex;
       flex-direction: row;

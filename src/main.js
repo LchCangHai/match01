@@ -13,6 +13,10 @@ import './assets/icon/font2/iconfont.css'
 import './assets/icon/font2/iconfont.js'
 // import VueSocketIO from 'vue-socket.io'
 // import SocketIO from 'socket.io-client'
+import VideoPlayer from 'vue-video-player'
+import { Radio, RadioGroup, RadioButton, Checkbox, CheckboxButton, CheckboxGroup } from 'element-ui'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
 
 Vue.prototype.$axios = axios
 // axios.defaults.baseURL = '/foo'
@@ -34,8 +38,16 @@ axios.interceptors.request.use(config => {
 // })
 // )
 
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(RadioButton)
+Vue.use(Checkbox)
+Vue.use(CheckboxButton)
+Vue.use(CheckboxGroup)
+
 Vue.use(vueBeauty)
 Vue.use(vuescroll)
+Vue.use(VideoPlayer)
 Vue.prototype.$vuescrollConfig = {
   bar: {
     background: '#cecece',

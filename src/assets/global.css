@@ -10,6 +10,11 @@ body{
     src: url("./font/PingFang Regular.ttf")
 }
 
+@font-face {
+    font-family: "kaiti";
+    src: url("./font/kaiti.ttf")
+}
+
 .__view {
     height: 100%;
     width: 100%;

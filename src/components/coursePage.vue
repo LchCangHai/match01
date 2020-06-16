@@ -202,6 +202,7 @@ nav {
   border-bottom: 1px solid lightgrey;
   background-color: white;
   z-index: 2020;
+  box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
   .navlogo {
     display: flex;
     flex-direction: row;
