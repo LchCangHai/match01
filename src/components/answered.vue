@@ -24,7 +24,96 @@
         </div>
       </div>
     </nav>
-    answer
+    <div id="answer01">
+      <div id="topNav">
+        <div class="three3Nav" v-show="true">
+          <div class="three3header">
+            <div class="three3type taskType"
+            ><div>作业</div></div>
+            <div class="three3Title1">第一节的作业</div>
+          </div>
+        </div>
+        <div class="three3Nav" v-show="false">
+          <div class="three3header">
+            <div class="three3type examType"
+            ><div>考试</div></div>
+            <div class="three3Title1">第一节的作业</div>
+          </div>
+        </div>
+      </div>
+      <div id="Content">
+        <div class="Item">
+          <div class="select item" v-show=" 'select' === 'select' ? true : false">
+            <div class="qText">
+              <div class="type"><span>1. </span>[<span>单选题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <el-radio-group v-model="radio" disabled>
+                <el-radio class="radio" label="1"><span></span>
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                </el-radio>
+                <el-radio class="radio" label="2"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="3"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="4"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="5"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="6"><span></span>备选项</el-radio>
+              </el-radio-group>
+
+            </div>
+          </div>
+          <div class="mselect item" v-show=" 'mselect' === 'mselect' ? true : false">
+            <div class="qText">
+              <div class="type"><span>2. </span>[<span>多选题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <el-checkbox-group v-model="checkList" disabled>
+                <el-checkbox class="checkbox"><span></span>复选框 A</el-checkbox>
+                <el-checkbox class="checkbox" label="复选框 B"><span></span>复选框 B</el-checkbox>
+                <el-checkbox class="checkbox" label="复选框 C"><span></span>复选框 C</el-checkbox>
+              </el-checkbox-group>
+            </div>
+          </div>
+          <div class="blank item" v-show=" 'blank' === 'blank' ? true : false">
+            <div class="qText">
+              <div class="type"><span>3. </span>[<span>填空题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <div class="replyArea">
+                <v-input class="blankArea Area" type="textarea"></v-input>
+              </div>
+            </div>
+          </div>
+          <div class="question item" v-show=" 'question' === 'question' ? true : false">
+            <div class="qText">
+              <div class="type"><span>4. </span>[<span>论述题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <div class="replyArea Area">
+                <v-input class="questionArea Area" type="textarea"></v-input>
+              </div>
+            </div>
+          </div>
+          <div class="Img item" v-show=" 'Img' === 'Img' ? true : false">
+            <div class="qText">
+              <div class="type"><span>5. </span>[<span>论述题</span>]</div>
+              <img src="../assets/headImg2.png">
+            </div>
+            <div class="answerSheet">
+              <div class="replyArea">
+                <v-input class="imgArea Area" type="textarea"></v-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -185,6 +274,192 @@ export default {
     }
   }
 
+  #answer01 {
+    position: relative;
+    width: 75%;
+    min-width: 800px;
+    /*max-width: 950px;*/
+    left: 50%;
+    transform: translate(-50%);
+    /*background-color: #3d84ff;*/
+    margin-bottom: 50px;
+  }
+
+  .time {
+    position: relative;
+    top: 60px;
+    box-shadow: 1px 3px 5px 1px rgba(213,213,213,0.6);
+    width: 80px;
+    height: 30px;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    >div {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+  #topNav {
+    width: 100%;
+  }
+  .three3Nav {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #d4d4d4;
+    .three3header {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      .three3type {
+        margin-left: 40px;
+        font-size: 10px;
+        width: 25px;
+        height: 25px;
+        color: white;
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .taskType {
+        background-color: #ffd500;
+      }
+      .examType {
+        background-color: #ff4e4e;
+      }
+      .three3Title1 {
+        margin-left: 20px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+    .three3Status {
+      width: 70px;
+      height: 25px;
+      border-radius: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color:white;
+      margin-right: 5px;
+    }
+    .finished {
+      background-color: #a2ffac;
+    }
+    .unFinished {
+      background-color: #ff4e4e;
+    }
+  }
+
+  #Content {
+    width: 100%;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .Item {
+      margin: 10px 0;
+    }
+  }
+  .item {
+    width: 100%;
+    .qText {
+      width: 100%;
+      min-height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 5px 0;
+      .type {
+        font-size: 12px;
+        span:first-child {
+          font-size: 14px;
+          margin-right: 5px;
+          font-weight: 600;
+        }
+      }
+      .text {
+        font-size: 14px;
+        text-indent: 1em;
+        margin-top: 5px;
+      }
+      img {
+        max-width: 90%;
+        max-height: 100px;
+      }
+    }
+  }
+  .answerSheet {
+    font-family: kaiti;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .select .radio {
+    display: block;
+    margin: 5px 0 0 30px;
+    font-size: 14px;
+    span {
+      margin: 0 5px;
+    }
+  }
+  .mselect .checkbox {
+    display: block;
+    margin: 5px 0 0 30px;
+    font-size: 14px;
+    span {
+      margin: 0 5px;
+    }
+  }
+  .replyArea {
+    width: 80%;
+    height: 100px;
+    .Area {
+      width: 100%;
+      height: 100%;
+      resize: none;
+    }
+  }
+  .uploadIcon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+    cursor: pointer;
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .fileName {
+    width: 90%;
+    font-size: 13px;
+    margin: 5px 0;
+  }
+  .Btn01 {
+    width: 130px;
+    height: 40px;
+    border-radius: 50px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 20px 0;
+  }
   img {
     object-fit: cover;
   }

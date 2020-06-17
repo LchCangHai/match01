@@ -1,5 +1,11 @@
 <template>
   <div id="answer">
+    <div class="none">
+      <input
+        type="file"
+        ref="upload_file"
+        @change="handleFileChange">
+    </div>
     <nav>
       <div class="navlogo">
         <img id="logo" src="../assets/logotem.jpg"/>
@@ -33,7 +39,7 @@
             <div class="three3Title1">第一节的作业</div>
           </div>
           <div class="time">
-            <div><span>1</span>:<span>19</span>:<span>53</span></div>
+            <div><span>{{timeCnt.h}}</span>:<span>{{timeCnt.m}}</span>:<span>{{timeCnt.s}}</span></div>
           </div>
         </div>
         <div class="three3Nav" v-show="false">
@@ -43,11 +49,112 @@
             <div class="three3Title1">第一节的作业</div>
           </div>
           <div class="time">
-            <div><span>1</span>:<span>19</span>:<span>53</span></div>
+            <div><span>{{timeCnt.h}}</span>:<span>{{timeCnt.m}}</span>:<span>{{timeCnt.s}}</span></div>
           </div>
         </div>
       </div>
       <div id="Content">
+        <div class="Item">
+          <div class="select item" v-show=" 'select' === 'select' ? true : false">
+            <div class="qText">
+              <div class="type"><span>1. </span>[<span>单选题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <el-radio-group v-model="radio">
+                <el-radio class="radio" label="1"><span></span>
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                </el-radio>
+                <el-radio class="radio" label="2"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="3"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="4"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="5"><span></span>备选项</el-radio>
+                <el-radio class="radio" label="6"><span></span>备选项</el-radio>
+              </el-radio-group>
+
+            </div>
+          </div>
+          <div class="mselect item" v-show=" 'mselect' === 'mselect' ? true : false">
+            <div class="qText">
+              <div class="type"><span>2. </span>[<span>多选题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <el-checkbox-group v-model="checkList">
+                <el-checkbox class="checkbox"><span></span>复选框 A</el-checkbox>
+                <el-checkbox class="checkbox" label="复选框 B"><span></span>复选框 B</el-checkbox>
+                <el-checkbox class="checkbox" label="复选框 C"><span></span>复选框 C</el-checkbox>
+              </el-checkbox-group>
+            </div>
+          </div>
+          <div class="judge item" v-show=" 'judge' === 'judge' ? true : false">
+            <div class="qText">
+              <div class="type"><span>1. </span>[<span>判断题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <el-radio-group v-model="radio">
+                <el-radio class="radio" label="对"><span></span>正确</el-radio>
+                <el-radio class="radio" label="错"><span></span>错误</el-radio>
+              </el-radio-group>
+
+            </div>
+          </div>
+          <div class="blank item" v-show=" 'blank' === 'blank' ? true : false">
+            <div class="qText">
+              <div class="type"><span>3. </span>[<span>填空题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <div class="uploadIcon" @click="clickUpLoad(1)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-fujian"></use>
+                </svg>
+              </div>
+              <div class="replyArea">
+                <v-input class="blankArea Area" type="textarea"></v-input>
+              </div>
+              <div class="fileName">{{answers['1'].fileName}}</div>
+            </div>
+          </div>
+          <div class="question item" v-show=" 'question' === 'question' ? true : false">
+            <div class="qText">
+              <div class="type"><span>4. </span>[<span>论述题</span>]</div>
+              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+            </div>
+            <div class="answerSheet">
+              <div class="uploadIcon" @click="clickUpLoad(1)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-fujian"></use>
+                </svg>
+              </div>
+              <div class="replyArea Area">
+                <v-input class="questionArea Area" type="textarea"></v-input>
+              </div>
+              <div class="fileName">{{answers['1'].fileName}}</div>
+            </div>
+          </div>
+          <div class="Img item" v-show=" 'Img' === 'Img' ? true : false">
+            <div class="qText">
+              <div class="type"><span>5. </span>[<span>论述题</span>]</div>
+              <img src="../assets/headImg2.png">
+            </div>
+            <div class="answerSheet">
+              <div class="uploadIcon" @click="clickUpLoad(1)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-fujian"></use>
+                </svg>
+              </div>
+              <div class="replyArea">
+                <v-input class="imgArea Area" type="textarea"></v-input>
+              </div>
+              <div class="fileName">{{answers['1'].fileName}}</div>
+            </div>
+          </div>
+        </div>
         <div class="Item">
           <div class="select item" v-show=" 'select' === 'select' ? true : false">
             <div class="qText">
@@ -90,14 +197,15 @@
               <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
             </div>
             <div class="answerSheet">
+              <div class="uploadIcon" @click="clickUpLoad(1)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-fujian"></use>
+                </svg>
+              </div>
               <div class="replyArea">
                 <v-input class="blankArea Area" type="textarea"></v-input>
               </div>
-              <v-upload :name="name" :action="action" :header='header' @change="onChange">
-                <v-button type="ghost">
-                  <v-icon type="upload"></v-icon>点击上传
-                </v-button>
-              </v-upload>
+              <div class="fileName">{{answers['1'].fileName}}</div>
             </div>
           </div>
           <div class="question item" v-show=" 'question' === 'question' ? true : false">
@@ -106,11 +214,15 @@
               <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
             </div>
             <div class="answerSheet">
-              <div></div>
+              <div class="uploadIcon" @click="clickUpLoad(1)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-fujian"></use>
+                </svg>
+              </div>
               <div class="replyArea Area">
                 <v-input class="questionArea Area" type="textarea"></v-input>
               </div>
-              <div></div>
+              <div class="fileName">{{answers['1'].fileName}}</div>
             </div>
           </div>
           <div class="Img item" v-show=" 'Img' === 'Img' ? true : false">
@@ -119,9 +231,15 @@
               <img src="../assets/headImg2.png">
             </div>
             <div class="answerSheet">
+              <div class="uploadIcon" @click="clickUpLoad(1)">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-fujian"></use>
+                </svg>
+              </div>
               <div class="replyArea">
                 <v-input class="imgArea Area" type="textarea"></v-input>
               </div>
+              <div class="fileName">{{answers['1'].fileName}}</div>
             </div>
           </div>
         </div>
@@ -153,7 +271,8 @@ export default {
       checkList: [],
       answers: {
         1: {
-          content: 'XXXXX'
+          content: 'XXXXX',
+          fileName: '文件名'
         },
         2: {
           content: 'XXXXX'
@@ -162,6 +281,12 @@ export default {
           content: 'XXXXX'
         },
         answerFile: formdata1
+      },
+      timeCnt: {
+        d: '',
+        h: '',
+        m: '',
+        s: ''
       }
     }
   },
@@ -177,9 +302,49 @@ export default {
     },
     itemClick (data) {
       console.log(data)
+    },
+    clickUpLoad (id) {
+      this.$refs.upload_file.click()
+      this.currentID = id
+      console.log(this.currentID)
+    },
+    handleFileChange () {
+      const inputDOM = this.$refs.upload_file
+      const files = inputDOM.files
+      this.uploadFile(files)
+    },
+    uploadFile: function (files) {
+      if (files.length !== 1) {
+        this.message.warning('数量错误')
+      } else {
+        const file = files[0]
+        this.answers.answerFile.set('answer' + this.currentID, file)
+        this.answers[this.currentID].fileName = file.name
+      }
+    },
+    addZero (i) {
+      return i < 10 ? '0' + i : i + ''
+    },
+    countTime (time = '2020/06/16 17:20:00') {
+      const nowtime = new Date()
+      const endtime = new Date(time)
+      const lefttime = parseInt((endtime.getTime() - nowtime.getTime()) / 1000)
+      this.timeCnt.d = parseInt(lefttime / (24 * 60 * 60))
+      this.timeCnt.h = parseInt(lefttime / (60 * 60) % 24)
+      this.timeCnt.m = parseInt(lefttime / 60 % 60)
+      this.timeCnt.s = parseInt(lefttime % 60)
+      this.timeCnt.d = this.addZero(this.timeCnt.d)
+      this.timeCnt.h = this.addZero(this.timeCnt.h)
+      this.timeCnt.m = this.addZero(this.timeCnt.m)
+      this.timeCnt.s = this.addZero(this.timeCnt.s)
+      console.log(123)
+      setTimeout(() => {
+        this.countTime(time = '2020/06/16 17:20:00')
+      }, 1000)
     }
   },
   mounted () {
+    this.countTime()
   }
 }
 </script>
@@ -188,6 +353,10 @@ export default {
   #answer {
     color: black;
     min-width: 1000px;
+  }
+
+  .none {
+    display: none;
   }
 
   nav {
@@ -433,8 +602,20 @@ export default {
   .answerSheet {
     font-family: kaiti;
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
   .select .radio {
+    display: block;
+    margin: 5px 0 0 30px;
+    font-size: 14px;
+    span {
+      margin: 0 5px;
+    }
+  }
+  .judge .radio {
     display: block;
     margin: 5px 0 0 30px;
     font-size: 14px;
@@ -459,7 +640,25 @@ export default {
       resize: none;
     }
   }
-
+  .uploadIcon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+    cursor: pointer;
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .fileName {
+    width: 90%;
+    font-size: 13px;
+    margin: 5px 0;
+  }
   .Btn01 {
     width: 130px;
     height: 40px;

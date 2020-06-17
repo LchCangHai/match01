@@ -1,11 +1,10 @@
 <template>
-  <div id="homePage">
+  <div id="courseWare">
     <nav>
       <div class="navlogo">
-        <img id="logo" src="../assets/logotem.jpg"/>
+        <img id="logo" src="../../assets/logotem.jpg"/>
         <div>
-          <span>这里是名字</span>
-          <span>English Name</span>
+          <span>教务管理中心</span>
         </div>
       </div>
       <div class="navbtn">
@@ -13,7 +12,7 @@
         <div class="btn01" @click="pcBtn()">个人中心</div>
         <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
           <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" src="../assets/avatar01.jpg">
+            <img class="avatarI" src="../../assets/avatar02.png">
           </a>
         </v-dropdown>
         <div class="messageShow">
@@ -24,34 +23,21 @@
       </div>
     </nav>
     <div id="rightSider" @click="tostudent()">
-      <div>教师主页</div>
+      <div>学生主页</div>
     </div>
-    <div style="width:100%; height: 60px"></div>
-    <div id="hcenter">
-      <my-course-center></my-course-center>
+    <div id="leftSider">
+      <my-left></my-left>
     </div>
-    <div id="hbrain">
-      <my-all-course></my-all-course>
-    </div>
-    <div id="hcourse">
-      <my-brainstorm></my-brainstorm>
-    </div>
-    <div id="hfile">
-      <my-file-manager></my-file-manager>
-    </div>
+    <div id="Content01"></div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-
-import allCourse from '../views/homepage/allCourse.vue'
-import brainstorm from '../views/homepage/brainstorm.vue'
-import courseCenter from '../views/homepage/courseCenter.vue'
-import fileManager from '../views/homepage/fileManager.vue'
+import LeftSider from './leftSider/leftSider.vue'
 
 export default {
-  name: 'homePage.vue',
+  name: 'courseWare.vue',
   data () {
     return {
       counter: 5,
@@ -65,38 +51,42 @@ export default {
   },
   computed: {
     ...mapState([
+      'leftSiderActive'
     ])
   },
   methods: {
     ...mapMutations([
+      'setLeftSider'
     ]),
     pcBtn () {
       this.$router.push('/pCenter')
     },
     tostudent () {
-      this.$router.push('/tindex')
+      this.$router.push('/index')
     }
   },
   components: {
-    'my-all-course': allCourse,
-    'my-brainstorm': brainstorm,
-    'my-course-center': courseCenter,
-    'my-file-manager': fileManager
+    'my-left': LeftSider
+  },
+  mounted () {
+    this.setLeftSider(1)
   }
 }
 </script>
 
 <style scoped lang="less">
-  #homePage {
+  #courseWare {
     width: 100%;
     min-width: 1050px;
     min-height: 400px;
+    min-height: 600px;
     /*background: url("../assets/headImg.png");*/
     /*background-repeat: repeat-x;*/
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    background-color: #f6f6f6;
   }
 
   nav {
@@ -104,7 +94,7 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    position: fixed;
+    position: relative;
     top: 0;
     left:0;
     width:100%;
@@ -136,10 +126,9 @@ export default {
         justify-content: center;
         align-items: flex-start;
         span {
-          font-size: 14px;
-        }
-        span:last-child {
-          font-size: 10px;
+          font-size: 16px;
+          color: #61c7fc;
+          font-weight: 600;
         }
       }
     }
@@ -217,12 +206,11 @@ export default {
   }
 
   #rightSider {
-    z-index: 2030;
     cursor: pointer;
     width: 60px;
     height: 100px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
     background-color: #ebf9ff;
     position: fixed;
     top: 50%;
@@ -249,28 +237,29 @@ export default {
     background-color: #2492eb;
   }
 
-  #hcenter {
-    width: 100%;
-    height: 420px;
+  #leftSider {
+    width: 150px;
+    height: 450px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
     background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
   }
 
-  #hbrain {
-    width: 100%;
-    height: 500px;
-    background-color: white;
-  }
-
-  #hcourse {
-    width: 100%;
-    height: 700px;
-    background-color: #f5f5f5;
-  }
-
-  #hfile {
-    width: 100%;
-    height: 500px;
-    background-color: white;
+  #Content01 {
+    width: 70%;
+    min-width: 700px;
+    max-width: 800px;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 5px 0;
+    margin-bottom: 50px;
   }
 
   img {

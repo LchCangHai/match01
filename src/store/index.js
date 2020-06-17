@@ -11,6 +11,7 @@ export default new Vuex.Store({
     showPopUp02: false, // 学生学校认证弹窗
     coursePop: false, // 课程界面弹窗
     coursePopType: 1, // 课程界面弹窗类型
+    leftSiderActive: 1, // 教师界面左侧边栏选中项目
     currentUser: { // 当前登录的用户信息
       avatarURL: ''
     },
@@ -65,6 +66,9 @@ export default new Vuex.Store({
     },
     chooseCourseType (state, type) {
       state.coursePopType = type
+    },
+    setLeftSider (state, item) {
+      state.leftSiderActive = item
     }
   },
   actions: {
