@@ -2,10 +2,10 @@
   <div id="addExam">
     <div id="closeC" @click="closeAddTEPop"><v-icon class="my-icon-close" type="close"></v-icon></div>
     <div id="title">
-      <div>布置作业</div>
+      <div>布置考试</div>
     </div>
     <div id="form">
-      <v-form direction="vertical" :model="ruleForm" :rules="rules" ref="ruleForm">
+      <v-form direction="vertical" :model="ruleForm" :rules="rules" ref="ruleForm1">
         <v-form-item label="考试名称" :label-col="labelCol" :wrapper-col="wrapperCol" prop="name">
           <v-input size="large" v-model="ruleForm.name"></v-input>
         </v-form-item>
@@ -13,7 +13,7 @@
           <v-input v-model="ruleForm.content" type="textarea" class="contentArea"></v-input>
         </v-form-item>
       </v-form>
-      <v-form :model="ruleForm" :rules="rules" ref="ruleForm">
+      <v-form :model="ruleForm" :rules="rules" ref="ruleForm2">
         <v-form-item label="截止日期" prop="deadDate">
           <v-date-picker v-model="ruleForm.deadDate"></v-date-picker>
         </v-form-item>
@@ -29,12 +29,12 @@
           <v-time-picker v-model="ruleForm.startTime"></v-time-picker>
         </v-form-item>
       </v-form>
-      <v-form class="lastItem" direction="vertical" :model="ruleForm" :rules="rules" ref="ruleForm">
+      <v-form class="lastItem" direction="vertical" :model="ruleForm" :rules="rules" ref="ruleForm3">
         <v-form-item label="考试时长" :label-col="labelCol" :wrapper-col="wrapperCol" prop="duration">
           <v-input size="large" v-model="ruleForm.duration"></v-input>
         </v-form-item>
         <v-form-item :wrapper-col="{offset:10, span: 14 }">
-          <v-button type="primary" style="margin-right:10px" @click.prevent="tryuse()">开始创建</v-button>
+          <v-button type="primary" style="margin-right:10px" @click.prevent="startExam()">开始创建</v-button>
         </v-form-item>
       </v-form>
     </div>
@@ -76,6 +76,14 @@ export default {
           required: true,
           message: '请选择截止时间'
         }],
+        startDate: [{
+          required: true,
+          message: '请选择开始日期'
+        }],
+        startTime: [{
+          required: true,
+          message: '请选择开始时间'
+        }],
         duration: [{
           required: true,
           message: '请选择持续时间'
@@ -91,11 +99,13 @@ export default {
   },
   computed: {
     ...mapState([
+      'currentEditTaskExam'
     ])
   },
   methods: {
     ...mapMutations([
-      'closeAddTEPop'
+      'closeAddTEPop',
+      'addTasks'
     ]),
     tryuse () {
       this.getTime()
@@ -122,6 +132,43 @@ export default {
         this.$message.error('结束时间应该在开始时间之后')
         return false
       }
+    },
+    startExam () {
+      this.$refs.ruleForm1.validate((valid) => {
+        if (valid) {
+          this.$refs.ruleForm2.validate((valid) => {
+            if (valid) {
+              this.$refs.ruleForm3.validate((valid) => {
+                if (valid) {
+                  const st = this.ruleForm.startDate + ' ' + this.ruleForm.startTime
+                  const et = this.ruleForm.deadDate + ' ' + this.ruleForm.deadTime
+                  this.getTime()
+                  const info = {
+                    type: 'exam',
+                    name: this.ruleForm.name,
+                    start: this.ruleForm.start,
+                    end: this.ruleForm.end,
+                    duration: this.ruleForm.duration,
+                    startS: st,
+                    endS: et
+                  }
+                  this.addTasks(info)
+                  this.$router.push('/addexam')
+                } else {
+                  this.$message.warning('请正确输入内容后开始创建')
+                  return false
+                }
+              })
+            } else {
+              this.$message.warning('请正确输入内容后开始创建')
+              return false
+            }
+          })
+        } else {
+          this.$message.warning('请正确输入内容后开始创建')
+          return false
+        }
+      })
     }
   },
   components: {

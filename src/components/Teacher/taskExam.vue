@@ -88,7 +88,7 @@ export default {
       'closeAddTEPop'
     ]),
     openPop (type) {
-      if (this.addTEPop === false) {
+      if (this.addTEPop === false || this.TEPopType !== type) {
         this.chooseTEPop(type)
         this.openAddTEPop()
       } else {

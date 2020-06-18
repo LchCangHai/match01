@@ -23,6 +23,8 @@ import CourseSignIn from '../components/Teacher/courseSignIn.vue'
 import StudentManage from '../components/Teacher/studentManage.vue'
 import TaskExam from '../components/Teacher/taskExam.vue'
 import DataManage from '../components/Teacher/dataManage.vue'
+import addExam01 from '../components/Teacher/task/addExam01.vue'
+import addTask01 from '../components/Teacher/task/addTask01.vue'
 // import
 
 Vue.use(VueRouter)
@@ -122,6 +124,14 @@ const routes = [
   {
     path: '/dataManage',
     component: DataManage
+  },
+  {
+    path: '/addexam',
+    component: addExam01
+  },
+  {
+    path: '/addtask',
+    component: addTask01
   }
 ]
 

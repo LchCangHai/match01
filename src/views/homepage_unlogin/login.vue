@@ -6,7 +6,7 @@
       <div id="content">
         <v-input class="loginIn" placeholder="账号"></v-input>
         <v-input class="loginIn" type="password" placeholder="密码"></v-input>
-        <v-button class="loginBtn" type="primary">立即登录</v-button>
+        <v-button class="loginBtn" type="primary" @click="login()">立即登录</v-button>
         <div id="tips">
           <span @click="retrievePop()">忘记密码</span>
           <span @click="otherWayPop()">短信验证码登录</span>
@@ -23,6 +23,7 @@ export default {
   name: 'login.vue',
   data () {
     return {
+      // account:
     }
   },
   computed: {
@@ -38,7 +39,9 @@ export default {
       'signUpPop',
       'retrievePop',
       'otherWayPop'
-    ])
+    ]),
+    login () {
+    }
   }
 }
 </script>

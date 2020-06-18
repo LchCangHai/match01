@@ -25,7 +25,73 @@ export default new Vuex.Store({
       id: '',
       name: ''
     },
-    currentEditTaskExam: {}
+    currentEditTaskExam: {
+      type: 'exam',
+      t_begin: '',
+      t_end: '',
+      name: '这是作业的名字XXX',
+      ans_visible: '',
+      problems: [
+        // {
+        //   type: 'select',
+        //   content: {
+        //     text: '题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容',
+        //     options: ['选项a', '选项b', '选项c']
+        //   },
+        //   order: 1,
+        //   answer: 'a',
+        //   answer_detail: '可为空',
+        //   max_score: 5
+        // },
+        // {
+        //   type: 'mselect',
+        //   content: {
+        //     text: '题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容',
+        //     options: ['选项a', '选项b', '选项c', '选项d']
+        //   },
+        //   order: 2,
+        //   answer: 'a',
+        //   answer_detail: '可为空',
+        //   max_score: 5
+        // },
+        // {
+        //   type: 'judge',
+        //   content: {
+        //     text: '题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容',
+        //     options: ['对', '错']
+        //   },
+        //   order: 3,
+        //   answer: 'a',
+        //   answer_detail: '可为空',
+        //   max_score: 5
+        // },
+        // {
+        //   type: 'blank',
+        //   content: {
+        //     text: '题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容',
+        //     options: ['选项a', '选项b', '选项c']
+        //   },
+        //   order: 4,
+        //   answer: 'a',
+        //   answer_detail: '可为空',
+        //   max_score: 5
+        // },
+        // {
+        //   type: 'subjective',
+        //   content: {
+        //     text: '题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容题目内容',
+        //     options: ['选项a', '选项b', '选项c']
+        //   },
+        //   order: 5,
+        //   answer: 'a',
+        //   answer_detail: '可为空',
+        //   max_score: 5
+        // }
+      ],
+      answerFile: new FormData(),
+      start: '2020/2/3 23:12:12',
+      end: '2020/5/3 23:12:12'
+    }
   },
   mutations: {
     openLogin (state) {
@@ -81,6 +147,18 @@ export default new Vuex.Store({
     },
     setLeftSider (state, item) {
       state.leftSiderActive = item
+    },
+    addTasks (state, info) { // 添加作业
+      state.currentEditTaskExam.type = info.type
+      state.currentEditTaskExam.t_begin = info.start
+      state.currentEditTaskExam.t_end = info.end
+      state.currentEditTaskExam.name = info.name
+      state.currentEditTaskExam.start = info.startS
+      state.currentEditTaskExam.end = info.endS
+      state.currentEditTaskExam.ans_visible = 1
+    },
+    addTask (state, info) { // 添加作业题目
+      // this.currentEditTaskExam.problem.push(info.)
     }
   },
   actions: {

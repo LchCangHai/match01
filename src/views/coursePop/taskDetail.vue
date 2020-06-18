@@ -22,12 +22,15 @@
     <div id="cP02Content">
       <div class="choice">
         <div class="title03">选择题： </div>
-        <div>单选题<span>8</span>题（共<span>40</span>分）</div>
-        <div>多选题<span>4</span>题（共<span>20</span>分）</div>
+        <div>共<span>8</span>题--合计<span>40</span>分</div>
         <div>合计<span>60</span>分</div>
       </div>
       <div class="completion">
         <div class="title03">填空题： </div>
+        <div>共<span>8</span>题--合计<span>40</span>分</div>
+      </div>
+      <div class="completion">
+        <div class="title03">判断题： </div>
         <div>共<span>8</span>题--合计<span>40</span>分</div>
       </div>
       <div class="question">

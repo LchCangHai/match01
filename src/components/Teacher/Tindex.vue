@@ -41,7 +41,7 @@
             <div>首页</div>
           </div>
           <div class="BtnBox">
-            <div class="item itemActive">首页</div>
+            <div class="item itemActive" @click="totindex()">首页</div>
           </div>
         </div>
         <div class="courseManage">
@@ -52,9 +52,10 @@
             <div>课程管理</div>
           </div>
           <div class="BtnBox">
-            <div class="item">课件管理</div>
-            <div class="item">视频管理</div>
-            <div class="item">讨论管理</div>
+            <div class="item" @click="totcourseWare()">课件管理</div>
+            <div class="item" @click="totcourseVideo()">视频管理</div>
+            <div class="item" @click="totcourseDiscuss()">讨论管理</div>
+            <div class="item" @click="totcourseSignIn()">课程签到</div>
           </div>
         </div>
         <div class="Exam">
@@ -65,7 +66,7 @@
             <div>作业与考试</div>
           </div>
           <div class="BtnBox">
-            <div class="item">作业考试</div>
+            <div class="item" @click="tottaskExam()">作业考试</div>
           </div>
         </div>
         <div class="studentManage">
@@ -76,7 +77,7 @@
             <div>学生管理</div>
           </div>
           <div class="BtnBox">
-            <div class="item">学生管理</div>
+            <div class="item" @click="totstudentManage()">学生管理</div>
           </div>
         </div>
         <div class="dataCenter">
@@ -87,7 +88,7 @@
             <div>数据中心</div>
           </div>
           <div class="BtnBox">
-            <div class="item">数据中心</div>
+            <div class="item" @click="totdataManage()">数据中心</div>
           </div>
         </div>
       </div>
@@ -262,7 +263,32 @@ export default {
     tostudent () {
       this.$router.push('/index')
     },
-    pushCourse () {
+    totindex () {
+      this.$router.push('/tindex')
+    },
+    totcourseManage () {
+      this.$router.push('/courseManage')
+    },
+    totcourseWare () {
+      this.$router.push('/courseWare')
+    },
+    totcourseVideo () {
+      this.$router.push('/courseVideo')
+    },
+    totcourseDiscuss () {
+      this.$router.push('/courseDiscuss')
+    },
+    totcourseSignIn () {
+      this.$router.push('/courseSignIn')
+    },
+    totstudentManage () {
+      this.$router.push('/studentManage')
+    },
+    tottaskExam () {
+      this.$router.push('/taskExam')
+    },
+    totdataManage () {
+      this.$router.push('/dataManage')
     }
   },
   components: {

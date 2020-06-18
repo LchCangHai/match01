@@ -4,6 +4,13 @@
         <div id="backIcon" class="iconBtn" @click="loginPop()"><v-icon class="my-icon1" type="left"></v-icon></div>
         <div id="closeIcon" class="iconBtn" @click="closeLogin()"><v-icon class="my-icon1" type="close"></v-icon></div>
       </div>
+      <div id="title">短信验证登录</div>
+      <div class="hrr"></div>
+      <div id="content">
+        <v-input class="loginIn" placeholder="手机号"></v-input>
+        <v-input class="loginIn" placeholder="验证码"></v-input>
+        <v-button class="loginBtn" type="primary">立即登录</v-button>
+      </div>
 
     </div>
 </template>
@@ -74,5 +81,38 @@ export default {
 
 .iconBtn:active {
   background-color: #49a9ee;
+}
+
+#title{
+  color: black;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.hrr {
+  height: 0;
+  width: 90%;
+  border-bottom: 1px solid #d6d6d6;
+  margin-top: 10px;
+}
+
+#content{
+  width: 100%;
+  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .loginIn{
+    margin-top: 20px;
+    width: 75%;
+    height: 30px;
+  }
+  .loginBtn {
+    margin-top: 10px;
+    border-radius: 50px;
+    width: 75%;
+  }
 }
 </style>
