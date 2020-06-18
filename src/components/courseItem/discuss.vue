@@ -160,6 +160,19 @@
         </div>
       </div>
     </div>
+    <div id="four4">
+      <div id="four04Title">
+        <div>发起讨论</div>
+      </div>
+      <div id="four04Input">
+        <v-input class="InArea" type="textarea"></v-input>
+      </div>
+      <div id="BtnBox">
+        <div>
+          <div>发布讨论话题</div>
+        </div>
+      </div>
+    </div>
     <div id="four3">
       <div id="fourHandle">
         <div>
@@ -575,6 +588,86 @@ export default {
       flex-direction: row;
       justify-content: flex-end;
       align-items: center;
+    }
+  }
+
+#four4 {
+  width: 70%;
+  min-width: 800px;
+  max-width: 900px;
+  minheight: 350px;
+  /*background-color: #83bafc;*/
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+  #four04Title {
+    width: 100%;
+    height: 40px;
+    background-color: #f4f4f4;
+    box-shadow: 1px 1px 5px 1px rgba(150,150,150,0.2),
+    -1px 1px 5px 1px rgba(150,150,150,0.2);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    >div {
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 20px;
+    }
+  }
+  #four04Input {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .InArea {
+      width: 100%;
+      height: 100%;
+      resize: none;
+    }
+  }
+  #BtnBox {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    >div {
+      cursor: pointer;
+      width: 170px;
+      height: 35px;
+      border-radius: 40px;
+      background-color: #81b8fa;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 1px 1px 3px 1px rgba(150,150,150,0.2);
+      >div {
+        color: white;
+        font-size: 15px;
+      }
+    }
+    >div:hover {
+      >div {
+        font-size: 16px;
+      }
+    }
+    >div:active {
+      >div {
+        font-size: 15px;
+      }
+      box-shadow: -1px -1px 3px 1px rgba(150,150,150,0.2);
     }
   }
 

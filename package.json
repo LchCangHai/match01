@@ -13,6 +13,7 @@
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
+    "jquery.jedate": "^6.0.2",
     "vue": "^2.6.11",
     "vue-beauty": "^2.0.0-beta.19",
     "vue-chartjs": "^3.5.0",

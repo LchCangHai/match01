@@ -1,5 +1,5 @@
 <template>
-  <div id="courseWare">
+  <div id="dataManage">
     <nav>
       <div class="navlogo">
         <img id="logo" src="../../assets/logotem.jpg"/>
@@ -37,7 +37,7 @@ import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider.vue'
 
 export default {
-  name: 'courseWare.vue',
+  name: 'dataManage.vue',
   data () {
     return {
       counter: 5,
@@ -69,13 +69,13 @@ export default {
     'my-left': LeftSider
   },
   mounted () {
-    this.setLeftSider(1)
+    this.setLeftSider(6)
   }
 }
 </script>
 
 <style scoped lang="less">
-  #courseWare {
+  #dataManage {
     width: 100%;
     min-width: 1050px;
     min-height: 400px;

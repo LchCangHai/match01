@@ -28,7 +28,388 @@
     <div id="leftSider">
       <my-left></my-left>
     </div>
-    <div id="Content01"></div>
+    <div id="Content01">
+      <div class="none">
+        <input type="file"
+               ref="upload_btn"
+               @change="handleFileChange">
+      </div>
+      <div class="topBox">
+        <div class="tips">
+          <div>上传至分组：</div>
+          <div>第一章：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+        </div>
+        <div class="upLoadBox" id="drag_box" ref="dopbox" :class=" { borderhover: borderhover } ">
+          <div class="uploadIcon">
+            <v-icon type="cloud-upload-o"></v-icon>
+          </div>
+          <div class="Btn01"
+               @click="clickUpload">
+            <div>上传课件</div>
+          </div>
+        </div>
+      </div>
+      <div class="courseCheck"
+           :class="{ toggled : open === false ? true : false}">
+        <div class="zhankai" @click="toggle">
+          <div v-show="!open">
+            <v-icon type="right"></v-icon>
+          </div>
+          <div v-show="open">
+            <v-icon type="down"></v-icon>
+          </div>
+        </div>
+        <div class="courseItem" :class=" { choosed : '12' === '12' ? true : false } ">
+          <div>
+            <div>熬夜秃头学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+        <div class="courseItem">
+          <div>
+            <div>自闭学</div>
+          </div>
+        </div>
+      </div>
+      <div class="mune">
+        <div class="mune02">
+          <div class="tips">
+            <div>上传至分组：</div>
+            <div>第一章：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+          </div>
+        </div>
+        <div class="mune03">
+          <div class="addBtn">
+            <div>添加分组</div>
+          </div>
+          <div class="addInput">
+            <v-input v-model="value" @keydown="keydown" @keyup="keyup"  @blur="blur('blur')"></v-input>
+          </div>
+        </div>
+        <vue-scroll ref="vscroll">
+          <div id="mune01">
+            <div class="studyItem01">
+              <div class="item01Main" @click="chooseChater('one')">
+                <div class="chapter01">
+                  <div>
+                    <v-icon type="folder"></v-icon>
+                  </div>
+                  <div>第一章 秃头学的前世今生</div>
+                </div>
+                <div class="floderIcon">
+                  <v-icon type="right" v-show="chapter === 'one' ? false : true"></v-icon>
+                  <v-icon type="down" v-show="chapter === 'one' ? true : false"></v-icon>
+                </div>
+              </div>
+              <div class="item01Child" v-show="chapter === 'one' ? true : false">
+                <div class="studyItem02">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-zuoyexiawu"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right" @click="deleteVideo('1')">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="studyItem02">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-zuoyexiawu"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right" @click="deleteVideo('1')">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="studyItem02">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-zuoyexiawu"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right" @click="deleteVideo('1')">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="studyItem01">
+              <div class="item01Main" @click="chooseChater('two')">
+                <div class="chapter01">
+                  <div>
+                    <v-icon type="folder"></v-icon>
+                  </div>
+                  <div>第一章 秃头学的前世今生</div>
+                </div>
+                <div class="floderIcon">
+                  <v-icon type="right" v-show="chapter === 'two' ? false : true"></v-icon>
+                  <v-icon type="down" v-show="chapter === 'two' ? true : false"></v-icon>
+                </div>
+              </div>
+              <div class="item01Child" v-show="chapter === 'two' ? true : false">
+                <div class="studyItem02">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right" @click="deleteVideo('1')">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="studyItem02">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right" @click="deleteVideo('1')">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="studyItem02">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right" @click="deleteVideo('1')">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="studyItem01">
+              <div class="item01Main" @click="chooseChater('three')">
+                <div class="chapter01">
+                  <div>
+                    <v-icon type="folder"></v-icon>
+                  </div>
+                  <div>第一章 秃头学的前世今生</div>
+                </div>
+                <div class="floderIcon">
+                  <v-icon type="right" v-show="chapter === 'three' ? false : true"></v-icon>
+                  <v-icon type="down" v-show="chapter === 'three' ? true : false"></v-icon>
+                </div>
+              </div>
+              <div class="item01Child" v-show="chapter === 'three' ? true : false">
+                <div class="studyItem02" @click="openVideo('1')">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="studyItem02" @click="openVideo('1')">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="studyItem01">
+              <div class="item01Main" @click="chooseChater('four')">
+                <div class="chapter01">
+                  <div>
+                    <v-icon type="folder"></v-icon>
+                  </div>
+                  <div>第一章 秃头学的前世今生</div>
+                </div>
+                <div class="floderIcon">
+                  <v-icon type="right" v-show="chapter === 'four' ? false : true"></v-icon>
+                  <v-icon type="down" v-show="chapter === 'four' ? true : false"></v-icon>
+                </div>
+              </div>
+              <div class="item01Child" v-show="chapter === 'four' ? true : false">
+                <div class="studyItem02" @click="openVideo('1')">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="studyItem02" @click="openVideo('1')">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="studyItem01">
+              <div class="item01Main" @click="chooseChater('five')">
+                <div class="chapter01">
+                  <div>
+                    <v-icon type="folder"></v-icon>
+                  </div>
+                  <div>第一章 秃头学的前世今生</div>
+                </div>
+                <div class="floderIcon">
+                  <v-icon type="right" v-show="chapter === 'five' ? false : true"></v-icon>
+                  <v-icon type="down" v-show="chapter === 'five' ? true : false"></v-icon>
+                </div>
+              </div>
+              <div class="item01Child" v-show="chapter === 'five' ? true : false">
+                <div class="studyItem02" @click="openVideo('1')">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="studyItem02" @click="openVideo('1')">
+                  <div class="item02Main">
+                    <div class="item02left">
+                      <div class="videoIcon">
+                        <svg class="icon" aria-hidden="true">
+                          <use xlink:href="#icon-meiti"></use>
+                        </svg>
+                      </div>
+                      <div class="videoTitle"> 秃头学的前世今生</div>
+                    </div>
+                    <div class="item02right">
+                      <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shanchu"></use>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </vue-scroll>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,6 +423,8 @@ export default {
     return {
       counter: 5,
       isCnt99: false,
+      open: false,
+      chapter: '',
       data: [
         { content: '1st item' },
         { content: '2nd item' },
@@ -58,11 +441,61 @@ export default {
     ...mapMutations([
       'setLeftSider'
     ]),
+    toggle () {
+      this.open = !this.open
+    },
     pcBtn () {
       this.$router.push('/pCenter')
     },
     tostudent () {
       this.$router.push('/index')
+    },
+    clickUpload () {
+      this.$refs.upload_btn.click()
+    },
+    uploadFile: function (files) {
+      if (files.length !== 1) {
+        this.$message.warning('数量错误')
+      } else {
+        const file = files[0]
+        this.file = file
+        this.formdata = new FormData()
+        this.formdata.set('avatar', file)
+      }
+    },
+    handleFileChange () {
+      const inputDOM = this.$refs.upload_btn
+      const files = inputDOM.files
+      this.uploadFile(files)
+    },
+    enentDrop: function (e) {
+      this.borderhover = false
+      e.stopPropagation()
+      e.preventDefault()
+      const fileData = e.dataTransfer.files
+      // console.log(fileData)
+      this.uploadFile(fileData)
+    },
+    chooseChater (id) {
+      if (this.chapter === id) {
+        this.chapter = ''
+      } else {
+        this.chapter = id
+      }
+    },
+    deleteVideo (id) {
+      const routeUrl = this.$router.resolve({
+        path: '/video'
+      })
+      window.open(routeUrl.href, '_blank')
+    },
+    scrollToDown () {
+      this.$refs.vscroll.scrollTo(
+        {
+          x: '100%'
+        },
+        500
+      )
     }
   },
   components: {
@@ -70,6 +503,24 @@ export default {
   },
   mounted () {
     this.setLeftSider(1)
+    const that = this
+    const dropbox = document.getElementById('drag_box')
+    dropbox.addEventListener('drop', this.enentDrop, false)
+    dropbox.addEventListener('dragleave', function (e) {
+      e.stopPropagation()
+      e.preventDefault()
+      that.borderhover = false
+    })
+    dropbox.addEventListener('dragenter', function (e) {
+      e.stopPropagation()
+      e.preventDefault()
+      that.borderhover = true
+    })
+    dropbox.addEventListener('dragover', function (e) {
+      e.stopPropagation()
+      e.preventDefault()
+      that.borderhover = true
+    })
   }
 }
 </script>
@@ -238,6 +689,7 @@ export default {
   }
 
   #leftSider {
+    z-index: 2030;
     width: 150px;
     height: 450px;
     border-top-right-radius: 15px;
@@ -260,6 +712,337 @@ export default {
     align-items: flex-start;
     margin: 5px 0;
     margin-bottom: 50px;
+  }
+  .none {
+    display: none;
+  }
+  .topBox {
+    width: 100%;
+    height: 250px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px 0;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 5px 1px rgba(150,150,150,0.3),
+      -1px -1px 5px 1px rgba(150,150,150,0.3);
+    .tips {
+      width: 100%;
+      height: 35px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      border-bottom: 1px solid #e4e4e4;
+      >div {
+        margin: 5px;
+        margin-left: 15px;
+      }
+    }
+    .upLoadBox {
+      width: 100%;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .uploadIcon {
+        width: 50px;
+        height: 50px;
+        i {
+          font-size: 40px;
+          font-weight: 500;
+          color: #34c5f2;
+        }
+        svg {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .Btn01 {
+        cursor: pointer;
+        width: 200px;
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 40px;
+        background-color: #83bafc;
+        color:white;
+        font-size: 15px;
+        box-shadow: 1px 1px 3px 1px rgba(150,150,150,0.3);
+      }
+      .Btn01:hover {
+        font-size: 16px;
+      }
+      .Btn01:active {
+        font-size: 15px;
+        box-shadow: -1px -1px 3px 1px rgba(150,150,150,0.3);
+      }
+    }
+  }
+  .borderhover {
+    box-shadow: inset 1px 1px 5px 1px rgba(150,150,150,0.3),
+      inset -1px -1px 5px 1px rgba(150,150,150,0.3);
+  }
+
+  .courseCheck {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 4px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    .zhankai {
+      cursor: pointer;
+      height: 50px;
+      width: 50px;
+      margin: 0 5px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      >div {
+        i {
+          font-size: 25px;
+          font-weight: 500;
+        }
+      }
+    }
+    .courseItem {
+      height: 50px;
+      min-width: 100px;
+      margin: 0 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      >div {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 35px;
+        padding: 0 20px;
+        border-radius: 40px;
+        border: 1px solid gray;
+        box-shadow: 1px 1px 5px 1px rgba(150,150,150,0.3);
+        >div {
+          font-size: 13px;
+        }
+      }
+      >div:hover {
+        font-size: 14px;
+      }
+      >div:active {
+        box-shadow: -1px -1px 5px 1px rgba(150,150,150,0.3);
+
+      }
+    }
+    .choosed {
+      >div {
+        border: 1.5px solid #7bd0fc;
+      }
+    }
+  }
+  .toggled {
+    height: 50px;
+    overflow: hidden;
+  }
+
+  .mune {
+    width: 100%;
+    height: 480px;
+    background-color: white;
+    margin-top: 40px;
+    box-shadow: 1px 1px 5px 1px rgba(150,150,150,0.2),
+    -1px 0px 5px 1px rgba(150,150,150,0.2);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .mune02 {
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #e4e4e4;
+    box-shadow: 0px 1px 3px 1px rgba(150,150,150,0.2);
+    .tips {
+      width: 100%;
+      height: 35px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      >div {
+        margin: 5px;
+        margin-left: 15px;
+      }
+    }
+  }
+  .mune03 {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #e4e4e4;
+    box-shadow: 0px 1px 3px 1px rgba(150,150,150,0.2);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    .addBtn {
+      cursor: pointer;
+      width: 100px;
+      height: 30px;
+      /*border: 1px solid #108ee9;*/
+      background-color: #7bd0fc;
+      color: white;
+      box-shadow: 1px 1px 3px 1px rgba(150,150,150,0.2);
+      border-radius: 50px;
+      margin-left: 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      >div {
+        font-size: 14px;
+      }
+    }
+    .addBtn:hover {
+      >div {
+        font-size: 15px;
+      }
+    }
+    .addBtn:active {
+      >div {
+        font-size: 14px;
+      }
+      box-shadow: -1px -1px 3px 1px rgba(150,150,150,0.2);
+    }
+    .addInput {
+      width: 500px;
+      margin-left: 20px;
+    }
+  }
+  #mune01 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .studyItem01 {
+      width: 100%;
+      min-height: 60px;
+      margin: 5px 0;
+    }
+  }
+  .item01Main {
+    cursor: pointer;
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5;
+    box-shadow: 3px 3px 5px 0px rgba(213,213,213,0.5);
+    .chapter01 {
+      margin-left: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      >div:first-child {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        i {
+          font-size: 24px;
+          color: #ffb41b;
+          font-weight: 600;
+        }
+      }
+      >div:last-child {
+        margin: 0 20px;
+        font-size: 13px;
+      }
+    }
+    .floderIcon {
+      margin-right: 20px;
+      i {
+        font-size: 16px;
+      }
+    }
+  }
+  .item01Child {
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    .studyItem02 {
+      background-color: #fbfbfb;
+      margin: 3px 0;
+      width: 99%;
+      height: 60px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .studyItem02:hover {
+      color: #3d84ff;
+    }
+  }
+  .item02Main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .item02left {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      margin-left: 20px;
+      .videoIcon {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+        svg {
+          height: 100%;
+          width: 100%;
+        }
+      }
+      .videoTitle {
+        font-size: 13px;
+      }
+    }
+    .item02right {
+      width: 20px;
+      height: 20px;
+      margin-right: 20px;
+      cursor: pointer;
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
   }
 
   img {

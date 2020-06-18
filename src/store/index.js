@@ -11,6 +11,8 @@ export default new Vuex.Store({
     showPopUp02: false, // 学生学校认证弹窗
     coursePop: false, // 课程界面弹窗
     coursePopType: 1, // 课程界面弹窗类型
+    addTEPop: false, // 教师添加作业，考试弹窗
+    TEPopType: 1, // 教师添加作业 弹窗类型
     leftSiderActive: 1, // 教师界面左侧边栏选中项目
     currentUser: { // 当前登录的用户信息
       avatarURL: ''
@@ -22,7 +24,8 @@ export default new Vuex.Store({
     currentDiscuss: { // 现在选中展示的讨论内容 ****需在action中获得
       id: '',
       name: ''
-    }
+    },
+    currentEditTaskExam: {}
   },
   mutations: {
     openLogin (state) {
@@ -63,6 +66,15 @@ export default new Vuex.Store({
     },
     closeCoursePop (state) {
       state.coursePop = false
+    },
+    openAddTEPop (state) {
+      state.addTEPop = true
+    },
+    closeAddTEPop (state) {
+      state.addTEPop = false
+    },
+    chooseTEPop (state, type) {
+      state.TEPopType = type
     },
     chooseCourseType (state, type) {
       state.coursePopType = type

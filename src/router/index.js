@@ -15,8 +15,14 @@ import Sourse from '../components/courseItem/sourse.vue'
 import OneDiscuss from '../components/courseItem/discuss/oneDiscuss.vue'
 
 import Tindex from '../components/Teacher/Tindex.vue'
+import CourseManage from '../components/Teacher/courseManage.vue'
 import CourseWare from '../components/Teacher/courseWare.vue'
 import CourseVideo from '../components/Teacher/courseVideo.vue'
+import CourseDiscuss from '../components/Teacher/courseDiscuss.vue'
+import CourseSignIn from '../components/Teacher/courseSignIn.vue'
+import StudentManage from '../components/Teacher/studentManage.vue'
+import TaskExam from '../components/Teacher/taskExam.vue'
+import DataManage from '../components/Teacher/dataManage.vue'
 // import
 
 Vue.use(VueRouter)
@@ -86,12 +92,36 @@ const routes = [
     component: Tindex
   },
   {
+    path: '/courseManage',
+    component: CourseManage
+  },
+  {
     path: '/courseWare',
     component: CourseWare
   },
   {
     path: '/courseVideo',
     component: CourseVideo
+  },
+  {
+    path: '/courseDiscuss',
+    component: CourseDiscuss
+  },
+  {
+    path: '/courseSignIn',
+    component: CourseSignIn
+  },
+  {
+    path: '/studentManage',
+    component: StudentManage
+  },
+  {
+    path: '/taskExam',
+    component: TaskExam
+  },
+  {
+    path: '/dataManage',
+    component: DataManage
   }
 ]
 

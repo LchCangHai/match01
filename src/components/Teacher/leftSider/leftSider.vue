@@ -1,6 +1,6 @@
 <template>
   <div id="leftSider">
-    <div class="siderItem">
+    <div class="siderItem" @click="totindex()">
       <div class="icon">
         <div>
           <v-icon type="home"></v-icon>
@@ -11,7 +11,7 @@
     </div>
     <div class="siderItem"
          :class=" { siderActive : (leftSiderActive === 1 || leftSiderActive === 2 || leftSiderActive === 3) ? true : false} ">
-      <div class="icon">
+      <div class="icon" @click="totcourseWare()">
         <div>
           <v-icon type="book"></v-icon>
         </div>
@@ -19,21 +19,30 @@
       </div>
       <div class="BtnBox">
         <div class="item"
-             :class=" { siderActive1 : leftSiderActive === 1 ? true : false} ">
+             :class=" { siderActive1 : leftSiderActive === 1 ? true : false} "
+        @click="totcourseWare()">
           <div>课件管理</div>
         </div>
         <div class="item"
-             :class=" { siderActive1 : leftSiderActive === 2 ? true : false} ">
+             :class=" { siderActive1 : leftSiderActive === 2 ? true : false} "
+        @click="totcourseVideo()">
           <div>视频管理</div>
         </div>
         <div class="item"
-             :class=" { siderActive1 : leftSiderActive === 3 ? true : false} ">
+             :class=" { siderActive1 : leftSiderActive === 3 ? true : false} "
+        @click="totcourseDiscuss()">
           <div>讨论管理</div>
+        </div>
+        <div class="item"
+             :class=" { siderActive1 : leftSiderActive === 0 ? true : false} "
+             @click="totcourseSignIn()">
+          <div>课件签到</div>
         </div>
       </div>
     </div>
     <div class="siderItem"
-         :class=" { siderActive : leftSiderActive === 4 ? true : false} ">
+         :class=" { siderActive : leftSiderActive === 4 ? true : false} "
+    @click="tottaskExam()">
       <div class="icon">
         <div>
           <v-icon type="file-text"></v-icon>
@@ -43,7 +52,8 @@
       <div></div>
     </div>
     <div class="siderItem"
-         :class=" { siderActive : leftSiderActive === 5 ? true : false} ">
+         :class=" { siderActive : leftSiderActive === 5 ? true : false} "
+    @click="totstudentManage()">
       <div class="icon">
         <div>
           <v-icon type="solution"></v-icon>
@@ -53,7 +63,8 @@
       <div></div>
     </div>
     <div class="siderItem"
-         :class=" { siderActive : leftSiderActive === 6 ? true : false} ">
+         :class=" { siderActive : leftSiderActive === 6 ? true : false} "
+    @click="totdataManage()">
       <div class="icon">
         <div>
           <v-icon type="line-chart"></v-icon>
@@ -70,17 +81,6 @@ import { mapMutations, mapState } from 'vuex'
 
 export default {
   name: 'leftSider.vue',
-  data () {
-    return {
-      counter: 5,
-      isCnt99: false,
-      data: [
-        { content: '1st item' },
-        { content: '2nd item' },
-        { content: '3rd item' }
-      ]
-    }
-  },
   computed: {
     ...mapState([
       'leftSiderActive'
@@ -95,6 +95,33 @@ export default {
     },
     tostudent () {
       this.$router.push('/index')
+    },
+    totindex () {
+      this.$router.push('/tindex')
+    },
+    totcourseManage () {
+      this.$router.push('/courseManage')
+    },
+    totcourseWare () {
+      this.$router.push('/courseWare')
+    },
+    totcourseVideo () {
+      this.$router.push('/courseVideo')
+    },
+    totcourseDiscuss () {
+      this.$router.push('/courseDiscuss')
+    },
+    totcourseSignIn () {
+      this.$router.push('/courseSignIn')
+    },
+    totstudentManage () {
+      this.$router.push('/studentManage')
+    },
+    tottaskExam () {
+      this.$router.push('/taskExam')
+    },
+    totdataManage () {
+      this.$router.push('/dataManage')
     }
   },
   components: {

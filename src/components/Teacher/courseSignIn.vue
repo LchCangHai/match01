@@ -1,5 +1,5 @@
 <template>
-  <div id="courseWare">
+  <div id="courseSignIn">
     <nav>
       <div class="navlogo">
         <img id="logo" src="../../assets/logotem.jpg"/>
@@ -28,16 +28,21 @@
     <div id="leftSider">
       <my-left></my-left>
     </div>
-    <div id="Content01"></div>
+    <div id="Content01">
+      <div id="checkcourse">
+        <my-choose-course></my-choose-course>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider.vue'
+import chooseCourse from './chooseCourse/chooseCourse.vue'
 
 export default {
-  name: 'courseWare.vue',
+  name: 'courseSignIn.vue',
   data () {
     return {
       counter: 5,
@@ -66,16 +71,17 @@ export default {
     }
   },
   components: {
-    'my-left': LeftSider
+    'my-left': LeftSider,
+    'my-choose-course': chooseCourse
   },
   mounted () {
-    this.setLeftSider(1)
+    this.setLeftSider(0)
   }
 }
 </script>
 
 <style scoped lang="less">
-  #courseWare {
+  #courseSignIn {
     width: 100%;
     min-width: 1050px;
     min-height: 400px;

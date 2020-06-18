@@ -28,16 +28,23 @@
     <div id="leftSider">
       <my-left></my-left>
     </div>
-    <div id="Content01"></div>
+    <div id="Content01">
+      <div id="checkcourse">
+        <my-choose-course></my-choose-course>
+      </div>
+      <my-discuss></my-discuss>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider.vue'
+import Discuss from '../courseItem/discuss.vue'
+import chooseCourse from './chooseCourse/chooseCourse.vue'
 
 export default {
-  name: 'courseWare.vue',
+  name: 'courseDiscuss.vue',
   data () {
     return {
       counter: 5,
@@ -66,10 +73,12 @@ export default {
     }
   },
   components: {
-    'my-left': LeftSider
+    'my-left': LeftSider,
+    'my-discuss': Discuss,
+    'my-choose-course': chooseCourse
   },
   mounted () {
-    this.setLeftSider(1)
+    this.setLeftSider(3)
   }
 }
 </script>
@@ -206,7 +215,6 @@ export default {
   }
 
   #rightSider {
-    z-index: 2030;
     cursor: pointer;
     width: 60px;
     height: 100px;
@@ -239,7 +247,6 @@ export default {
   }
 
   #leftSider {
-    z-index: 2030;
     width: 150px;
     height: 450px;
     border-top-right-radius: 15px;

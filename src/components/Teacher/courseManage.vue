@@ -1,5 +1,5 @@
 <template>
-  <div id="courseWare">
+  <div id="courseManage">
     <nav>
       <div class="navlogo">
         <img id="logo" src="../../assets/logotem.jpg"/>
@@ -25,19 +25,15 @@
     <div id="rightSider" @click="tostudent()">
       <div>学生主页</div>
     </div>
-    <div id="leftSider">
-      <my-left></my-left>
-    </div>
     <div id="Content01"></div>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import LeftSider from './leftSider/leftSider.vue'
 
 export default {
-  name: 'courseWare.vue',
+  name: 'courseManage.vue',
   data () {
     return {
       counter: 5,
@@ -66,16 +62,15 @@ export default {
     }
   },
   components: {
-    'my-left': LeftSider
   },
   mounted () {
-    this.setLeftSider(1)
+    this.setLeftSider(0)
   }
 }
 </script>
 
 <style scoped lang="less">
-  #courseWare {
+  #courseManage {
     width: 100%;
     min-width: 1050px;
     min-height: 400px;
@@ -236,19 +231,6 @@ export default {
   }
   #rightSider:active {
     background-color: #2492eb;
-  }
-
-  #leftSider {
-    z-index: 2030;
-    width: 150px;
-    height: 450px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    background-color: white;
-    position: fixed;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
   }
 
   #Content01 {
