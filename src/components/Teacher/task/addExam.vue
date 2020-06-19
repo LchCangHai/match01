@@ -126,8 +126,8 @@ export default {
       }
       this.ruleForm.start = this.ruleForm.startDate.replace(/-/g, '/') + ' ' + this.ruleForm.startTime
       this.ruleForm.end = this.ruleForm.deadDate.replace(/-/g, '/') + ' ' + this.ruleForm.deadTime
-      this.ruleForm.start = new Date(this.ruleForm.start).getTime()
-      this.ruleForm.end = new Date(this.ruleForm.end).getTime()
+      this.ruleForm.start = (new Date(this.ruleForm.start).getTime()) / 1000
+      this.ruleForm.end = (new Date(this.ruleForm.end).getTime()) / 1000
       if (this.ruleForm.end - this.ruleForm.start <= 0) {
         this.$message.error('结束时间应该在开始时间之后')
         return false

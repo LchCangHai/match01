@@ -14,11 +14,20 @@ export default new Vuex.Store({
     addTEPop: false, // 教师添加作业，考试弹窗
     TEPopType: 1, // 教师添加作业 弹窗类型
     leftSiderActive: 1, // 教师界面左侧边栏选中项目
-    currentUser: { // 当前登录的用户信息
-      avatarURL: ''
-    },
+    currentUser: {}, // 当前登录的用户信息
+    currentTask: '',
+    currentCourse: 2,
     courseInfo: { // 学生所选的课程信息
     },
+    courseInform: { // 当前课程公告
+    },
+    courseFile: { // 当前课程章节 文件
+    },
+    courseVideo: { // 当前课程 章节 视频
+    },
+    courseDiscuss: { // 当前课程 讨论列表
+    },
+    courseDiscussID: '', // 当前选中的讨论的id
     informs: { // 通知信息
     },
     currentDiscuss: { // 现在选中展示的讨论内容 ****需在action中获得
@@ -112,8 +121,23 @@ export default new Vuex.Store({
     otherWayPop (state) {
       state.popUpType = 4
     },
-    setCourseInfo (state, val) {
+    setcourseInfo (state, val) {
       state.courseInfo = val
+    },
+    setcourseInform (state, val) {
+      state.courseInform = val
+    },
+    setcourseFile (state, val) {
+      state.courseFile = val
+    },
+    setcourseVideo (state, val) {
+      state.courseVideo = val
+    },
+    setcourseDiscuss (state, val) {
+      state.courseDiscuss = val
+    },
+    setcourseDiscussID (state, val) {
+      state.courseDiscussID = val
     },
     openPop01 (state) {
       state.showPopUp01 = true
@@ -159,6 +183,15 @@ export default new Vuex.Store({
     },
     addTask (state, info) { // 添加作业题目
       // this.currentEditTaskExam.problem.push(info.)
+    },
+    setCurrentUser (state, info) {
+      state.currentUser = info
+    },
+    setcurrentTask (state, id) {
+      state.currentTask = id
+    },
+    setcurrentCourse (state, id) {
+      state.currentCourse = id
     }
   },
   actions: {

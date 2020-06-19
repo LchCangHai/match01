@@ -20,7 +20,8 @@
           </div>
         </v-form-item>
         <v-form-item label="昵称" :label-col="labelCol" :wrapper-col="wrapperCol" prop="name">
-          <v-input placeholder="请输入昵称" size="large"  v-model="ruleForm.name"></v-input>
+          <v-input placeholder="请输入昵称" size="large"  v-model="ruleForm.name" @blur="valiName()"></v-input>
+          <div class="tip1">{{tip1}}</div>
         </v-form-item>
         <v-form-item label="在校信息" :label-col="labelCol" :wrapper-col="wrapperCol" prop="studentID">
 <!--          <v-input size="large"  v-model="ruleForm.studentID"></v-input>-->
@@ -30,21 +31,23 @@
 <!--          <v-input size="large" v-model="ruleForm.school"></v-input>-->
           <div class="disabledInfo">{{ruleForm.school}}</div>
         </v-form-item>
-        <v-form-item label="真实姓名" :label-col="labelCol" :wrapper-col="wrapperCol" prop="realName">
-          <v-input placeholder="请输入真实姓名" size="large" v-model="ruleForm.realName"></v-input>
-        </v-form-item>
+<!--        <v-form-item label="真实姓名" :label-col="labelCol" :wrapper-col="wrapperCol" prop="realName">-->
+<!--          <v-input placeholder="请输入真实姓名" size="large" v-model="ruleForm.realName"></v-input>-->
+<!--        </v-form-item>-->
         <v-form-item label="您的性别" :label-col="labelCol" :wrapper-col="wrapperCol" prop="sex">
-          <v-radio-group v-model="ruleForm.sex" :data="[{value: 'male', text: '男'},{value: 'female', text: '女'},{value: 'other', text: '保密'}]"></v-radio-group>
+          <v-radio-group v-model="ruleForm.sex" :data="[{value: 'male', text: '男'},{value: 'female', text: '女'},{value: 'secret', text: '保密'}]"></v-radio-group>
         </v-form-item>
         <v-form-item label="年级" :label-col="labelCol" :wrapper-col="wrapperCol" prop="grade">
-          <v-input placeholder="请输入年级" size="large" v-model="ruleForm.grade"></v-input>
+          <div class="disabledInfo">{{ruleForm.grade}}</div>
+<!--          <v-input placeholder="请输入年级" size="large" v-model="ruleForm.grade"></v-input>-->
         </v-form-item>
         <v-form-item label="班级" :label-col="labelCol" :wrapper-col="wrapperCol" prop="class">
-          <v-input placeholder="请输入班级" size="large" v-model="ruleForm.class"></v-input>
+          <div class="disabledInfo">{{ruleForm.class}}</div>
+<!--          <v-input placeholder="请输入班级" size="large" v-model="ruleForm.class"></v-input>-->
         </v-form-item>
-        <v-form-item label="简介" :label-col="labelCol" :wrapper-col="wrapperCol" prop="briefInfo">
-          <v-input type="textarea" class="briefInfoArea" v-model="ruleForm.briefInfo" placeholder="让更多人认识自己"></v-input>
-        </v-form-item>
+<!--        <v-form-item label="简介" :label-col="labelCol" :wrapper-col="wrapperCol" prop="briefInfo">-->
+<!--          <v-input type="textarea" class="briefInfoArea" v-model="ruleForm.briefInfo" placeholder="让更多人认识自己"></v-input>-->
+<!--        </v-form-item>-->
         <v-form-item :wrapper-col="{span:8,offset:10}" style="margin-top:24px">
           <v-button class="submitBtn" type="primary" size="large" html-type="button" @click="submitForm('ruleForm')">确认修改</v-button>
         </v-form-item>
@@ -61,13 +64,14 @@
       @crop-upload-success="cropUploadSuccess"
       @crop-upload-fail="cropUploadFail"
       field="img"
+      method="POST"
     :width="300"
     :height="300"
-    url=""
-    :params="params"
     :headers="headers"
     v-model="show"
-    img-format="png"></my-upload>
+    withCre
+    langType="zh"
+    :withCredentials="true"></my-upload>
   </div>
 
 </div>
@@ -84,8 +88,8 @@ export default {
     return {
       ruleForm: {
         name: '',
-        studentID: '学生信息221801227',
-        school: '福州大学',
+        studentID: '',
+        school: '',
         realName: '',
         sex: '',
         grade: '',
@@ -94,7 +98,7 @@ export default {
       },
       rules: {
         name: [{
-          required: true,
+          // required: true,
           message: '请输入昵称'
         }],
         studentID: [{
@@ -104,7 +108,7 @@ export default {
           disabled: true
         }],
         realName: [{
-          required: true,
+          // required: true,
           message: '请输入真实姓名'
         }],
         sex: [{
@@ -112,14 +116,17 @@ export default {
           message: '请选择性别'
         }],
         grade: [{
+          disabled: true
           // required: true,
-          message: '请输入年级'
+          // message: '请输入年级'
         }],
         class: [{
+          disabled: true
           // required: true,
-          message: '请输入班级'
+          // message: '请输入班级'
         }]
       },
+      tip1: '',
       labelCol: {
         span: 4
       },
@@ -128,26 +135,26 @@ export default {
       },
       imgUrl: require('../../../assets/avatar02.png'),
       show: false,
-      params: {
-        token: '123456798',
-        name: 'avatar'
-      },
       headers: {
-        smail: '*_~'
+        Authorization: window.localStorage.getItem('access_token')
       },
-      imgDataUrl: '' // the datebase64 url of created image
+      imgDataUrl: '', // the datebase64 url of created image
+      imgupURL: '',
+      imgBlob: ''
     }
   },
   computed: {
     ...mapState([
       'showPopUp',
-      'popUpType'
+      'popUpType',
+      'currentUser'
     ])
   },
   methods: {
     ...mapMutations([
       'closePop01',
-      'openPop01'
+      'openPop01',
+      'setCurrentUser'
     ]),
     centerBtn () {
       this.$router.push('/courses')
@@ -166,7 +173,27 @@ export default {
      */
     cropSuccess (imgDataUrl, field) {
       console.log('-------- crop success --------')
-      this.imgUrl = imgDataUrl
+      const arr = imgDataUrl.split(',')
+      const mime = arr[0].match(/:(.*?);/)[1]
+      const bstr = atob(arr[1])
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      this.imgBlob = new Blob([u8arr], { type: mime })
+      const formdata = new FormData()
+      formdata.set('avatar', this.imgBlob)
+      this.$axios.post('/api/avatars/course/' + this.currentUser.uid, formdata, {
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => {
+        this.$message.success('用户头像上传成功')
+      }).catch(error => {
+        console.log(error)
+        this.imgUrl = imgDataUrl
+      })
     },
     /**
      * upload success
@@ -194,13 +221,113 @@ export default {
       console.log(this.ruleForm)
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.modify()
         } else {
           console.log('error submit!!')
           return false
         }
       })
+    },
+    modify () {
+      if (this.tip1 !== '') return
+      const data = {}
+      if (this.ruleForm.name !== '') {
+        data.nickname = this.ruleForm.name
+      }
+      if (this.ruleForm.sex !== '') {
+        data.gender = this.ruleForm.sex
+      }
+      this.$axios.put('/api/auser/current', {
+        nickname: this.ruleForm.name,
+        gender: this.ruleForm.sex
+      }, {
+        header: {
+          'Content-Type': 'application/json' // 如果写成contentType会报错
+        }
+      }).then(res => {
+        this.$message.success('登录成功')
+        this.setCurrentUser(res.data.data.user_info)
+        window.localStorage.setItem('access_token', res.data.data.access_token)
+        this.$router.push('/index')
+      }).catch(error => {
+        this.$message.error('登录失败')
+        console.log(error)
+      }).finally(() => {
+        this.account = ''
+        this.password = ''
+      })
+    },
+    getUserInfo () {
+      this.$axios.get('/api/user/current')
+        .then(res => {
+          console.log('已登录!!!!!!!!!!!!!!!!!!!!111111111')
+          this.setCurrentUser(res.data.data)
+          // this.$notification.info({
+          //   message: '消息',
+          //   description: '已登录账号： ' + res.data.data.nickname,
+          //   duration: 2
+          // })
+        }).catch(() => {
+          this.$notification.warning({
+            message: '警告',
+            description: '未登录或登录过期',
+            duration: 10
+          })
+          this.$message.warning('未登录或登录过期')
+          this.$router.push('/unindex')
+        }).finally(() => {
+          this.setInfo()
+        })
+    },
+    setInfo () {
+      console.log(this.currentUser)
+      this.imgupURL = 'http://thunderclass.mr-lin.site/api/avatars/user/' + this.currentUser.uid
+      if (this.currentUser.school === null) {
+        this.ruleForm.school = '未认证'
+      } else {
+        this.ruleForm.school = this.currentUser.school
+      }
+      if (this.currentUser.school_id === null) {
+        this.ruleForm.studentID = '未认证'
+      } else {
+        this.ruleForm.studentID = this.currentUser.school_id
+      }
+      if (this.currentUser.grade === null) {
+        this.ruleForm.grade = '未导入'
+      } else {
+        this.ruleForm.grade = this.currentUser.grade
+      }
+      if (this.currentUser.class === null) {
+        this.ruleForm.class = '未导入'
+      } else {
+        this.ruleForm.class = this.currentUser.class
+      }
+    },
+    valiName () {
+      if (this.nickname === '') {
+        this.tip1 = ''
+      } else {
+        this.tip1 = ''
+        this.$axios('/api/auth/check/nickname', {
+          params: {
+            nickname: this.ruleForm.name
+          }
+        }).then(res => {
+          if (res.data.status === 0) {
+            this.$message.success('昵称可用')
+            this.tip1 = ''
+          } else if (res.data.status === 1) {
+            this.tip1 = '该昵称已被占用'
+          }
+        }).catch(error => {
+          this.$message.error('验证昵称出错')
+          console.log(error)
+        })
+      }
     }
+  },
+  mounted () {
+    this.getUserInfo()
   },
   components: {
     'my-upload': myUpload
@@ -321,6 +448,11 @@ export default {
   }
   .submitBtn {
     border-radius: 40px;
+  }
+  .tip1, .tip2 {
+    width: 75%;
+    margin: 3px 0;
+    color: red;
   }
   img {
     object-fit: cover;

@@ -1,14 +1,14 @@
 <template>
   <div id="tasks">
     <div id="tasksTitle">
-      <v-icon  class="licon01" type="question-circle"></v-icon>
+      <v-icon type="appstore-o"></v-icon>
       <span>作业情况</span>
     </div>
     <div class="handles">
       <div class="taskstype">
-        <v-button class="typeBtn" type="ghost"
-        :class="{ activeBtn: type === 1 ? true : false}"
-        @click="typeAll()">全部</v-button>
+<!--        <v-button class="typeBtn" type="ghost"-->
+<!--        :class="{ activeBtn: type === 1 ? true : false}"-->
+<!--        @click="typeAll()">全部</v-button>-->
         <v-button  class="typeBtn" type="ghost"
         :class="{ activeBtn: type === 2 ? true : false}"
         @click="typeUnfinish()">未完成</v-button>
@@ -16,9 +16,9 @@
         :class="{ activeBtn: type === 3 ? true : false}"
         @click="typeFinish()">已完成</v-button>
       </div>
-      <div class="search">
-        <input placeholder="搜索" class="searchIn" v-model="searchTask">
-        <v-icon  class="licon01" type="question-circle"></v-icon>
+      <div class="search1">
+<!--        <input placeholder="搜索" class="searchIn" v-model="searchTask">-->
+<!--        <v-icon  class="licon01" type="question-circle"></v-icon>-->
       </div>
     </div>
     <div class="tasksContent">
@@ -31,21 +31,20 @@
       <div id="maintasks">
         <vue-scroll ref="vs">
           <div id="tasksContent01">
-            <div class="tasksItem">
+            <div class="tasksItem"
+                 v-for="item in alltask"
+                 :key="item.id"
+                 v-show="(type === 2 && item.finished === false) || (type === 3 && item.finished === true)">
               <vue-scroll>
-                <div class="tasksItem01"></div>
-              </vue-scroll>
-            </div>
-            <div class="tasksItem">
-              <vue-scroll>
-                <div class="tasksItem01" @click="showTask()">
-                  <div class="taskTitle">9.6 傅里叶级数</div>
-                  <div class="taskMajor">高等数学</div>
-                  <div class="taskInfo">作业要求:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
-                  <div class="taskEnd">
-                    <v-icon type="question-circle"></v-icon>
-                    <div>截止时间： 2020.05.20</div>
-                  </div>
+                <div class="tasksItem01" @click="showTask(item.id)">
+                  <div class="taskTitle">{{item.task_name}}</div>
+                  <div class="taskMajor">满分：{{item.max_score}}</div>
+                  <div class="taskInfo">创建时间： {{item.time_begin}}</div>
+                  <div class="taskInfo">截止时间： {{item.time_excess}}</div>
+<!--                  <div class="taskEnd">-->
+<!--                    <v-icon type="pushpin-o"></v-icon>-->
+<!--                    <div>截止时间： 2020.05.20  2020.05.20</div>-->
+<!--                  </div>-->
                 </div>
               </vue-scroll>
             </div>
@@ -54,11 +53,13 @@
                 <div class="tasksItem01">
                   <div class="taskTitle">9.6 傅里叶级数</div>
                   <div class="taskMajor">高等数学</div>
-                  <div class="taskInfo">作业要求:XXXXXXXXXXXXXXXXXXXXXX</div>
-                  <div class="taskEnd">
-                    <v-icon type="question-circle"></v-icon>
-                    <div>截止时间： 2020.05.20</div>
-                  </div>
+<!--                  <div class="taskInfo">作业要求:XXXXXXXXXXXXXXXXXXXXXX</div>-->
+                  <div class="taskInfo">截止时间： 2020.05.20  2020.05.20</div>
+                  <div class="taskInfo">截止时间： 2020.05.20  2020.05.20</div>
+<!--                  <div class="taskEnd">-->
+<!--                    <v-icon type="question-circle"></v-icon>-->
+<!--                    <div>截止时间： 2020.05.20  2020.05.20</div>-->
+<!--                  </div>-->
                 </div>
               </vue-scroll>
             </div>
@@ -145,15 +146,17 @@ export default {
   name: 'tasks',
   data () {
     return {
-      type: 1,
+      type: 2,
       showFB: false,
-      searchTask: ''
+      searchTask: '',
+      alltask: []
     }
   },
   computed: {
     ...mapState([
       'showPopUp',
-      'popUpType'
+      'popUpType',
+      'currentTask'
     ])
   },
   methods: {
@@ -162,7 +165,8 @@ export default {
       'loginPop',
       'signUpPop',
       'retrievePop',
-      'otherWayPop'
+      'otherWayPop',
+      'setcurrentTask'
     ]),
     typeAll () {
       this.type = 1
@@ -195,9 +199,24 @@ export default {
         200
       )
     },
-    showTask () {
-      this.$message.info('showtask')
+    showTask (id) {
+      this.$message.info(id)
+      this.setcurrentTask(id)
+      this.$router.push('/answer')
+    },
+    getAllTasks () {
+      this.$axios.get('/api/user/current/tasks')
+        .then(res => {
+          console.log('获取课程信息成功')
+          this.alltask = res.data.data.tasks
+        }).catch(error => {
+          this.$message.warning('获取课程信息出错')
+          console.log(error)
+        })
     }
+  },
+  mounted () {
+    this.getAllTasks()
   },
   components: {
   }

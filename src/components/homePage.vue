@@ -13,20 +13,17 @@
         <div class="btn01" @click="pcBtn()">个人中心</div>
         <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
           <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" src="../assets/avatar01.jpg">
+            <img class="avatarI" :src="this.currentUser.avatar">
           </a>
         </v-dropdown>
         <div class="messageShow">
-          <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-          <div class="headerNum" v-show="isCnt99">99+</div>
-          <span class="iconfont messageIcon">&#xe606;</span>
+          <div @click="exit">退出</div>
         </div>
       </div>
     </nav>
     <div id="rightSider" @click="tostudent()">
       <div>教师主页</div>
     </div>
-    <div style="width:100%; height: 60px"></div>
     <div id="hcenter">
       <my-course-center></my-course-center>
     </div>
@@ -36,9 +33,9 @@
     <div id="hcourse">
       <my-brainstorm></my-brainstorm>
     </div>
-    <div id="hfile">
-      <my-file-manager></my-file-manager>
-    </div>
+<!--    <div id="hfile">-->
+<!--      <my-file-manager></my-file-manager>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -48,40 +45,67 @@ import { mapMutations, mapState } from 'vuex'
 import allCourse from '../views/homepage/allCourse.vue'
 import brainstorm from '../views/homepage/brainstorm.vue'
 import courseCenter from '../views/homepage/courseCenter.vue'
-import fileManager from '../views/homepage/fileManager.vue'
+// import fileManager from '../views/homepage/fileManager.vue'
 
 export default {
   name: 'homePage.vue',
   data () {
     return {
-      counter: 5,
-      isCnt99: false,
-      data: [
-        { content: '1st item' },
-        { content: '2nd item' },
-        { content: '3rd item' }
-      ]
+      // data: [
+      //   { content: this.currentUser.nickname },
+      //   { content: this.currentUser.telephone }
+      // ]
     }
   },
   computed: {
     ...mapState([
+      'currentUser'
     ])
   },
   methods: {
     ...mapMutations([
+      'setCurrentUser'
     ]),
     pcBtn () {
       this.$router.push('/pCenter')
     },
     tostudent () {
       this.$router.push('/tindex')
+    },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
+    },
+    getUserInfo () {
+      this.$axios.get('/api/user/current')
+        .then(res => {
+          console.log('已登录')
+          this.setCurrentUser(res.data.data)
+          // this.$notification.info({
+          //   message: '消息',
+          //   description: '已登录账号： ' + res.data.data.nickname,
+          //   duration: 2
+          // })
+        }).catch(() => {
+          this.$notification.warning({
+            message: '警告',
+            description: '未登录或登录过期',
+            duration: 2
+          })
+          this.$message.warning('未登录或登录过期')
+          this.$router.push('/unindex')
+        }).finally(() => {
+        })
     }
+  },
+  mounted () {
+    this.getUserInfo()
   },
   components: {
     'my-all-course': allCourse,
     'my-brainstorm': brainstorm,
-    'my-course-center': courseCenter,
-    'my-file-manager': fileManager
+    'my-course-center': courseCenter
+    // 'my-file-manager': fileManager
   }
 }
 </script>
@@ -104,7 +128,7 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    position: fixed;
+    position: relative;
     top: 0;
     left:0;
     width:100%;
@@ -116,7 +140,7 @@ export default {
     border-bottom: 1px solid lightgrey;
     box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
     background-color: white;
-    z-index: 2020;
+    z-index: 20;
     .navlogo {
       display: flex;
       flex-direction: row;
@@ -151,33 +175,22 @@ export default {
       width: 300px;
       font-size: 16px;
       .messageShow {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        .headerNum{
-          width: 23px;
-          height: 15px;
-          position: absolute;
-          background-color: #f04134;
-          color: white;
-          font-size: 12px;
-          border-radius: 50px;
-          position: relative;
-          left: 100%;
-          top: 0;
-          transform: translate(-50%, -20%);
-          text-align: center;
+        width:50px;
+        height: 35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        >div{
+          cursor: pointer;
+          font-size: 14px;
         }
-        >span.messageIcon {
-          position: relative;
-          left: 0;
-          top: -15px;
-          /*transform: translate(-50%, -50%);*/
-          font-size: 25px;
-          color: #61c7fc;
+        >div:hover {
+          font-size: 15px;
         }
-        >span.messageIcon:hover {
-          color: #2492eb;
+        >div:active {
+          font-size: 14px;
+          text-decoration: underline;
         }
       }
       .btn01{

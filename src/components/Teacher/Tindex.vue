@@ -1,5 +1,11 @@
 <template>
   <div id="Tindex">
+    <div class="none">
+      <input
+        type="file"
+        ref="upload_file"
+        @change="handleFileChange">
+    </div>
     <nav>
       <div class="navlogo">
         <img id="logo" src="../../assets/logotem.jpg"/>
@@ -12,13 +18,11 @@
         <div class="btn01" @click="pcBtn()">个人中心</div>
         <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
           <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" src="../../assets/avatar02.png">
+            <img class="avatarI" :src="currentUser.avatar">
           </a>
         </v-dropdown>
         <div class="messageShow">
-          <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-          <div class="headerNum" v-show="isCnt99">99+</div>
-          <span class="iconfont messageIcon">&#xe606;</span>
+          <div @click="exit()">退出</div>
         </div>
       </div>
     </nav>
@@ -94,140 +98,43 @@
       </div>
     </div>
     <div id="myCourse">
-      <div class="title01">
-        <div>我的课程</div>
-      </div>
-      <div class="tcontent">
-        <vue-scroll>
-          <div class="tcontent1">
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
+      <div class="title01" @click="toggleCreate()"><div>创建课程</div></div>
+      <div class="form" v-show="createCourse">
+        <v-form direction="horizontal" :model="ruleForm" :rules="rules" ref="ruleForm">
+          <v-form-item label="课程名称" :label-col="labelCol" :wrapper-col="wrapperCol" prop="name">
+            <v-input size="large" v-model="ruleForm.name"></v-input>
+          </v-form-item>
+          <v-form-item label="开课时间" :label-col="labelCol" :wrapper-col="wrapperCol">
+            <v-date-picker v-model="ruleForm.startDate"></v-date-picker>
+            <v-time-picker v-model="ruleForm.startTime"></v-time-picker>
+          </v-form-item>
+          <v-form-item label="结课时间" :label-col="labelCol" :wrapper-col="wrapperCol">
+            <v-date-picker v-model="ruleForm.deadDate"></v-date-picker>
+            <v-time-picker v-model="ruleForm.deadTime"></v-time-picker>
+          </v-form-item>
+          <v-form-item label="课程封面" :label-col="labelCol" :wrapper-col="wrapperCol">
+            <div>
+              <div class="Img" v-show="ruleForm.isAvatar">
+                <img :src="imgUrl">
               </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
+              <div class="uploadIcon" @click="clickUpLoad()">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-fujian"></use>
+                </svg>
               </div>
+              <div class="fileName">{{fileTitle}}</div>
             </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-            <div class="titem1">
-              <div class="timgBox">
-                <img class="Img1" src="../../assets/course01.jpg">
-              </div>
-              <div class="tcontext">
-                <div class="ttitle2">国防教育--军事理论</div>
-                <div class="tcollege2">西安交通大学</div>
-              </div>
-            </div>
-          </div>
-        </vue-scroll>
+          </v-form-item>
+          <v-form-item label="课程类型" :label-col="labelCol" :wrapper-col="wrapperCol" prop="public">
+            <v-radio-group v-model="ruleForm.public" :data="[{value: '1', text: '公开课'},{value: '0', text: '非公开课'}]"></v-radio-group>
+          </v-form-item>
+          <v-form-item label="课程简介" :label-col="labelCol" :wrapper-col="wrapperCol" prop="introduce">
+            <v-input v-model="ruleForm.introduce" type="textarea"></v-input>
+          </v-form-item>
+          <v-form-item :wrapper-col="{offset:6, span: 14 }">
+            <v-button type="primary" style="margin-right:10px" @click.prevent="submitForm('ruleForm')">立即创建</v-button>
+          </v-form-item>
+        </v-form>
       </div>
     </div>
   </div>
@@ -236,22 +143,60 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 import courseCenter from '../../views/homepage/courseCenter.vue'
-
+/* Eslit disabled */
+const formdata = new FormData()
 export default {
   name: 'Tindex.vue',
   data () {
     return {
       counter: 5,
       isCnt99: false,
-      data: [
-        { content: '1st item' },
-        { content: '2nd item' },
-        { content: '3rd item' }
-      ]
+      // data: [
+      //   { content: this.currentUser.nickname },
+      //   { content: this.currentUser.telephone }
+      // ],
+      createCourse: false,
+      formdata,
+      ruleForm: {
+        name: '',
+        public: '',
+        introduce: '',
+        deadDate: '',
+        deadTime: '',
+        startDate: '',
+        startTime: '',
+        start: '',
+        end: '',
+        isAvatar: false
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入课程名称'
+        }],
+        introduce: [{
+          required: true,
+          message: '请输入课程简介'
+        }],
+        public: [{
+          required: true,
+          message: '请选择课程类型'
+        }]
+      },
+      labelCol: {
+        span: 6
+      },
+      wrapperCol: {
+        span: 14
+      },
+      imgUrl: '',
+      fileTitle: '',
+      hasFile: false
     }
   },
   computed: {
     ...mapState([
+      'currentUser'
     ])
   },
   methods: {
@@ -262,6 +207,10 @@ export default {
     },
     tostudent () {
       this.$router.push('/index')
+    },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
     },
     totindex () {
       this.$router.push('/tindex')
@@ -289,7 +238,125 @@ export default {
     },
     totdataManage () {
       this.$router.push('/dataManage')
+    },
+    toggleCreate () {
+      this.createCourse = !this.createCourse
+    },
+    clickUpLoad () {
+      this.$refs.upload_file.click()
+    },
+    handleFileChange () {
+      const inputDOM = this.$refs.upload_file
+      const files = inputDOM.files
+      this.uploadFile(files)
+    },
+    uploadFile: function (files) {
+      if (files.length !== 1) {
+        this.$notification.warning({
+          message: '警告',
+          description: '上传文件数量错误',
+          duration: 1
+        })
+      } else {
+        const file = files[0]
+        console.log(file)
+        this.fileTitle = file.name
+        formdata.set('avatar', file)
+        this.ruleForm.isAvatar = true
+        this.imgUrl = window.URL.createObjectURL(file)
+      }
+    },
+    getTime () {
+      if (this.ruleForm.deadDate === '') {
+        this.$message.error('请选择结束日期')
+        return false
+      } else if (this.ruleForm.deadTime === '') {
+        this.$message.error('请选择结束时间')
+        return false
+      } else if (this.ruleForm.startTime === '') {
+        this.$message.error('请选择开始时间')
+        return false
+      } else if (this.ruleForm.deadDate === '') {
+        this.$message.error('请选择开始日期')
+        return false
+      }
+      this.ruleForm.start = this.ruleForm.startDate.replace(/-/g, '/') + ' ' + this.ruleForm.startTime
+      this.ruleForm.end = this.ruleForm.deadDate.replace(/-/g, '/') + ' ' + this.ruleForm.deadTime
+      this.ruleForm.start = (new Date(this.ruleForm.start).getTime()) / 1000
+      this.ruleForm.end = (new Date(this.ruleForm.end).getTime()) / 1000
+      if (this.ruleForm.end - this.ruleForm.start <= 0) {
+        this.$message.error('结束时间应该在开始时间之后')
+        return false
+      }
+      return true
+    },
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          const time = this.getTime()
+          if (time === false) return false
+          if (this.ruleForm.isAvatar === false) {
+            this.$message.warning('请上传课程封面后提交')
+            return false
+          }
+          formdata.set('name', this.ruleForm.name)
+          formdata.set('public', this.ruleForm.public)
+          formdata.set('introduce', this.ruleForm.introduce)
+          formdata.set('start_at', this.ruleForm.start)
+          formdata.set('end_at', this.ruleForm.end)
+          this.$axios.post('/api/course/course_list', formdata, {
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(res => {
+            this.$message.success('创建成功')
+            this.createCourse = false
+          }).catch(error => {
+            this.$message.error('创建失败')
+            console.log(error)
+          }).finally(() => {
+            const temp = {
+              name: ' ',
+              public: ' ',
+              introduce: ' ',
+              deadDate: '',
+              deadTime: '',
+              startDate: '',
+              startTime: '',
+              start: '',
+              end: '',
+              isAvatar: false
+            }
+            this.ruleForm = temp
+          })
+        } else {
+          this.$message.error('请正确填写后提交！')
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    getUserInfo () {
+      this.$axios.get('/api/user/current')
+        .then(res => {
+          console.log('已登录!!!!!11')
+          // this.$notification.info({
+          //   message: '消息',
+          //   description: '已登录账号： ' + res.data.data.nickname,
+          //   duration: 2
+          // })
+        }).catch(() => {
+          this.$notification.warning({
+            message: '警告',
+            description: '未登录或登录过期',
+            duration: 2
+          })
+        }).finally(() => {
+        })
     }
+  },
+  mounted () {
+    this.getUserInfo()
   },
   components: {
     'my-course-center': courseCenter
@@ -363,33 +430,22 @@ export default {
       width: 300px;
       font-size: 16px;
       .messageShow {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        .headerNum{
-          width: 23px;
-          height: 15px;
-          position: absolute;
-          background-color: #f04134;
-          color: white;
-          font-size: 12px;
-          border-radius: 50px;
-          position: relative;
-          left: 100%;
-          top: 0;
-          transform: translate(-50%, -20%);
-          text-align: center;
+        width:50px;
+        height: 35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        >div{
+          cursor: pointer;
+          font-size: 14px;
         }
-        >span.messageIcon {
-          position: relative;
-          left: 0;
-          top: -15px;
-          /*transform: translate(-50%, -50%);*/
-          font-size: 25px;
-          color: #61c7fc;
+        >div:hover {
+          font-size: 15px;
         }
-        >span.messageIcon:hover {
-          color: #2492eb;
+        >div:active {
+          font-size: 14px;
+          text-decoration: underline;
         }
       }
       .btn01{
@@ -566,89 +622,82 @@ export default {
     width: 70%;
     min-width: 700px;
     max-width: 800px;
-    min-height: 400px;
+    min-height: 60px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     margin: 20px 0 50px 0;
+    box-shadow: 1px 1px 5px 1px #e5e5e5;
+    .title01:hover {
+      font-size: 16px;
+    }
+    .title01:active {
+      box-shadow: -1px -1px 3px 1px rgba(180,180,180,0.56);
+    }
   }
   .title01 {
-    width: 100%;
-    height: 30px;
+    width: 150px;
+    height: 40px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    border-radius: 40px;
+    background-color: #108ee9;
+    box-shadow: 1px 1px 3px 1px rgba(180,180,180,0.56);
+    margin: 15px;
+    cursor: pointer;
     >div {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
-      position: relative;
-      left: 25px;
+      color: white;
     }
   }
-  .tcontent {
+  .form{
     width: 100%;
-    height: 350px;
-    /*background-color: #83bafc;*/
-    position: relative;
-    /*top: 40px;*/
-    margin: 10px 0;
   }
 
-  .tcontent1 {
+  .imgBox {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 50%;
+
+    > img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+  .none {
+    display: none;
+  }
+  .Img {
     width: 100%;
-    /*height: 100%;*/
+    img {
+      max-height: 200px;
+      max-width: 90%;
+    }
+  }
+  .uploadIcon {
+    width: 20px;
+    height: 20px;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    .titem1 {
-      cursor: pointer;
-      width: 30%;
-      height: 160px;
-      margin: 7.5px 1.5%;
-      background-color: white;
-      border-radius: 20px;
-      box-shadow: 15px 0px #f5f5f5;
-      .timgBox {
-        width: 100%;
-        height: 70%;
-        border-top-right-radius: 20px;
-        border-top-left-radius: 20px;
-        .Img1 {
-          width: 100%;
-          height: 100%;
-          border-top-right-radius: 20px;
-          border-top-left-radius: 20px;
-        }
-      }
-      .tcontext {
-        height: 30%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: flex-start;
-        >div{
-          position: relative;
-          left: 5px;
-        }
-        .ttitle2 {
-          font-size: 14px;
-          font-weight: 600;
-        }
-        .tcollege {
-          font-size: 13px;
-        }
-      }
-    }
-    .titem1:hover {
-      box-shadow: 2px 0px 10px  rgba(213,213,213,0.6);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+    cursor: pointer;
+    svg {
+      width: 100%;
+      height: 100%;
     }
   }
-
+  .fileName {
+    width: 90%;
+    font-size: 13px;
+    margin: 5px 0;
+  }
   img {
     object-fit: cover;
   }

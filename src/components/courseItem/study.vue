@@ -1,23 +1,23 @@
 <template>
   <div id="study">
-    <div id="preStudy">
-      <div class="pre01">
-        <div>上次学习到</div>
-      </div>
-      <div class="pre02">
-        <div class="pre02Icon">
-          <v-icon type="play-circle"></v-icon>
-        </div>
-        <div class="pre02Title">
-          <div>第一章 秃头学的前世今生</div>
-        </div>
-      </div>
-      <div class="pre03" @click="openVideo('1')">
-        <div>继续学习</div>
-      </div>
-    </div>
+<!--    <div id="preStudy">-->
+<!--      <div class="pre01">-->
+<!--        <div>上次学习到</div>-->
+<!--      </div>-->
+<!--      <div class="pre02">-->
+<!--        <div class="pre02Icon">-->
+<!--          <v-icon type="play-circle"></v-icon>-->
+<!--        </div>-->
+<!--        <div class="pre02Title">-->
+<!--          <div>第一章 秃头学的前世今生</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="pre03" @click="openVideo('1')">-->
+<!--        <div>继续学习</div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div id="mune01">
-      <div class="studyItem01">
+      <div class="studyItem01" v-for="(item, index) in courseVideo" :key="index">
         <div class="item01Main" @click="chooseChater('one')">
           <div class="chapter01">
             <div>
@@ -263,6 +263,7 @@ export default {
   },
   computed: {
     ...mapState([
+      'courseVideo'
     ])
   },
   methods: {
@@ -289,7 +290,7 @@ export default {
 
 <style scoped lang="less">
 #study {
-  /*margin: 20px 0;*/
+  margin-top: 20px;
   position: relative;
   /*height: 700px;*/
   width: 70%;

@@ -36,6 +36,19 @@
         </div>
       </div>
     </div>
+    <div id="four4">
+      <div id="four04Title">
+        <div>发布评论</div>
+      </div>
+      <div id="four04Input">
+        <v-input class="InArea" type="textarea" v-model="content"></v-input>
+      </div>
+      <div id="BtnBox">
+        <div @click="publishDiscuss()">
+          <div>发布</div>
+        </div>
+      </div>
+    </div>
     <div id="focNum">
       <div>999+ 条回答</div>
     </div>
@@ -681,15 +694,18 @@ export default {
       isCommit: false,
       loading: false,
       endLoading: false,
-      commitText: ''
+      commitText: '',
+      content: ''
     }
   },
   computed: {
     ...mapState([
+      'courseDiscussID'
     ])
   },
   methods: {
     ...mapMutations([
+      'setcourseDiscussID'
     ]),
     toBack () {
       this.$router.go(-1)
@@ -724,6 +740,35 @@ export default {
         setTimeout(() => {
           this.loading = false
         }, 1000)
+      }
+    },
+    publishDiscuss () {
+      if (this.content === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入评论内容',
+          duration: 2
+        })
+      } else {
+        this.$axios.post('/api/course/' + this.currentCourse + '/discussions/' + this.courseDiscussID,
+          {
+            content: this.content
+          }, {
+            header: {
+              'Content-Type': 'application/json' // 如果写成contentType会报错
+            }
+          }).then(res => {
+          this.$notification.success({
+            message: '成功',
+            description: '发布评论内容',
+            duration: 1
+          })
+        }).catch(error => {
+          this.$message.error('发布评论内容失败')
+          console.log(error)
+        }).finally(() => {
+          this.content = ''
+        })
       }
     }
   },
@@ -794,6 +839,85 @@ export default {
       font-weight: 500;
     }
   }
+  #four4 {
+    width: 100%;
+    min-height: 350px;
+    /*background-color: #83bafc;*/
+    margin: 20px 0;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  #four04Title {
+    width: 100%;
+    height: 40px;
+    background-color: #f4f4f4;
+    box-shadow: 1px 1px 5px 1px rgba(150,150,150,0.2),
+    -1px 1px 5px 1px rgba(150,150,150,0.2);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    >div {
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 20px;
+    }
+  }
+  #four04Input {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .InArea {
+      width: 100%;
+      height: 100%;
+      resize: none;
+    }
+  }
+  #BtnBox {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    >div {
+      cursor: pointer;
+      width: 170px;
+      height: 35px;
+      border-radius: 40px;
+      background-color: #81b8fa;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 1px 1px 3px 1px rgba(150,150,150,0.2);
+      >div {
+        color: white;
+        font-size: 15px;
+      }
+    }
+    >div:hover {
+      >div {
+        font-size: 16px;
+      }
+    }
+    >div:active {
+      >div {
+        font-size: 15px;
+      }
+      box-shadow: -1px -1px 3px 1px rgba(150,150,150,0.2);
+    }
+  }
+
   .oneUser {
     width: 90%;
     height: 40px;

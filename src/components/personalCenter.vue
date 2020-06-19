@@ -15,14 +15,11 @@
             <div class="btn01 tabActive">个人中心</div>
             <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
               <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-                <img class="avatarI" src="../assets/avatar01.jpg">
+                <img class="avatarI" :src="this.currentUser.avatar">
               </a>
             </v-dropdown>
             <div class="messageShow">
-              <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-              <div class="headerNum" v-show="isCnt99">99+</div>
-              <span class="iconfont messageIcon">&#xe606;</span>
-              <!--            <v-icon class="messageIcon" type="message"></v-icon>-->
+              <div @click="exit">退出</div>
             </div>
           </div>
         </nav>
@@ -121,15 +118,14 @@ export default {
       confirmResult: {
         show: false,
         type: 1
-      },
-      counter: 5,
-      isCnt99: false
+      }
     }
   },
   computed: {
     ...mapState([
       'showPopUp01',
-      'showPopUp02'
+      'showPopUp02',
+      'currentUser'
     ])
   },
   methods: {
@@ -137,10 +133,15 @@ export default {
       'closePop01',
       'openPop01',
       'closePop02',
-      'openPop02'
+      'openPop02',
+      'setCurrentUser'
     ]),
     courseBtn () {
       this.$router.push('/courses')
+    },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
     },
     itemClick (data) {
       console.log(data)
@@ -155,7 +156,36 @@ export default {
       setTimeout(() => {
         that.confirmResult.show = false
       }, 2000)
+    },
+    getUserInfo () {
+      this.$axios.get('/api/user/current')
+        .then(res => {
+          console.log('已登录!!!!!!!!!!!!!!!!!!!!111111111')
+          this.setCurrentUser(res.data.data)
+          // this.$notification.info({
+          //   message: '消息',
+          //   description: '已登录账号： ' + res.data.data.nickname,
+          //   duration: 2
+          // })
+          if (res.data.data.school === null) {
+            this.isComfirmed = false
+          } else {
+            this.isComfirmed = true
+          }
+        }).catch(() => {
+          this.$notification.warning({
+            message: '警告',
+            description: '未登录或登录过期',
+            duration: 10
+          })
+          this.$message.warning('未登录或登录过期')
+          this.$router.push('/unindex')
+        }).finally(() => {
+        })
     }
+  },
+  mounted () {
+    this.getUserInfo()
   },
   components: {
     'my-course': Course,
@@ -311,33 +341,22 @@ export default {
       width: 250px;
       font-size: 16px;
       .messageShow {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        .headerNum{
-          width: 23px;
-          height: 15px;
-          position: absolute;
-          background-color: #f04134;
-          color: white;
-          font-size: 12px;
-          border-radius: 50px;
-          position: relative;
-          left: 100%;
-          top: 0;
-          transform: translate(-50%, -20%);
-          text-align: center;
+        width:50px;
+        height: 35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        >div{
+          cursor: pointer;
+          font-size: 14px;
         }
-        >span.messageIcon {
-          position: relative;
-          left: 0;
-          top: -15px;
-          /*transform: translate(-50%, -50%);*/
-          font-size: 25px;
-          color: whitesmoke;
+        >div:hover {
+          font-size: 15px;
         }
-        >span.messageIcon:hover {
-          color: white;
+        >div:active {
+          font-size: 14px;
+          text-decoration: underline;
         }
       }
       .btn01{
@@ -402,7 +421,7 @@ export default {
   }
   .modify {
     position: absolute;
-    top: 0;
+    top: 120px;
     left: 0;
     /*transform: translate(-50%, -35%);*/
     /*display: flex;*/
@@ -415,7 +434,7 @@ export default {
     /*border-radius: 4px;*/
     /*box-shadow: 0px 2px 10px 1px rgba(150,150,150,0.51);*/
     width: 100%;
-    height: 1000px;
+    height: 800px;
   }
   .confirm {
     z-index: 2001;

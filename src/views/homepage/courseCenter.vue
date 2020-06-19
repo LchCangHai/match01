@@ -2,7 +2,7 @@
   <div id="hcourse1">
     <div class="oneTitle">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-tubiao-"></use>
+        <use xlink:href="#icon-kechengguanli"></use>
       </svg>
 <!--      <span class="iconfont">&#xe61f;</span>-->
       <span>课程中心</span>
@@ -11,15 +11,15 @@
       <v-carousel vertical
       autoplay
       dots="outside">
-        <v-carousel-item>
+        <v-carousel-item v-for="item in allcourse" :key="id">
           <div class="demo-carousel oneItem">
             <div class="oneContent">
               <div class="onepanel1">
                 <div class="oneImg">
-                  <img class="Img1" width="100%" src="../../assets/coursecenter1.png">
+                  <img class="Img1" width="100%" :src="item.avatar">
                 </div>
                 <div class="oneContext">
-                  <div class="context1">今天你代码打完了吗？？</div>
+                  <div class="context1">{{item.name}}</div>
                   <div class="context2">Are we done with the code</div>
                 </div>
               </div>
@@ -31,17 +31,14 @@
                 </div>
                 <div class="ttitle">
                   <div class="shuxian"></div>
-                  <div>林炜同学呕心沥血谋来的福利</div>
+                  <div>{{item.teacher_name}} 老师最新的课程</div>
                 </div>
                 <div class="tcontext">
-                  让熬夜成为现实。秃头成为奢
-                  侈，想像林炜同学一样996似
-                  呼吸一般轻松吗，开来看看吧
-                  哦吼吼吼吼
+                  {{item.introduce}}
                 </div>
                 <div class="ttime">
                   <div>开课时间</div>
-                  <div>2020.6.1-2020.6.20</div>
+                  <div>{{item.start_at}}</div>
                 </div>
               </div>
             </div>
@@ -167,6 +164,7 @@ export default {
   name: 'courseCenter.vue',
   data () {
     return {
+      allcourse: []
     }
   },
   computed: {
@@ -175,7 +173,22 @@ export default {
   },
   methods: {
     ...mapMutations([
-    ])
+    ]),
+    getAllCourse () {
+      this.$axios.get('/api/course/recommend', {
+        params: 6
+      })
+        .then(res => {
+          console.log('获取课程信息成功')
+          this.allcourse = res.data.data.courses
+        }).catch(error => {
+          this.$message.warning('获取课程信息出错')
+          console.log(error)
+        })
+    }
+  },
+  mounted () {
+    this.getAllCourse()
   },
   components: {
   }

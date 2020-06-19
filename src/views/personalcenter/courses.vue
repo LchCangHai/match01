@@ -1,22 +1,47 @@
 <template>
   <div id="courses">
     <div id="courseTitle">
-      <v-icon  class="licon01" type="question-circle"></v-icon>
+      <v-icon type="appstore"></v-icon>
       <span>在线课程</span>
     </div>
     <div id="panel">
       <div
-        :class="{ beactive1: courseType === 1 ? true : false}"
-        @click="publicCourse()"
-      >公开课</div>
-      <div
         :class="{ beactive1: courseType === 2 ? true : false}"
         @click="inCourse()"
+      >公开课</div>
+      <div
+        :class="{ beactive1: courseType === 1 ? true : false}"
+        @click="publicCourse()"
       >导入课</div>
     </div>
     <div class="content1 publicCourse" v-show="courseType == 1 ? true : false">
       <vue-scroll>
         <div class="content2">
+          <div class="courseItem"
+               v-for="item in allcourse"
+               :key="item.id" @click="toCourse(item.id)">
+            <div class="course02">
+              <div class="info02">
+                <div class="courseImg02">
+                  <img class="img02" :src="item.avatar">
+                </div>
+                <div class="courseinfo02">
+                  <div class="courseTitle02">{{item.name}}</div>
+                  <div class="courseCollege02">{{item.teacher_name}}</div>
+                  <div class="courseRate02">{{item.stat_at}} 开始</div>
+                  <div class="courseEnd02">{{item.end_at}} 截止</div>
+                </div>
+              </div>
+              <div class="handle02">
+                <div class="handleitem">
+                  <div class="icon02">
+                    <v-icon class="infoicon" type="caret-right"></v-icon>
+                  </div>
+                  <div @click="cinfo(item.name, item.introduce)">课程介绍</div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="courseItem">
             <div class="course02">
               <div class="info02">
@@ -84,17 +109,20 @@
     <div class="content1 importCourse" v-show="courseType == 2 ? true : false">
       <vue-scroll>
         <div class="content2">
-          <div class="courseItem">
+          <div class="courseItem"
+               v-for="item in currentUser.courses"
+               :key="item.id"
+               @click="toCourse(item.id)">
             <div class="course02">
               <div class="info02">
                 <div class="courseImg02">
-                  <img class="img02" src="../../assets/course01.jpg">
+                  <img class="img02" :src="item.avatar">
                 </div>
                 <div class="courseinfo02">
-                  <div class="courseTitle02">国防教育-军事理论</div>
-                  <div class="courseCollege02">福州大学</div>
-                  <div class="courseRate02">已完成100%</div>
-                  <div class="courseEnd02">2020年6月20日 截止</div>
+                  <div class="courseTitle02">{{item.name}}</div>
+                  <div class="courseCollege02">{{item.teacher_name}}</div>
+                  <div class="courseRate02">{{item.stat_at}} 开始</div>
+                  <div class="courseEnd02">{{item.end_at}} 截止</div>
                 </div>
               </div>
               <div class="handle02">
@@ -102,15 +130,8 @@
                   <div class="icon02">
                     <v-icon class="infoicon" type="caret-right"></v-icon>
                   </div>
-                  <div>课程介绍</div>
+                  <div @click="cinfo(item.name, item.introduce)">课程介绍</div>
                 </div>
-                <div class="handleitem">
-                  <div class="icon02">
-                    <v-icon class="exiticon" type="caret-right"></v-icon>
-                  </div>
-                  <div>退出课程</div>
-                </div>
-
               </div>
             </div>
           </div>
@@ -133,12 +154,6 @@
                 </div>
                 <div>课程介绍</div>
               </div>
-              <div class="handleitem">
-                <div class="icon02">
-                  <v-icon class="exiticon" type="caret-right"></v-icon>
-                </div>
-                <div>退出课程</div>
-              </div>
 
             </div>
           </div>
@@ -159,13 +174,16 @@ export default {
   name: 'courses',
   data () {
     return {
-      courseType: 1
+      courseType: 2,
+      allcourse: []
     }
   },
   computed: {
     ...mapState([
       'showPopUp',
-      'popUpType'
+      'popUpType',
+      'currentUser',
+      'currentCourse'
     ])
   },
   methods: {
@@ -174,14 +192,64 @@ export default {
       'loginPop',
       'signUpPop',
       'retrievePop',
-      'otherWayPop'
+      'otherWayPop',
+      'setCurrentUser',
+      'setcurrentCourse'
     ]),
     publicCourse () {
       this.courseType = 1
     },
     inCourse () {
       this.courseType = 2
+    },
+    cinfo (name, introduce) {
+      this.$notification.info({
+        message: name,
+        description: introduce
+      })
+    },
+    binfo (name, id) {},
+    getAllCourse () {
+      this.$axios.get('/api/course/course_list', {
+        params: {
+          teacher_id: this.currentUser.uid
+        }
+      })
+        .then(res => {
+          console.log('获取课程信息成功')
+          this.allcourse = res.data.data.courses
+        }).catch(error => {
+          this.$message.warning('获取课程信息出错')
+          console.log(error)
+        })
+    },
+    toCourse (id) {
+      this.setcurrentCourse(id)
+      this.$router.push('/courses')
+    },
+    getUserInfo () {
+      this.$axios.get('/api/user/current')
+        .then(res => {
+          console.log('已登录')
+          this.setCurrentUser(res.data.data)
+          // this.$notification.info({
+          //   message: '消息',
+          //   description: '已登录账号： ' + res.data.data.nickname,
+          //   duration: 2
+          // })
+        }).catch(() => {
+          this.$notification.warning({
+            message: '警告',
+            description: '未登录或登录过期',
+            duration: 2
+          })
+        }).finally(() => {
+        })
     }
+  },
+  mounted () {
+    this.getUserInfo()
+    this.getAllCourse()
   },
   components: {
     'my-course': Course

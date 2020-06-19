@@ -16,20 +16,18 @@
                 </div>
               </div>
               <div class="oneavatarBox">
-                <img class="onavatarImg" src="../../assets/avatar02.png">
+                <img class="onavatarImg" :src="courseInfo.teacher.avatar">
               </div>
               <div class="oneName">
-                <div>林炜</div>
+                <div>{{courseInfo.teacher.nickname}}</div>
               </div>
               <div class="oneCollege">
-                <div>所属院系：秃顶研究院</div>
+                <div>所属院系：{{courseInfo.teacher.school}}
+                <span v-show="courseInfo.teacher.shool === null">未认证</span></div>
               </div>
               <div class="oneIntro">
                 <div>个人简介</div>
-                <div>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+                <div>暂无</div>
               </div>
             </div>
           </vue-scroll>
@@ -48,25 +46,26 @@
                 </div>
               </div>
               <div class="one2Term">
-                <div class="one2infolab">所属学期：</div>
-                <div class="one2infolab">2019-2020 第二学期</div>
+                <div class="one2infolab">开始时间：</div>
+                <div class="one2infolab">{{courseInfo.stat_at}}</div>
               </div>
-              <div class="one2Info">
-                <div class="one2infolab">总学时：</div>
-                <div class="one2infoVal">48</div>
-                <div class="one2infolab">课程学分：</div>
-                <div class="one2infoVal">2.0</div>
+              <div class="one2Term">
+                <div class="one2infolab">结束时间：</div>
+                <div class="one2infolab">{{courseInfo.end_at}}</div>
               </div>
-              <div class="one2Time">
-                <div class="one2infolab">开课时间：</div>
-                <div class="one2infoVal">12周-16周</div>
-              </div>
+<!--              <div class="one2Info">-->
+<!--                <div class="one2infolab">总学时：</div>-->
+<!--                <div class="one2infoVal">48</div>-->
+<!--                <div class="one2infolab">课程学分：</div>-->
+<!--                <div class="one2infoVal">2.0</div>-->
+<!--              </div>-->
+<!--              <div class="one2Time">-->
+<!--                <div class="one2infolab">开课时间：</div>-->
+<!--                <div class="one2infoVal">12周-16周</div>-->
+<!--              </div>-->
               <div class="one2Breif">
                 <div class="one2infolab">简介：</div>
-                <div>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+                <div>{{courseInfo.introduce}}</div>
               </div>
             </div>
           </vue-scroll>
@@ -88,11 +87,13 @@
                   课程通知
                 </div>
               </div>
-              <div class="one3item" @click="openPop()">
+              <div class="one3item"
+                   @click="openPop(index)"
+                   v-for="(item, index) in courseInform"
+                   :key="index">
                 <div class="one3">
-                  <div class="one3icon" v-show="false"></div>
-                  <div class="one3iconed" v-show="true"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
+                  <div class="one3icon"></div>
+                  <div class="one3info">{{item.title}}</div>
                 </div>
                 <div class="one3time">2020.6.1</div>
               </div>
@@ -177,9 +178,9 @@
                   课程安排
                 </div>
               </div>
-              <div class="one4item">
+              <div class="one4item" v-for="(item,index) in courseFile" :key="index">
               <div>
-                第一周 秃头学的前世今生
+<!--                {{item.name}}-->
               </div>
             </div>
               <div class="one4item">
@@ -237,7 +238,10 @@ export default {
   computed: {
     ...mapState([
       'coursePop',
-      'coursePopType'
+      'coursePopType',
+      'courseInfo',
+      'courseInform',
+      'courseFile'
     ])
   },
   methods: {

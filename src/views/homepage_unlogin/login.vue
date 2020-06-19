@@ -4,8 +4,8 @@
       <div id="title">登录</div>
       <div class="hrr"></div>
       <div id="content">
-        <v-input class="loginIn" placeholder="账号"></v-input>
-        <v-input class="loginIn" type="password" placeholder="密码"></v-input>
+        <v-input class="loginIn" placeholder="昵称" v-model="account"></v-input>
+        <v-input class="loginIn" type="password" placeholder="密码" v-model="password"></v-input>
         <v-button class="loginBtn" type="primary" @click="login()">立即登录</v-button>
         <div id="tips">
           <span @click="retrievePop()">忘记密码</span>
@@ -23,13 +23,15 @@ export default {
   name: 'login.vue',
   data () {
     return {
-      // account:
+      account: '',
+      password: ''
     }
   },
   computed: {
     ...mapState([
       'showPopUp',
-      'popUpType'
+      'popUpType',
+      'currentUser'
     ])
   },
   methods: {
@@ -38,9 +40,53 @@ export default {
       'loginPop',
       'signUpPop',
       'retrievePop',
-      'otherWayPop'
+      'otherWayPop',
+      'setCurrentUser'
     ]),
     login () {
+      if (this.account === '' && this.password === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入内容',
+          duration: 1
+        })
+        return
+      } else if (this.account === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入昵称',
+          duration: 1
+        })
+        // this.tip1 = '请输入昵称'
+        return
+      } else if (this.password === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入密码',
+          duration: 1
+        })
+        return
+      }
+      this.$axios.post('/api/auth/login', {
+        method: 0,
+        username: this.account,
+        password: this.password
+      }, {
+        header: {
+          'Content-Type': 'application/json' // 如果写成contentType会报错
+        }
+      }).then(res => {
+        this.$message.success('登录成功')
+        this.setCurrentUser(res.data.data.user_info)
+        window.localStorage.setItem('access_token', res.data.data.access_token)
+        this.$router.push('/index')
+      }).catch(error => {
+        this.$message.error('登录失败')
+        console.log(error)
+      }).finally(() => {
+        this.account = ''
+        this.password = ''
+      })
     }
   }
 }
@@ -50,8 +96,10 @@ export default {
   #container02 {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    width: 100%;
+    height: 285px;
   }
 
   #closeC {

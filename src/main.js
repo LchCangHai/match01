@@ -21,10 +21,11 @@ require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 
 Vue.prototype.$axios = axios
-// axios.defaults.baseURL = '/foo'
-axios.defaults.withCredentials = true
+axios.defaults.baseURL = '/foo'
+// axios.defaults.withCredentials = true
 axios.interceptors.request.use(config => {
-  config.headers.token = window.localStorage.getItem('token')
+  config.headers.Authorization = window.localStorage.getItem('access_token')
+  // config.headers.refresh_token = window.localStorage.getItem('refresh_token')
   return config
 })
 

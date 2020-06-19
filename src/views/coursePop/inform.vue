@@ -29,7 +29,7 @@
       </vue-scroll>
     </div>
     <div id="cP01Btn">
-      <v-button class="Btn03" type="primary" size="large">确认收到</v-button>
+      <v-button class="Btn03" type="primary" size="large">确认</v-button>
     </div>
   </div>
 </template>

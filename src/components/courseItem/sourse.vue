@@ -1,142 +1,364 @@
 <template>
   <div id="sourse">
-    <div id="fiveNav">
-      <div class="three1icon">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-ziyuan"></use>
-        </svg>
-      </div>
-      <div class="three1title">资源管理</div>
+    <div>
+      <v-button @click="changetype(1)">现用版</v-button>
+      <v-button @click="changetype(2)">待开发版</v-button>
     </div>
-    <div id="fivebody">
-      <div id="fivemenu">
-        <vue-scroll>
-          <div id="fivemenu1">
-            <div class="fiveItem1">
-              <div class="fiveItem1Main">
-                <div class="Main1"
-                     :class="{ acitveItem1: courseId === '1' ? true : false }"
-                @click="setCourseId('1')">
-                  <div>
-                    <div>第一节 秃头资源</div>
+    <div id="old" v-show="type === 2">
+      <div id="fiveNav">
+        <div class="three1icon">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-ziyuan"></use>
+          </svg>
+        </div>
+        <div class="three1title">资源管理</div>
+      </div>
+      <div id="fivebody">
+        <div id="fivemenu">
+          <vue-scroll>
+            <div id="fivemenu1">
+              <div class="fiveItem1">
+                <div class="fiveItem1Main">
+                  <div class="Main1"
+                       :class="{ acitveItem1: courseId === '1' ? true : false }"
+                       @click="setCourseId('1')">
+                    <div>
+                      <div>第一节 秃头资源</div>
+                    </div>
+                    <div>
+                      <v-icon class="item2Icon" type="right"
+                              :class="{ choosed: courseId === '1' ? true : false}"></v-icon>
+                    </div>
                   </div>
-                  <div>
-                    <v-icon class="item2Icon" type="right"
-                            :class="{ choosed: courseId === '1' ? true : false}"></v-icon>
+                </div>
+                <div class="fiveItem1Chlid"
+                     v-show="courseId === '1' ? true : false">
+                  <div class="fiveItem2">
+                    <div class="fiveItem2Main">
+                      <div class="Main2"
+                           @click="setChapterId('1')">
+                        <div>
+                          <div>
+                            1.1 林炜秃头史
+                          </div>
+                        </div>
+                        <div>
+                          <v-icon class="item2Icon" type="right"
+                                  :class="{ choosed: chapterId === '1' ? true : false}"></v-icon>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fiveItem2Child"
+                         v-show="chapterId === '1' ? true : false">
+                      <div class="fiveItem3">
+                        <div class="Main3">
+                          <div>
+                            <div>1.林炜秃头史</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fiveItem3">
+                        <div class="Main3">
+                          <div>
+                            <div>2.林炜秃头后获取的成就</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fiveItem3">
+                        <div class="Main3">
+                          <div>
+                            <div>3.林炜秃头后美照</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  <div class="fiveItem2"></div>
                 </div>
               </div>
-              <div class="fiveItem1Chlid"
-              v-show="courseId === '1' ? true : false">
-                <div class="fiveItem2">
-                  <div class="fiveItem2Main">
-                    <div class="Main2"
-                         @click="setChapterId('1')">
-                      <div>
-                        <div>
-                          1.1 林炜秃头史
-                        </div>
-                      </div>
-                      <div>
-                        <v-icon class="item2Icon" type="right"
-                                :class="{ choosed: chapterId === '1' ? true : false}"></v-icon>
-                      </div>
+              <div class="fiveItem1">
+                <div class="fiveItem1Main">
+                  <div class="Main1"
+                       :class="{ acitveItem1: courseId === '2' ? true : false }"
+                       @click="setCourseId('2')">
+                    <div>
+                      <div>第一节 秃头资源</div>
                     </div>
-                  </div>
-                  <div class="fiveItem2Child"
-                  v-show="chapterId === '1' ? true : false">
-                    <div class="fiveItem3">
-                      <div class="Main3">
-                        <div>
-                          <div>1.林炜秃头史</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="fiveItem3">
-                      <div class="Main3">
-                        <div>
-                          <div>2.林炜秃头后获取的成就</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="fiveItem3">
-                      <div class="Main3">
-                        <div>
-                          <div>3.林炜秃头后美照</div>
-                        </div>
-                      </div>
+                    <div>
+                      <v-icon class="item2Icon" type="right"
+                              :class="{ choosed: courseId === '2' ? true : false}"></v-icon>
                     </div>
                   </div>
                 </div>
-                <div class="fiveItem2"></div>
+                <div class="fiveItem1Chlid"
+                     v-show="courseId === '2' ? true : false">
+                  <div class="fiveItem2">
+                    <div class="fiveItem2Main">
+                      <div class="Main2"
+                           @click="setChapterId('2')">
+                        <div>
+                          <div>
+                            1.1 林炜秃头史
+                          </div>
+                        </div>
+                        <div>
+                          <v-icon class="item2Icon" type="right"
+                                  :class="{ choosed: chapterId === '2' ? true : false}"></v-icon>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fiveItem2Child"
+                         v-show="chapterId === '2' ? true : false">
+                      <div class="fiveItem3">
+                        <div class="Main3">
+                          <div>
+                            <div>1.林炜秃头史</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fiveItem3">
+                        <div class="Main3">
+                          <div>
+                            <div>2.林炜秃头后获取的成就</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="fiveItem3">
+                        <div class="Main3">
+                          <div>
+                            <div>3.林炜秃头后美照</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fiveItem2"></div>
+                </div>
               </div>
             </div>
-            <div class="fiveItem1">
-              <div class="fiveItem1Main">
-                <div class="Main1"
-                     :class="{ acitveItem1: courseId === '2' ? true : false }"
-                     @click="setCourseId('2')">
-                  <div>
-                    <div>第一节 秃头资源</div>
-                  </div>
-                  <div>
-                    <v-icon class="item2Icon" type="right"
-                            :class="{ choosed: courseId === '2' ? true : false}"></v-icon>
-                  </div>
-                </div>
+          </vue-scroll>
+        </div>
+        <div id="fiveSourse">
+          <div class="sourseContent"></div>
+          <div class="progress">
+            <v-progress-line :percent="50" :stroke-width="7" status="active"></v-progress-line>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="new" v-show="type === 1">
+      <div id="mune01">
+        <div class="studyItem01" v-for="(item, index) in courseFile" :key="index">
+          <div class="item01Main" @click="chooseChater('one')">
+            <div class="chapter01">
+              <div>
+                <v-icon type="folder"></v-icon>
               </div>
-              <div class="fiveItem1Chlid"
-                   v-show="courseId === '2' ? true : false">
-                <div class="fiveItem2">
-                  <div class="fiveItem2Main">
-                    <div class="Main2"
-                         @click="setChapterId('2')">
-                      <div>
-                        <div>
-                          1.1 林炜秃头史
-                        </div>
-                      </div>
-                      <div>
-                        <v-icon class="item2Icon" type="right"
-                                :class="{ choosed: chapterId === '2' ? true : false}"></v-icon>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="fiveItem2Child"
-                       v-show="chapterId === '2' ? true : false">
-                    <div class="fiveItem3">
-                      <div class="Main3">
-                        <div>
-                          <div>1.林炜秃头史</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="fiveItem3">
-                      <div class="Main3">
-                        <div>
-                          <div>2.林炜秃头后获取的成就</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="fiveItem3">
-                      <div class="Main3">
-                        <div>
-                          <div>3.林炜秃头后美照</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div>第一章 秃头学的前世今生</div>
+            </div>
+            <div class="floderIcon">
+              <v-icon type="right" v-show="chapter === 'one' ? false : true"></v-icon>
+              <v-icon type="down" v-show="chapter === 'one' ? true : false"></v-icon>
+            </div>
+          </div>
+          <div class="item01Child" v-show="chapter === 'one' ? true : false">
+            <div class="studyItem02"
+                 @click="openDocument(item1)"
+                 v-for="(item1, index1) in item.documents" :key="index1">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-wenjianguanli"></use>
+                  </svg>
                 </div>
-                <div class="fiveItem2"></div>
+                <div class="videoTitle">{{item1.name}}</div>
               </div>
             </div>
           </div>
-        </vue-scroll>
-      </div>
-      <div id="fiveSourse">
-        <div class="sourseContent"></div>
-        <div class="progress">
-          <v-progress-line :percent="50" :stroke-width="7" status="active"></v-progress-line>
+        </div>
+        <div class="studyItem01">
+          <div class="item01Main" @click="chooseChater('two')">
+            <div class="chapter01">
+              <div>
+                <v-icon type="folder"></v-icon>
+              </div>
+              <div>第一章 秃头学的前世今生</div>
+            </div>
+            <div class="floderIcon">
+              <v-icon type="right" v-show="chapter === 'two' ? false : true"></v-icon>
+              <v-icon type="down" v-show="chapter === 'two' ? true : false"></v-icon>
+            </div>
+          </div>
+          <div class="item01Child" v-show="chapter === 'two' ? true : false">
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="studyItem01">
+          <div class="item01Main" @click="chooseChater('three')">
+            <div class="chapter01">
+              <div>
+                <v-icon type="folder"></v-icon>
+              </div>
+              <div>第一章 秃头学的前世今生</div>
+            </div>
+            <div class="floderIcon">
+              <v-icon type="right" v-show="chapter === 'three' ? false : true"></v-icon>
+              <v-icon type="down" v-show="chapter === 'three' ? true : false"></v-icon>
+            </div>
+          </div>
+          <div class="item01Child" v-show="chapter === 'three' ? true : false">
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="studyItem01">
+          <div class="item01Main" @click="chooseChater('four')">
+            <div class="chapter01">
+              <div>
+                <v-icon type="folder"></v-icon>
+              </div>
+              <div>第一章 秃头学的前世今生</div>
+            </div>
+            <div class="floderIcon">
+              <v-icon type="right" v-show="chapter === 'four' ? false : true"></v-icon>
+              <v-icon type="down" v-show="chapter === 'four' ? true : false"></v-icon>
+            </div>
+          </div>
+          <div class="item01Child" v-show="chapter === 'four' ? true : false">
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="studyItem01">
+          <div class="item01Main" @click="chooseChater('five')">
+            <div class="chapter01">
+              <div>
+                <v-icon type="folder"></v-icon>
+              </div>
+              <div>第一章 秃头学的前世今生</div>
+            </div>
+            <div class="floderIcon">
+              <v-icon type="right" v-show="chapter === 'five' ? false : true"></v-icon>
+              <v-icon type="down" v-show="chapter === 'five' ? true : false"></v-icon>
+            </div>
+          </div>
+          <div class="item01Child" v-show="chapter === 'five' ? true : false">
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+            <div class="studyItem02" @click="openVideo('1')">
+              <div class="item02Main">
+                <div class="videoIcon">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-meiti"></use>
+                  </svg>
+                </div>
+                <div class="videoTitle"> 秃头学的前世今生</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -151,11 +373,14 @@ export default {
   data () {
     return {
       courseId: '',
-      chapterId: ''
+      chapterId: '',
+      type: 1,
+      chapter: ''
     }
   },
   computed: {
     ...mapState([
+      'courseFile'
     ])
   },
   methods: {
@@ -175,6 +400,27 @@ export default {
       } else {
         this.chapterId = id
       }
+    },
+    changetype (id) {
+      this.type = id
+    },
+    chooseChater (id) {
+      if (this.chapter === id) {
+        this.chapter = ''
+      } else {
+        this.chapter = id
+      }
+    },
+    openVideo (id) {
+      const routeUrl = this.$router.resolve({
+        path: '/video'
+      })
+      window.open(routeUrl.href, '_blank')
+    },
+    openDocument (item1) {
+      let base1 = 'http://view.officeapps.live.com/op/view.aspx'
+      base1 = base1 + '?src=http://thunderclass.mr-lin.site/api' + item1.url
+      window.open(base1)
     }
   },
   components: {
@@ -184,6 +430,9 @@ export default {
 
 <style scoped lang="less">
 #sourse {
+  width: 100%;
+}
+#old {
   margin: 20px 0;
   position: relative;
   height: 700px;
@@ -194,54 +443,52 @@ export default {
   transform: translate(-50%);
   margin-bottom: 50px;
   color: black;
-}
-
-#fiveNav {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  .three1icon {
-    width: 30px;
-    height: 30px;
-    svg {
-      height: 100%;
-      width: 100%;
+  #fiveNav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    .three1icon {
+      width: 30px;
+      height: 30px;
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .three1title {
+      margin-left: 10px;
+      font-size: 14px;
+      font-weight: 600;
     }
   }
-  .three1title {
-    margin-left: 10px;
-    font-size: 14px;
-    font-weight: 600;
+
+  #fivebody{
+    width: 100%;
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
   }
-}
 
-#fivebody{
-  width: 100%;
-  height: 600px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 20px;
-}
+  #fivemenu{
+    width: 28%;
+    height: 500px;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px 0px rgba(213,213,213,0.8);
+  }
 
-#fivemenu{
-  width: 28%;
-  height: 500px;
-  border: 1px solid #dfdfdf;
-  border-radius: 4px;
-  box-shadow: 1px 1px 5px 0px rgba(213,213,213,0.8);
-}
-
-#fivemenu1 {
-  width: 98%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
+  #fivemenu1 {
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
   .acitveItem1 {
     font-weight: 600;
   }
@@ -344,32 +591,197 @@ export default {
     }
   }
 
-#fiveSourse {
-  width: 70%;
-  height: 550px;
-  border: 1px solid #dfdfdf;
-  border-radius: 4px;
-  box-shadow: 5px 5px 10px 0px rgba(213,213,213,1),
-    -1px -1px 5px 0px rgba(213,213,213,0.6);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  .sourseContent {
-    width: 100%;
-    height: 500px;
-  }
-  .progress {
-    width: 100%;
-    height: 50px;
+  #fiveSourse {
+    width: 70%;
+    height: 550px;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    box-shadow: 5px 5px 10px 0px rgba(213,213,213,1),
+      -1px -1px 5px 0px rgba(213,213,213,0.6);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    border-top: 1px solid #dfdfdf;
-    >div {
-      width: 95%;
+    .sourseContent {
+      width: 100%;
+      height: 500px;
+    }
+    .progress {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-top: 1px solid #dfdfdf;
+      >div {
+        width: 95%;
+      }
     }
   }
 }
+
+#new {
+  margin-top: 20px;
+  position: relative;
+  /*height: 700px;*/
+  width: 70%;
+  min-width: 800px;
+  max-width: 900px;
+  left: 50%;
+  transform: translate(-50%);
+  margin-bottom: 50px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  #preStudy {
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
+    box-shadow: 3px 3px 5px 0px rgba(213,213,213,0.5);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0;
+    border-radius: 20px;
+    font-size: 14px;
+    .pre02 {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      .pre02Icon {
+        i {
+          font-size: 22px;
+          color: #38afff;
+        }
+      }
+      >div {
+        margin: 0 10px;
+      }
+    }
+    .pre03 {
+      width: 100px;
+      height: 35px;
+      color: white;
+      border-radius: 50px;
+      box-shadow: 3px 3px 5px 0px rgba(213,213,213,0.9);
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      background-color: #61c7fc;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .pre03:hover {
+      font-size: 14px;
+    }
+    .pre03:active {
+      box-shadow: -3px -3px 5px 0px rgba(213,213,213,0.9);
+    }
+  }
+
+  #mune01 {
+    width: 100%;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .studyItem01 {
+      width: 100%;
+      min-height: 60px;
+      margin: 10px 0;
+    }
+  }
+  .item01Main {
+    cursor: pointer;
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f5f5;
+    box-shadow: 3px 3px 5px 0px rgba(213,213,213,0.5);
+    .chapter01 {
+      margin-left: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      >div:first-child {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        i {
+          font-size: 24px;
+          color: #ffb41b;
+          font-weight: 600;
+        }
+      }
+      >div:last-child {
+        margin: 0 20px;
+        font-size: 13px;
+      }
+    }
+    .floderIcon {
+      margin-right: 20px;
+      i {
+        font-size: 16px;
+      }
+    }
+  }
+  .item01Child {
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    .studyItem02 {
+      cursor: pointer;
+      background-color: #fbfbfb;
+      margin: 3px 0;
+      width: 99%;
+      height: 60px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .studyItem02:hover {
+      color: #3d84ff;
+    }
+  }
+  .item02Main {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    .videoIcon {
+      width: 25px;
+      height: 25px;
+      margin-left: 20px;
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .videoTitle {
+      margin-left: 20px;
+      font-size: 13px;
+    }
+  }
+
+}
+
 </style>

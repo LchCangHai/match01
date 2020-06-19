@@ -13,13 +13,10 @@
           <div class="btn01 tabActive">课程</div>
           <div class="btn01" @click="toPCBtn()">个人中心</div>
           <div class="avatarC1">
-            <img class="avatarI" src="../assets/avatar01.jpg">
+            <img class="avatarI" :src="this.currentUser.avatar">
           </div>
           <div class="messageShow">
-            <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-            <div class="headerNum" v-show="isCnt99">99+</div>
-            <span class="iconfont messageIcon">&#xe606;</span>
-<!--            <v-icon class="messageIcon" type="message"></v-icon>-->
+            <div @click="exit">退出</div>
           </div>
         </div>
       </nav>
@@ -27,7 +24,7 @@
     <div id="body01">
       <div style="  width:100%; height: 60px"></div>
       <div class="menu01">
-        <div class="title01">熬夜秃头学（下）</div>
+        <div class="title01">{{courseInfo1.name}}</div>
         <div class="menu02">
           <div class="item01" @click="BtnHome()">
             <div :class="{ itemActive: item === 1 ? true : false}"> 首页 </div>
@@ -87,7 +84,9 @@ export default {
       },
       counter: 5,
       isCnt99: false,
-      item: 1
+      item: 1,
+      courseInfo1: {},
+      courseInfo2: {}
     }
   },
   computed: {
@@ -95,7 +94,12 @@ export default {
       'showPopUp',
       'popUpType',
       'coursePop',
-      'coursePopType'
+      'coursePopType',
+      'currentCourse',
+      'currentUser',
+      'courseInform',
+      'courseFile',
+      'courseVideo'
     ])
   },
   methods: {
@@ -106,10 +110,19 @@ export default {
       'retrievePop',
       'otherWayPop',
       'openCoursePop',
-      'closeCoursePop'
+      'closeCoursePop',
+      'setCurrentUser',
+      'setcourseInfo',
+      'setcourseInform',
+      'setcourseFile',
+      'setcourseVideo'
     ]),
     toPCBtn () {
       this.$router.push('/pCenter')
+    },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
     },
     BtnHome () {
       this.item = 1
@@ -130,6 +143,69 @@ export default {
     BtnSourse () {
       this.item = 5
       this.$router.push('/courses/sourse')
+    },
+    getCourse () {
+      this.$axios.get('/api/course/' + this.currentCourse)
+      .then(res => {
+        this.courseInfo1 = res.data.data
+        this.setcourseInfo(res.data.data)
+      }).catch(error => {
+        console.log(error)
+        this.$message.error('获取课程信息失败')
+      })
+    },
+    getCourseInform () {
+      this.$axios.get('/api/course/' + this.currentCourse + '/notices')
+        .then(res => {
+          this.setcourseInform(res.data.data.notices)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程公告失败')
+        })
+    },
+    getCourseFile () {
+      this.$axios.get('/api/course/' + this.currentCourse + '/documents')
+        .then(res => {
+          this.setcourseFile(res.data.data.chapters)
+        }).catch(error => {
+        console.log(error)
+        this.$message.error('获取课程章节课件失败')
+      })
+    },
+    getCourseVideo () {
+      this.$axios.get('/api/course/' + this.currentCourse + '/movies')
+        .then(res => {
+          this.setcourseVideo(res.data.data.chapters)
+        }).catch(error => {
+        console.log(error)
+        this.$message.error('获取课程章节视频失败')
+      })
+    },
+    getUserInfo () {
+      this.$axios.get('/api/user/current')
+        .then(res => {
+          console.log('已登录!!!!!!!!!!!!!!!!!!!!111111111')
+          this.setCurrentUser(res.data.data)
+          // this.$notification.info({
+          //   message: '消息',
+          //   description: '已登录账号： ' + res.data.data.nickname,
+          //   duration: 2
+          // })
+          if (res.data.data.school === null) {
+            this.isComfirmed = false
+          } else {
+            this.isComfirmed = true
+          }
+        }).catch(() => {
+        this.$notification.warning({
+          message: '警告',
+          description: '未登录或登录过期',
+          duration: 10
+        })
+        this.$message.warning('未登录或登录过期')
+        this.$router.push('/unindex')
+      }).finally(() => {
+      })
     }
   },
   components: {
@@ -160,6 +236,8 @@ export default {
     }
   },
   mounted: function () {
+    this.getUserInfo()
+    this.getCourse()
     const that = this
     const hash = getHash()
     if (hash === '#/courses/home') {
@@ -176,6 +254,7 @@ export default {
       that.item = 4
     }
     vm = this
+    this.getCourseInform()
   }
 }
 </script>
@@ -192,7 +271,7 @@ nav {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  position: fixed;
+  position: relative;
   top: 0;
   width:100%;
   height: 60px;
@@ -237,33 +316,22 @@ nav {
     width: 300px;
     font-size: 16px;
     .messageShow {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      .headerNum{
-        width: 23px;
-        height: 15px;
-        position: absolute;
-        background-color: #f04134;
-        color: white;
-        font-size: 12px;
-        border-radius: 50px;
-        position: relative;
-        left: 100%;
-        top: 0;
-        transform: translate(-50%, -20%);
-        text-align: center;
+      width:50px;
+      height: 35px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-end;
+      >div{
+        cursor: pointer;
+        font-size: 14px;
       }
-      >span.messageIcon {
-        position: relative;
-        left: 0;
-        top: -15px;
-        /*transform: translate(-50%, -50%);*/
-        font-size: 25px;
-        color: #61c7fc;
+      >div:hover {
+        font-size: 15px;
       }
-      >span.messageIcon:hover {
-        color: #2492eb;
+      >div:active {
+        font-size: 14px;
+        text-decoration: underline;
       }
     }
     .btn01{

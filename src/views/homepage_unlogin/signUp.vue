@@ -157,7 +157,7 @@ export default {
         this.tip1 = '昵称不可为空'
       } else {
         this.tip1 = ''
-        this.$axios('/foo/api/auth/check/nickname', {
+        this.$axios('/api/auth/check/nickname', {
           params: {
             nickname: this.nickname
           }
@@ -185,7 +185,7 @@ export default {
         this.tip2 = '手机号错误'
       } else {
         this.tip2 = ''
-        this.$axios('/foo/api/auth/check/telephone', {
+        this.$axios('/api/auth/check/telephone', {
           params: {
             tel: this.telephone
           }
@@ -203,14 +203,17 @@ export default {
       }
     },
     sendCode () {
-      this.$axios.post('too/thunderclass', {
-        type: 1,
-        tle: this.telephone
+      this.$axios.post('/thunderclass', null, {
+        params: {
+          type: 0,
+          tel: this.telephone
+        },
+        baseURL: '/too'
       }).then(res => {
         console.log(res)
         this.$notification.success({
           message: '成功',
-          description: '发送短信。。',
+          description: '发送短信中。。5分钟内有效',
           duration: 3
         })
         this.stepOned = true
@@ -224,18 +227,29 @@ export default {
       })
     },
     signUp () {
-      this.$axios('/foo/api/auth/user/current', {
-        params: {
-          nickname: this.nickname,
-          telephone: this.telephone,
-          password: this.password,
-          code: this.code
+      this.$axios.post('/api/user/current', {
+        nickname: this.nickname,
+        telephone: this.telephone,
+        password: this.password,
+        code: this.code
+      }, {
+        header: {
+          'Content-Type': 'application/json' // 如果写成contentType会报错
         }
       }).then(res => {
         this.$message.success('注册成功')
       }).catch(error => {
         this.$message.error('注册失败')
         console.log(error)
+        console.log(error.data)
+        // if (error)
+      }).finally(() => {
+        this.nickname = ''
+        this.telephone = ''
+        this.password = ''
+        this.code = ''
+        this.password1 = ''
+        this.stepOned = false
       })
     }
   }
@@ -248,7 +262,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100%;
+    height: 320px;
     width: 100%;
   }
   .Ticon {

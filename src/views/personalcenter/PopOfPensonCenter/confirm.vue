@@ -7,10 +7,10 @@
     <div id="title">学校认证</div>
     <div class="hrr"></div>
     <div id="content">
-      <v-input class="loginIn" placeholder="学校"></v-input>
-      <v-input class="loginIn" placeholder="学号"></v-input>
-      <v-input class="loginIn" placeholder="认证码"></v-input>
-      <v-button class="loginBtn" type="primary">完成认证</v-button>
+      <v-input class="loginIn" placeholder="学校" v-model="school"></v-input>
+      <v-input class="loginIn" placeholder="学号" v-model="student_id"></v-input>
+      <v-input class="loginIn" placeholder="认证码" v-model="certificate_code"></v-input>
+      <v-button class="loginBtn" type="primary" @click="certificate()">认证</v-button>
     </div>
   </div>
 </template>
@@ -22,18 +22,75 @@ export default {
   name: 'confirm.vue',
   data () {
     return {
+      school: '',
+      student_id: '',
+      certificate_code: ''
     }
   },
   computed: {
     ...mapState([
       'showPopUp',
-      'popUpType'
+      'popUpType',
+      'currentUser'
     ])
   },
   methods: {
     ...mapMutations([
-      'closePop02'
-    ])
+      'closePop02',
+      'setCurrentUser'
+    ]),
+    certificate () {
+      if (this.school === '' && this.student_id === '' && this.certificate_code === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入内容',
+          duration: 1
+        })
+      } else if (this.school === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入学校全名',
+          duration: 1
+        })
+      } else if (this.student_id === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入学号',
+          duration: 1
+        })
+      } else if (this.certificate_code === '') {
+        this.$notification.warning({
+          message: '警告',
+          description: '请输入验证码',
+          duration: 1
+        })
+      } else {
+        this.$axios.post('/api/user/current/certificate', {
+          school: this.school,
+          student_id: this.student_id,
+          certificate_code: this.certificate_code
+        }, {
+          header: {
+            'Content-Type': 'application/json' // 如果写成contentType会报错
+          }
+        }).then(res => {
+          console.log(res)
+          this.$notification.success({
+            message: '成功',
+            description: '认证成功',
+            duration: 2
+          })
+          this.setCurrentUser(res.data.data)
+        }).catch(error => {
+          console.log(error)
+          this.$notification.warning({
+            message: '警告',
+            description: '验证失败',
+            duration: 2
+          })
+        })
+      }
+    }
   },
   components: {
   }

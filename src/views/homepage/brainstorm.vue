@@ -24,29 +24,29 @@
       <div class="discussMain">
         <vue-scroll ref="vs">
           <div class="discussMain1">
-            <div class="thItem">
+            <div class="thItem" v-for="(item, index) in alldiscuss" :key="index">
               <div class="nav1">
                 <div class="thfont">
                   <div class="avatarBox">
-                    <img class="avatarImg1" src="../../assets/avatar01.jpg">
+                    <img class="avatarImg1" :src="item.user.avatar">
                   </div>
-                  <div class="thName">林炜</div>
+                  <div class="thName">{{item.user.nickname}}</div>
                   <div class="thIden">学生</div>
                 </div>
                 <div class="thback">
-                  <span>来自</span>
-                  <span class="fromCourse">熬夜秃头学</span>
+<!--                  <span>来自</span>-->
+                  <span class="fromCourse">{{item.user.school}}</span>
                 </div>
               </div>
               <div class="thdcontext">
                 <div>
-                  我是怎样秃头的？我又是怎样变强的？我，又是如何让996如呼吸一般自然的？
+                  {{item.content}}
                 </div>
               </div>
-              <div class="thfooter">
-                <span>9999+</span>
-                <span>人参与讨论</span>
-              </div>
+<!--              <div class="thfooter">-->
+<!--                <span>9999+</span>-->
+<!--                <span>人参与讨论</span>-->
+<!--              </div>-->
             </div>
             <div class="thItem">
               <div class="nav1">
@@ -188,7 +188,8 @@ export default {
   name: 'brainstorm.vue',
   data () {
     return {
-      isShowfb: false
+      isShowfb: false,
+      alldiscuss: ''
     }
   },
   computed: {
@@ -223,7 +224,22 @@ export default {
         },
         200
       )
+    },
+    getAllDiscuss () {
+      this.$axios.get('/api/discussions/recommend', {
+        params: 6
+      })
+        .then(res => {
+          console.log('获取讨论推荐信息成功')
+          this.alldiscuss = res.data.data.discussions
+        }).catch(error => {
+          this.$message.warning('获取讨论推荐信息出错')
+          console.log(error)
+        })
     }
+  },
+  mounted () {
+    this.getAllDiscuss()
   },
   components: {
   }
