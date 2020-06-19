@@ -194,7 +194,7 @@ export default {
     transform: translate(-50%, -50%);
     background-color: white;
     width: 300px;
-    height: 280px;
+    height: 320px;
     z-index: 2001;
     box-shadow: 2px 2px 10px 5px rgba(0,0,0,0.1);
     border-radius: 4px;
