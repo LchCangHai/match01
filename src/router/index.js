@@ -47,11 +47,11 @@ const routes = [
     component: personalCenter
   },
   {
-    path: '/video',
+    path: '/video/:id?',
     component: Video
   },
   {
-    path: '/answer',
+    path: '/answer/:id?',
     component: Answer
   },
   {

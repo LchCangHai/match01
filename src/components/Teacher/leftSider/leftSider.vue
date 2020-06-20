@@ -10,12 +10,12 @@
       <div></div>
     </div>
     <div class="siderItem"
-         :class=" { siderActive : (leftSiderActive === 1 || leftSiderActive === 2 || leftSiderActive === 3) ? true : false} ">
-      <div class="icon" @click="totcourseWare()">
+         :class=" { siderActive : leftSiderActive === 0 ? true : false} ">
+      <div class="icon">
         <div>
           <v-icon type="book"></v-icon>
         </div>
-        <div>课程管理</div>
+        <div @click="totcourseManage()">课程管理</div>
       </div>
       <div class="BtnBox">
         <div class="item"
@@ -33,11 +33,11 @@
         @click="totcourseDiscuss()">
           <div>讨论管理</div>
         </div>
-        <div class="item"
-             :class=" { siderActive1 : leftSiderActive === 0 ? true : false} "
-             @click="totcourseSignIn()">
-          <div>课件签到</div>
-        </div>
+<!--        <div class="item"-->
+<!--             :class=" { siderActive1 : leftSiderActive === 7 ? true : false} "-->
+<!--             @click="totcourseSignIn()">-->
+<!--          <div>课件签到</div>-->
+<!--        </div>-->
       </div>
     </div>
     <div class="siderItem"
@@ -64,7 +64,8 @@
     </div>
     <div class="siderItem"
          :class=" { siderActive : leftSiderActive === 6 ? true : false} "
-    @click="totdataManage()">
+    @click="totdataManage()"
+    v-show="leftSiderActive === 6 ? true : false">
       <div class="icon">
         <div>
           <v-icon type="line-chart"></v-icon>

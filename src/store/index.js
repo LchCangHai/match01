@@ -28,6 +28,7 @@ export default new Vuex.Store({
     courseDiscuss: { // 当前课程 讨论列表
     },
     courseDiscussID: '', // 当前选中的讨论的id
+    currentVideo: {},
     informs: { // 通知信息
     },
     currentDiscuss: { // 现在选中展示的讨论内容 ****需在action中获得
@@ -38,7 +39,7 @@ export default new Vuex.Store({
       type: 'exam',
       t_begin: '',
       t_end: '',
-      name: '这是作业的名字XXX',
+      name: '',
       ans_visible: '',
       problems: [
         // {
@@ -97,9 +98,9 @@ export default new Vuex.Store({
         //   max_score: 5
         // }
       ],
-      answerFile: new FormData(),
       start: '2020/2/3 23:12:12',
-      end: '2020/5/3 23:12:12'
+      end: '2020/5/3 23:12:12',
+      dexpires: ''
     }
   },
   mutations: {
@@ -180,6 +181,7 @@ export default new Vuex.Store({
       state.currentEditTaskExam.start = info.startS
       state.currentEditTaskExam.end = info.endS
       state.currentEditTaskExam.ans_visible = 1
+      state.currentEditTaskExam.expires = info.duration
     },
     addTask (state, info) { // 添加作业题目
       // this.currentEditTaskExam.problem.push(info.)
@@ -192,6 +194,9 @@ export default new Vuex.Store({
     },
     setcurrentCourse (state, id) {
       state.currentCourse = id
+    },
+    setcurrentVideo (state, id) {
+      state.currentVideo = id
     }
   },
   actions: {

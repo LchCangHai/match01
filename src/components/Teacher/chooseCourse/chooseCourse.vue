@@ -10,9 +10,12 @@
           <v-icon type="down"></v-icon>
         </div>
       </div>
-      <div class="courseItem" :class=" { choosed : '12' === '12' ? true : false } ">
-        <div>
-          <div>熬夜秃头学</div>
+      <div class="courseItem"
+           :class=" { choosed : currentCourse === item.id ? true : false } "
+           v-for="(item, index) in allcourse"
+           :key="index">
+        <div @click="changeCourse(item.id)">
+          <div>{{item.name}}</div>
         </div>
       </div>
       <div class="courseItem">
@@ -66,25 +69,46 @@ export default {
   name: 'chooseCourse.vue',
   data () {
     return {
-      open: false
+      open: false,
+      allcourse: []
     }
   },
   computed: {
     ...mapState([
+      'currentUser',
+      'currentCourse'
     ])
   },
   methods: {
     ...mapMutations([
-      'closeAddTEPop'
+      'closeAddTEPop',
+      'setcurrentCourse'
     ]),
     toggle () {
       this.open = !this.open
+    },
+    getAllCourse () {
+      this.$axios.get('/api/course/course_list', {
+        params: {
+          teacher_id: this.currentUser.uid
+        }
+      })
+        .then(res => {
+          console.log('获取课程信息成功')
+          this.allcourse = res.data.data.courses
+        }).catch(error => {
+          this.$message.warning('获取课程信息出错')
+          console.log(error)
+        })
+    },
+    changeCourse (id) {
+      this.setcurrentCourse(id)
     }
   },
   components: {
   },
   mounted () {
-    this.setLeftSider(4)
+    this.getAllCourse()
   }
 }
 </script>
@@ -157,7 +181,7 @@ export default {
     }
     .choosed {
       >div {
-        border: 1.5px solid #7bd0fc;
+        border: 1.5px solid #108ee9;
       }
     }
   }

@@ -182,6 +182,7 @@ export default {
         u8arr[n] = bstr.charCodeAt(n)
       }
       this.imgBlob = new Blob([u8arr], { type: mime })
+      console.log(this.imgBlob)
       const formdata = new FormData()
       formdata.set('avatar', this.imgBlob)
       this.$axios.post('/api/avatars/course/' + this.currentUser.uid, formdata, {
@@ -190,9 +191,9 @@ export default {
         }
       }).then(res => {
         this.$message.success('用户头像上传成功')
+        this.imgUrl = imgDataUrl
       }).catch(error => {
         console.log(error)
-        this.imgUrl = imgDataUrl
       })
     },
     /**

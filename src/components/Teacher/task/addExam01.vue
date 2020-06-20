@@ -273,6 +273,9 @@ export default {
   },
   mounted () {
     // this.countTime()
+    if (this.currentEditTaskExam.name === '') {
+      this.$router.push('/taskExam')
+    }
   }
 }
 </script>

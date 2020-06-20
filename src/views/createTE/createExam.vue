@@ -6,6 +6,9 @@
         ref="upload_file"
         @change="handleFileChange">
     </div>
+    <div id="title1">
+      <v-button type="primary" @click="publish()" v-show="currentEditTaskExam.problems.length !== 0">发布</v-button>
+    </div>
     <div id="title">
       <div>添加题目</div>
     </div>
@@ -50,7 +53,7 @@
                     :disabled="ruleForm.type === 'judge'">添加选项</v-button>
         </v-form-item>
         <v-form-item label="正确答案" :label-col="labelCol" :wrapper-col="wrapperCol"
-                     v-show="( ruleForm.type === 'mselect' || ruleForm.type === 'judge') ? true : false">
+                     v-show="( ruleForm.type === 'mselect') ? true : false">
           <v-input size="large"
                    class="optionItem"
                    v-model="ruleForm.answers01[index]"
@@ -59,7 +62,7 @@
           <v-button type="primary" ghost style="margin-right:10px" @click.prevent="addanswer()">添加选项</v-button>
         </v-form-item>
         <v-form-item label="正确答案" :label-col="labelCol" :wrapper-col="wrapperCol"
-                     v-show="(ruleForm.type === 'mselect' || ruleForm.type === 'judge') ? false : true">
+                     v-show="(ruleForm.type === 'mselect') ? false : true">
           <v-input v-model="ruleForm.answer02" type="textarea" class="contentArea"></v-input>
         </v-form-item>
         <v-form-item label="答案解析" :label-col="labelCol" :wrapper-col="wrapperCol">
@@ -75,7 +78,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-
+const formdata = new FormData()
 export default {
   name: 'addExam.vue',
   data () {
@@ -85,8 +88,8 @@ export default {
         order: '',
         score: '5',
         text: '',
-        option: ['', ''],
-        answers01: ['', ''],
+        option: [''],
+        answers01: [''],
         answer02: '',
         answer_detail: '',
         fileTitle: '',
@@ -109,18 +112,22 @@ export default {
       },
       wrapperCol: {
         span: 15
-      }
+      },
+      problems: {}
     }
   },
   computed: {
     ...mapState([
-      'currentEditTaskExam'
+      'currentEditTaskExam',
+      'courseInfo',
+      'currentCourse'
     ])
   },
   methods: {
     ...mapMutations([
       'closeAddTEPop',
-      'addTasks'
+      'addTasks',
+      'setcourseInfo'
     ]),
     changeOption () {
       // this.ruleForm.option.push
@@ -150,7 +157,7 @@ export default {
         })
       } else {
         const file = files[0]
-        this.problem['problem' + this.ruleForm.order] = file
+        formdata.set('problem' + this.ruleForm.order, file)
         this.ruleForm.fileTitle = file.name
         this.ruleForm.imgUrl = window.URL.createObjectURL(file)
         this.ruleForm.hasFile = false
@@ -233,7 +240,7 @@ export default {
     },
     addQuestion () {
       if (!this.judgeorder()) return false
-      if (!this.judgetext()) return false
+      // if (!this.judgetext()) return false
       this.problem.content.text = this.ruleForm.text
       this.problem.type = this.ruleForm.type
       this.problem.order = this.ruleForm.order
@@ -263,6 +270,8 @@ export default {
       }
       console.log(this.problem)
       this.currentEditTaskExam.problems.push(this.problem)
+      const str = JSON.stringify(this.problem)
+      this.problems[this.problem.order] = str
       let tem1 = {
         type: '',
         content: {
@@ -280,8 +289,8 @@ export default {
         order: '',
         score: '5',
         text: '',
-        option: ['', ''],
-        answers01: ['', ''],
+        option: [''],
+        answers01: [''],
         answer02: '',
         answer_detail: '',
         fileTitle: '',
@@ -289,6 +298,28 @@ export default {
         imgUrl: ''
       }
       this.ruleForm = tem1
+    },
+    publish () {
+      formdata.set('problems', JSON.stringify(this.problems))
+      this.$axios.post('/api/course/' + this.currentCourse + '/tasks', formdata, {
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(res => {
+        this.$message.success('发布成功')
+      }).catch(error => {
+        console.log(error)
+        this.$message.error('发布失败')
+      })
+    },
+    getCourse () {
+      this.$axios.get('/api/course/' + this.currentCourse)
+        .then(res => {
+          this.setcourseInfo(res.data.data)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程信息失败')
+        })
     }
   },
   components: {
@@ -296,6 +327,16 @@ export default {
   watch: {
   },
   mounted () {
+    this.currentEditTaskExam.problems = []
+    this.getCourse()
+    formdata.set('type', this.currentEditTaskExam.type)
+    formdata.set('t_begin', this.currentEditTaskExam.t_begin)
+    formdata.set('t_end', this.currentEditTaskExam.t_end)
+    formdata.set('name', this.currentEditTaskExam.name)
+    formdata.set('ans_visible', 1)
+    if (this.currentEditTaskExam.type === 'exam') {
+      formdata.set('expires', this.currentEditTaskExam.expires)
+    }
   }
 }
 </script>
@@ -334,7 +375,7 @@ export default {
     background-color: #49a9ee;
   }
 
-  #title {
+  #title, #title1 {
     width: 90%;
     height: 40px;
     display: flex;

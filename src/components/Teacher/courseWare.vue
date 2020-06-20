@@ -16,9 +16,7 @@
           </a>
         </v-dropdown>
         <div class="messageShow">
-          <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-          <div class="headerNum" v-show="isCnt99">99+</div>
-          <span class="iconfont messageIcon">&#xe606;</span>
+          <div @click="exit">退出</div>
         </div>
       </div>
     </nav>
@@ -37,7 +35,7 @@
       <div class="topBox">
         <div class="tips">
           <div>上传至分组：</div>
-          <div>第一章：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+          <div>{{chapter}}</div>
         </div>
         <div class="upLoadBox" id="drag_box" ref="dopbox" :class=" { borderhover: borderhover } ">
           <div class="uploadIcon">
@@ -49,138 +47,51 @@
           </div>
         </div>
       </div>
-      <div class="courseCheck"
-           :class="{ toggled : open === false ? true : false}">
-        <div class="zhankai" @click="toggle">
-          <div v-show="!open">
-            <v-icon type="right"></v-icon>
-          </div>
-          <div v-show="open">
-            <v-icon type="down"></v-icon>
-          </div>
-        </div>
-        <div class="courseItem" :class=" { choosed : '12' === '12' ? true : false } ">
-          <div>
-            <div>熬夜秃头学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
+      <div id="checkcourse">
+        <my-choose-course></my-choose-course>
       </div>
       <div class="mune">
         <div class="mune02">
           <div class="tips">
             <div>上传至分组：</div>
-            <div>第一章：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+            <div>{{chapter}}</div>
           </div>
         </div>
         <div class="mune03">
-          <div class="addBtn">
+          <div class="addBtn" @click="addChapter()">
             <div>添加分组</div>
           </div>
           <div class="addInput">
-            <v-input v-model="value" @keydown="keydown" @keyup="keyup"  @blur="blur('blur')"></v-input>
+            <v-input v-model="chapter1"></v-input>
           </div>
         </div>
         <vue-scroll ref="vscroll">
           <div id="mune01">
-            <div class="studyItem01">
-              <div class="item01Main" @click="chooseChater('one')">
+            <div class="studyItem01" v-for="(item, index) in courseFile" :key="index">
+              <div class="item01Main" @click="chooseChater(item.name)">
                 <div class="chapter01">
                   <div>
                     <v-icon type="folder"></v-icon>
                   </div>
-                  <div>第一章 秃头学的前世今生</div>
+                  <div>{{item.name}}</div>
                 </div>
                 <div class="floderIcon">
-                  <v-icon type="right" v-show="chapter === 'one' ? false : true"></v-icon>
-                  <v-icon type="down" v-show="chapter === 'one' ? true : false"></v-icon>
+                  <v-icon type="right" v-show="chapter === item.name ? false : true"></v-icon>
+                  <v-icon type="down" v-show="chapter === item.name ? true : false"></v-icon>
                 </div>
               </div>
-              <div class="item01Child" v-show="chapter === 'one' ? true : false">
-                <div class="studyItem02">
+              <div class="item01Child" v-show="chapter === item.name ? true : false">
+                <div class="studyItem02" v-for="(item1, index1) in item.documents" :key="index1">
                   <div class="item02Main">
-                    <div class="item02left">
+                    <div class="item02left" @click="showWare(item1)">
                       <div class="videoIcon">
                         <svg class="icon" aria-hidden="true">
                           <use xlink:href="#icon-zuoyexiawu"></use>
                         </svg>
                       </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
+                      <div class="videoTitle">{{item1.name}}</div>
                     </div>
-                    <div class="item02right" @click="deleteVideo('1')">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="studyItem02">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-zuoyexiawu"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right" @click="deleteVideo('1')">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="studyItem02">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-zuoyexiawu"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right" @click="deleteVideo('1')">
+                    <div class="item02right" @click="deleteWare(item1.uuid)">
                       <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-shanchu"></use>
                       </svg>
@@ -416,36 +327,44 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider.vue'
-
+import chooseCourse from './chooseCourse/chooseCourse'
+const formdata = new FormData()
 export default {
   name: 'courseWare.vue',
   data () {
     return {
-      counter: 5,
-      isCnt99: false,
       open: false,
       chapter: '',
-      data: [
-        { content: '1st item' },
-        { content: '2nd item' },
-        { content: '3rd item' }
-      ]
+      chapter1: '',
+      formdata
+      // data: [
+      //   { content: '1st item' },
+      //   { content: '2nd item' },
+      //   { content: '3rd item' }
+      // ]
     }
   },
   computed: {
     ...mapState([
-      'leftSiderActive'
+      'leftSiderActive',
+      'courseFile',
+      'currentCourse'
     ])
   },
   methods: {
     ...mapMutations([
-      'setLeftSider'
+      'setLeftSider',
+      'setcourseFile'
     ]),
     toggle () {
       this.open = !this.open
     },
     pcBtn () {
       this.$router.push('/pCenter')
+    },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
     },
     tostudent () {
       this.$router.push('/index')
@@ -459,8 +378,32 @@ export default {
       } else {
         const file = files[0]
         this.file = file
-        this.formdata = new FormData()
-        this.formdata.set('avatar', file)
+        console.log(file)
+        this.formdata.set('document', file)
+        this.formdata.set('name', file.name)
+        console.log(1)
+        if (this.chapter === '') {
+          console.log(2)
+          this.$notification.warning({
+            message: '警告',
+            description: '请选择或新建分组后上传文件！',
+            duration: 1
+          })
+        } else {
+          console.log(3)
+          this.formdata.set('chapter', this.chapter)
+          this.$axios.post('/api/course/' + this.currentCourse + '/documents/upload', formdata, {
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          }).then(res => {
+            this.$message.success('上传文件成功')
+            this.getCourseFile()
+          }).catch(error => {
+            console.log(error)
+            this.$message.warning('上传文件失败')
+          })
+        }
       }
     },
     handleFileChange () {
@@ -476,6 +419,9 @@ export default {
       // console.log(fileData)
       this.uploadFile(fileData)
     },
+    addChapter () {
+      this.chapter = this.chapter1
+    },
     chooseChater (id) {
       if (this.chapter === id) {
         this.chapter = ''
@@ -483,11 +429,17 @@ export default {
         this.chapter = id
       }
     },
-    deleteVideo (id) {
-      const routeUrl = this.$router.resolve({
-        path: '/video'
-      })
-      window.open(routeUrl.href, '_blank')
+    deleteWare (id) {
+      this.$message.info('删除课件')
+      // const routeUrl = this.$router.resolve({
+      //   path: '/video'
+      // })
+      // window.open(routeUrl.href, '_blank')
+    },
+    showWare (item1) {
+      let base1 = 'http://view.officeapps.live.com/op/view.aspx'
+      base1 = base1 + '?src=' + item1.url
+      window.open(base1)
     },
     scrollToDown () {
       this.$refs.vscroll.scrollTo(
@@ -496,13 +448,24 @@ export default {
         },
         500
       )
+    },
+    getCourseFile () {
+      this.$axios.get('/api/course/' + this.currentCourse + '/documents')
+        .then(res => {
+          this.setcourseFile(res.data.data.chapters)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程章节课件失败')
+        })
     }
   },
   components: {
-    'my-left': LeftSider
+    'my-left': LeftSider,
+    'my-choose-course': chooseCourse
   },
   mounted () {
     this.setLeftSider(1)
+    this.getCourseFile()
     const that = this
     const dropbox = document.getElementById('drag_box')
     dropbox.addEventListener('drop', this.enentDrop, false)
@@ -557,7 +520,7 @@ export default {
     border-bottom: 1px solid lightgrey;
     box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
     background-color: white;
-    z-index: 2020;
+    z-index: 20;
     .navlogo {
       display: flex;
       flex-direction: row;
@@ -591,33 +554,22 @@ export default {
       width: 300px;
       font-size: 16px;
       .messageShow {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        .headerNum{
-          width: 23px;
-          height: 15px;
-          position: absolute;
-          background-color: #f04134;
-          color: white;
-          font-size: 12px;
-          border-radius: 50px;
-          position: relative;
-          left: 100%;
-          top: 0;
-          transform: translate(-50%, -20%);
-          text-align: center;
+        width:50px;
+        height: 35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        >div{
+          cursor: pointer;
+          font-size: 14px;
         }
-        >span.messageIcon {
-          position: relative;
-          left: 0;
-          top: -15px;
-          /*transform: translate(-50%, -50%);*/
-          font-size: 25px;
-          color: #61c7fc;
+        >div:hover {
+          font-size: 15px;
         }
-        >span.messageIcon:hover {
-          color: #2492eb;
+        >div:active {
+          font-size: 14px;
+          text-decoration: underline;
         }
       }
       .btn01{

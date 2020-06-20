@@ -17,10 +17,7 @@
           </a>
         </v-dropdown>
         <div class="messageShow">
-          <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-          <div class="headerNum" v-show="isCnt99">99+</div>
-          <span class="iconfont messageIcon">&#xe606;</span>
-          <!--            <v-icon class="messageIcon" type="message"></v-icon>-->
+          <div @click="exit">退出</div>
         </div>
       </div>
     </nav>
@@ -115,21 +112,22 @@
           </div>
           <div class="handleContent">
             <div class="circleIcon unStart"
-                 v-show="signInStatus === 1 ? true : false"
+                 v-show="signInInfo.exist === 0"
             @click="signInone()">
               <div>
                 <div>非签到时间</div>
               </div>
             </div>
             <div class="circleIcon yet"
-                 v-show="signInStatus === 2 ? true : false"
+                 v-show="signInInfo.finish === 1 && signInInfo.exist !== 0"
             @click="signIntwo()">
               <div>
                 <div>已签到</div>
               </div>
             </div>
             <div class="circleIcon notYet"
-                 v-show="signInStatus === 3 ? true : false">
+                 v-show="signInInfo.finish === 0 && signInInfo.exist !== 0"
+                 @click="signInthree()">
               <div>
                 <div>未签到</div>
               </div>
@@ -159,11 +157,12 @@ export default {
     return {
       counter: 5,
       isCnt99: false,
-      data: [
-        { content: '1st item' },
-        { content: '2nd item' },
-        { content: '3rd item' }
-      ],
+      // data: [
+      //   { content: '1st item' },
+      //   { content: '2nd item' },
+      //   { content: '3rd item' }
+      // ],
+      url: '',
       sideBarType: 1,
       signInStatus: 2,
       playerOptions: {
@@ -177,7 +176,7 @@ export default {
         fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
         sources: [{
           type: 'video/mp4', // 这里的种类支持很多种：基本视频格式、直播、流媒体等，具体可以参看git网址项目
-          src: 'http://cdn.mr-lin.site/1%E7%A1%AE%E5%AE%9A%E6%89%BF%E5%8A%9E.mp4' // url地址
+          src: this.$route.query.url // url地址
         }],
         poster: '../../static/images/test.jpg', // 你的封面地址
         // width: document.documentElement.clientWidth, //播放器宽度
@@ -188,29 +187,36 @@ export default {
           remainingTimeDisplay: false,
           fullscreenToggle: true // 全屏按钮
         }
-      }
+      },
+      signInInfo: ''
     }
   },
   computed: {
     ...mapState([
-
+      'currentVideo',
+      'currentCourse'
     ])
   },
   methods: {
     ...mapMutations([
+      'setcurrentCourse'
     ]),
     toPCBtn () {
       this.$router.push('/pCenter')
     },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
+    },
     itemClick (data) {
       console.log(data)
     },
-    _playVideo () {
+    _playVideo (url) {
       const player = new Player({
         id: 'vs',
         autoplay: false,
         volume: 0.3,
-        url: 'http://cdn.mr-lin.site/1%E7%A1%AE%E5%AE%9A%E6%89%BF%E5%8A%9E.avi',
+        url: url,
         poster: '//s2.pstatp.com/cdn/expire-1-M/byted-player-videos/1.0.0/poster.jpg',
         playsinline: true
         // height: 700px
@@ -245,10 +251,36 @@ export default {
     },
     signIntwo () {
       this.$message.warning('您已签到成功')
+    },
+    signInthree () {
+      this.$axios.put('/api/course/' + this.currentCourse + '/commit')
+        .then(res => {
+          console.log('签到成功')
+          this.checkSignIn()
+        }).catch(error => {
+          console.log(error)
+          console.log('签到失败')
+        })
+    },
+    checkSignIn () {
+      this.$axios.get('/api/course/' + this.currentCourse + '/commit')
+        .then(res => {
+          console.log('查看签到信息成功')
+          this.signInInfo = res.data.data
+          console.log(this.signInInfo)
+        }).catch(error => {
+          console.log(error)
+          console.log('查看签到信息失败')
+        })
     }
   },
   mounted () {
     this._playVideo()
+    this.checkSignIn()
+    this.setcurrentCourse(this.$route.params.id)
+    this.url = this.$route.query.url
+    console.log('55555555555555555555')
+    console.log(this.$route.query.url)
   }
 }
 </script>
@@ -277,7 +309,7 @@ nav {
   color: black;
   border-bottom: 1px solid lightgrey;
   background-color: white;
-  z-index: 2020;
+  z-index: 20;
   box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
   .navlogo {
     display: flex;
@@ -313,33 +345,22 @@ nav {
     width: 300px;
     font-size: 16px;
     .messageShow {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      .headerNum{
-        width: 23px;
-        height: 15px;
-        position: absolute;
-        background-color: #f04134;
-        color: white;
-        font-size: 12px;
-        border-radius: 50px;
-        position: relative;
-        left: 100%;
-        top: 0;
-        transform: translate(-50%, -20%);
-        text-align: center;
+      width:50px;
+      height: 35px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-end;
+      >div{
+        cursor: pointer;
+        font-size: 14px;
       }
-      >span.messageIcon {
-        position: relative;
-        left: 0;
-        top: -15px;
-        /*transform: translate(-50%, -50%);*/
-        font-size: 25px;
-        color: #61c7fc;
+      >div:hover {
+        font-size: 15px;
       }
-      >span.messageIcon:hover {
-        color: #2492eb;
+      >div:active {
+        font-size: 14px;
+        text-decoration: underline;
       }
     }
     .btn01{

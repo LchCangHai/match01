@@ -255,6 +255,8 @@ export default {
     }
     vm = this
     this.getCourseInform()
+    this.getCourseFile()
+    this.getCourseVideo()
   }
 }
 </script>

@@ -83,10 +83,6 @@ export default {
         startTime: [{
           required: true,
           message: '请选择开始时间'
-        }],
-        duration: [{
-          required: true,
-          message: '请选择持续时间'
         }]
       },
       labelCol: {

@@ -3,7 +3,7 @@
     <div id="container">
       <nav>
         <div class="navlogo">
-          <img id="logo" src="../assets/logotem.jpg"/>
+          <img id="logo" src="../assets/logo.svg"/>
           <div>
             <span>这里是名字</span>
             <span>English Name</span>

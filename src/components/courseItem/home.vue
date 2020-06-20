@@ -180,7 +180,7 @@
               </div>
               <div class="one4item" v-for="(item,index) in courseFile" :key="index">
               <div>
-<!--                {{item.name}}-->
+                {{item.name}}
               </div>
             </div>
               <div class="one4item">

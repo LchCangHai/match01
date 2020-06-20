@@ -122,39 +122,33 @@ export default {
       }
       this.ruleForm.start = this.ruleForm.startDate.replace(/-/g, '/') + ' ' + this.ruleForm.startTime
       this.ruleForm.end = this.ruleForm.deadDate.replace(/-/g, '/') + ' ' + this.ruleForm.deadTime
-      this.ruleForm.start = new Date(this.ruleForm.start).getTime()
-      this.ruleForm.end = new Date(this.ruleForm.end).getTime()
+      this.ruleForm.start = (new Date(this.ruleForm.start).getTime()) / 1000
+      this.ruleForm.end = (new Date(this.ruleForm.end).getTime()) / 1000
       if (this.ruleForm.end - this.ruleForm.start <= 0) {
         this.$message.error('结束时间应该在开始时间之后')
         return false
       }
     },
     startExam () {
+      console.log('123456789000000000000')
       this.$refs.ruleForm1.validate((valid) => {
         if (valid) {
           this.$refs.ruleForm2.validate((valid) => {
             if (valid) {
-              this.$refs.ruleForm3.validate((valid) => {
-                if (valid) {
-                  const st = this.ruleForm.startDate + ' ' + this.ruleForm.startTime
-                  const et = this.ruleForm.deadDate + ' ' + this.ruleForm.deadTime
-                  this.getTime()
-                  const info = {
-                    type: 'exam',
-                    name: this.ruleForm.name,
-                    start: this.ruleForm.start,
-                    end: this.ruleForm.end,
-                    duration: this.ruleForm.duration,
-                    startS: st,
-                    endS: et
-                  }
-                  this.addTasks(info)
-                  this.$router.push('/addexam')
-                } else {
-                  this.$message.warning('请正确输入内容后开始创建')
-                  return false
-                }
-              })
+              const st = this.ruleForm.startDate + ' ' + this.ruleForm.startTime
+              const et = this.ruleForm.deadDate + ' ' + this.ruleForm.deadTime
+              this.getTime()
+              const info = {
+                type: 'test',
+                name: this.ruleForm.name,
+                start: this.ruleForm.start,
+                end: this.ruleForm.end,
+                duration: this.ruleForm.duration,
+                startS: st,
+                endS: et
+              }
+              this.addTasks(info)
+              this.$router.push('/addtask')
             } else {
               this.$message.warning('请正确输入内容后开始创建')
               return false

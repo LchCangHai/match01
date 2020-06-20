@@ -75,7 +75,7 @@ export default {
     'my-choose-course': chooseCourse
   },
   mounted () {
-    this.setLeftSider(0)
+    this.setLeftSider(7)
   }
 }
 </script>

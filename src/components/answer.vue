@@ -23,10 +23,7 @@
           </a>
         </v-dropdown>
         <div class="messageShow">
-          <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-          <div class="headerNum" v-show="isCnt99">99+</div>
-          <span class="iconfont messageIcon">&#xe606;</span>
-          <!--            <v-icon class="messageIcon" type="message"></v-icon>-->
+          <div @click="exit">退出</div>
         </div>
       </div>
     </nav>
@@ -54,62 +51,75 @@
         </div>
       </div>
       <div id="Content">
-        <div class="Item">
-          <div class="select item" v-show=" 'select' === 'select' ? true : false">
+        <div class="Item"
+             v-for="(item, index) in taskDATA.problems"
+             :key="item.order">
+          <div class="select item" v-show=" item.type === 'select' ? true : false">
             <div class="qText">
-              <div class="type"><span>1. </span>[<span>单选题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+              <div class="type">
+                <span>{{index + 1}}. </span>[<span>单选题</span>](<span>{{item.max_score}}分</span>)
+              </div>
+              <div class="text">{{item.content.text}}</div>
+              <img src="../assets/headImg2.png">
             </div>
             <div class="answerSheet">
               <el-radio-group v-model="radio">
-                <el-radio class="radio" label="1"><span></span>
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
+                <el-radio v-for="(option, index) in item.content.options"
+                          class="radio"
+                          :label="option"
+                          :key="index">
+                  <span></span>{{option}}
                 </el-radio>
-                <el-radio class="radio" label="2"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="3"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="4"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="5"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="6"><span></span>备选项</el-radio>
               </el-radio-group>
 
             </div>
           </div>
-          <div class="mselect item" v-show=" 'mselect' === 'mselect' ? true : false">
+          <div class="mselect item" v-show=" item.type === 'mselect' ? true : false">
             <div class="qText">
-              <div class="type"><span>2. </span>[<span>多选题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+              <div class="type">
+                <span>{{index + 1}}. </span>[<span>多选题</span>](<span>{{item.max_score}}分</span>)
+              </div>
+              <div class="text">{{item.content.text}}</div>
             </div>
             <div class="answerSheet">
               <el-checkbox-group v-model="checkList">
-                <el-checkbox class="checkbox"><span></span>复选框 A</el-checkbox>
-                <el-checkbox class="checkbox" label="复选框 B"><span></span>复选框 B</el-checkbox>
-                <el-checkbox class="checkbox" label="复选框 C"><span></span>复选框 C</el-checkbox>
+                <el-checkbox class="checkbox"
+                             v-for="(option, index) in item.content.options"
+                             :label="option"
+                             :key="index">
+                  <span></span>{{option}}
+                </el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
-          <div class="judge item" v-show=" 'judge' === 'judge' ? true : false">
+          <div class="judge item" v-show=" item.type === 'judge' ? true : false">
             <div class="qText">
-              <div class="type"><span>1. </span>[<span>判断题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+              <div class="type">
+                <span>{{index + 1}}. </span>[<span>判断题</span>](<span>{{item.max_score}}分</span>)
+              </div>
+              <div class="text">{{item.content.text}}</div>
             </div>
             <div class="answerSheet">
               <el-radio-group v-model="radio">
-                <el-radio class="radio" label="对"><span></span>正确</el-radio>
-                <el-radio class="radio" label="错"><span></span>错误</el-radio>
+                <el-radio class="radio"
+                          v-for="(option, index) in item.content.options"
+                          :label="option"
+                          :key="index">
+                  <span></span>{{option}}
+                </el-radio>
               </el-radio-group>
 
             </div>
           </div>
-          <div class="blank item" v-show=" 'blank' === 'blank' ? true : false">
+          <div class="blank item" v-show=" item.type === 'blank' ? true : false">
             <div class="qText">
-              <div class="type"><span>3. </span>[<span>填空题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+              <div class="type">
+                <span>{{index + 1}}. </span>[<span>填空题</span>](<span>{{item.max_score}}分</span>)
+              </div>
+              <div class="text">{{item.content.text}}</div>
             </div>
             <div class="answerSheet">
-              <div class="uploadIcon" @click="clickUpLoad(1)">
+              <div class="uploadIcon" @click="clickUpLoad(item.order)">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-fujian"></use>
                 </svg>
@@ -117,16 +127,18 @@
               <div class="replyArea">
                 <v-input class="blankArea Area" type="textarea"></v-input>
               </div>
-              <div class="fileName">{{answers['1'].fileName}}</div>
+              <div class="fileName">文件名</div>
             </div>
           </div>
-          <div class="question item" v-show=" 'question' === 'question' ? true : false">
+          <div class="question item" v-show=" item.type === 'subjective' ? true : false">
             <div class="qText">
-              <div class="type"><span>4. </span>[<span>论述题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
+              <div class="type">
+                <span>{{index + 1}}. </span>[<span>论述题</span>](<span>{{item.max_score}}分</span>)
+              </div>
+              <div class="text">{{item.content.text}}</div>
             </div>
             <div class="answerSheet">
-              <div class="uploadIcon" @click="clickUpLoad(1)">
+              <div class="uploadIcon" @click="clickUpLoad(item.order)">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-fujian"></use>
                 </svg>
@@ -134,16 +146,18 @@
               <div class="replyArea Area">
                 <v-input class="questionArea Area" type="textarea"></v-input>
               </div>
-              <div class="fileName">{{answers['1'].fileName}}</div>
+              <div class="fileName">文件名</div>
             </div>
           </div>
-          <div class="Img item" v-show=" 'Img' === 'Img' ? true : false">
+          <div class="Img item" v-show=" item.type === 'Img' ? true : false">
             <div class="qText">
-              <div class="type"><span>5. </span>[<span>论述题</span>]</div>
+              <div class="type">
+                <span>{{index + 1}}. </span>[<span>论述题</span>](<span>{{item.max_score}}分</span>)
+              </div>
               <img src="../assets/headImg2.png">
             </div>
             <div class="answerSheet">
-              <div class="uploadIcon" @click="clickUpLoad(1)">
+              <div class="uploadIcon" @click="clickUpLoad(item.order)">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-fujian"></use>
                 </svg>
@@ -151,95 +165,7 @@
               <div class="replyArea">
                 <v-input class="imgArea Area" type="textarea"></v-input>
               </div>
-              <div class="fileName">{{answers['1'].fileName}}</div>
-            </div>
-          </div>
-        </div>
-        <div class="Item">
-          <div class="select item" v-show=" 'select' === 'select' ? true : false">
-            <div class="qText">
-              <div class="type"><span>1. </span>[<span>单选题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
-            </div>
-            <div class="answerSheet">
-              <el-radio-group v-model="radio">
-                <el-radio class="radio" label="1"><span></span>
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
-                  备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项备选项
-                </el-radio>
-                <el-radio class="radio" label="2"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="3"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="4"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="5"><span></span>备选项</el-radio>
-                <el-radio class="radio" label="6"><span></span>备选项</el-radio>
-              </el-radio-group>
-
-            </div>
-          </div>
-          <div class="mselect item" v-show=" 'mselect' === 'mselect' ? true : false">
-            <div class="qText">
-              <div class="type"><span>2. </span>[<span>多选题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
-            </div>
-            <div class="answerSheet">
-              <el-checkbox-group v-model="checkList">
-                <el-checkbox class="checkbox"><span></span>复选框 A</el-checkbox>
-                <el-checkbox class="checkbox" label="复选框 B"><span></span>复选框 B</el-checkbox>
-                <el-checkbox class="checkbox" label="复选框 C"><span></span>复选框 C</el-checkbox>
-              </el-checkbox-group>
-            </div>
-          </div>
-          <div class="blank item" v-show=" 'blank' === 'blank' ? true : false">
-            <div class="qText">
-              <div class="type"><span>3. </span>[<span>填空题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
-            </div>
-            <div class="answerSheet">
-              <div class="uploadIcon" @click="clickUpLoad(1)">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-fujian"></use>
-                </svg>
-              </div>
-              <div class="replyArea">
-                <v-input class="blankArea Area" type="textarea"></v-input>
-              </div>
-              <div class="fileName">{{answers['1'].fileName}}</div>
-            </div>
-          </div>
-          <div class="question item" v-show=" 'question' === 'question' ? true : false">
-            <div class="qText">
-              <div class="type"><span>4. </span>[<span>论述题</span>]</div>
-              <div class="text">这里是题目题目这里是题目题目这里是题目题目这里是题目题目这里是题目题目</div>
-            </div>
-            <div class="answerSheet">
-              <div class="uploadIcon" @click="clickUpLoad(1)">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-fujian"></use>
-                </svg>
-              </div>
-              <div class="replyArea Area">
-                <v-input class="questionArea Area" type="textarea"></v-input>
-              </div>
-              <div class="fileName">{{answers['1'].fileName}}</div>
-            </div>
-          </div>
-          <div class="Img item" v-show=" 'Img' === 'Img' ? true : false">
-            <div class="qText">
-              <div class="type"><span>5. </span>[<span>论述题</span>]</div>
-              <img src="../assets/headImg2.png">
-            </div>
-            <div class="answerSheet">
-              <div class="uploadIcon" @click="clickUpLoad(1)">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-fujian"></use>
-                </svg>
-              </div>
-              <div class="replyArea">
-                <v-input class="imgArea Area" type="textarea"></v-input>
-              </div>
-              <div class="fileName">{{answers['1'].fileName}}</div>
+              <div class="fileName">文件名</div>
             </div>
           </div>
         </div>
@@ -259,13 +185,13 @@ export default {
   },
   data () {
     return {
-      counter: 5,
-      isCnt99: false,
-      data: [
-        { content: '1st item' },
-        { content: '2nd item' },
-        { content: '3rd item' }
-      ],
+      taskID: this.$route.params.id,
+      taskDATA: {},
+      // data: [
+      //   { content: '1st item' },
+      //   { content: '2nd item' },
+      //   { content: '3rd item' }
+      // ],
       radio: '',
       radio01: '',
       checkList: [],
@@ -300,6 +226,10 @@ export default {
     toPCBtn () {
       this.$router.push('/pCenter')
     },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
+    },
     itemClick (data) {
       console.log(data)
     },
@@ -325,10 +255,10 @@ export default {
     addZero (i) {
       return i < 10 ? '0' + i : i + ''
     },
-    countTime (time = '2020/06/16 17:20:00') {
+    countTime (time) {
       const nowtime = new Date()
-      const endtime = new Date(time)
-      const lefttime = parseInt((endtime.getTime() - nowtime.getTime()) / 1000)
+      const endtime = parseInt(time)
+      const lefttime = parseInt(endtime - (nowtime.getTime()) / 1000)
       this.timeCnt.d = parseInt(lefttime / (24 * 60 * 60))
       this.timeCnt.h = parseInt(lefttime / (60 * 60) % 24)
       this.timeCnt.m = parseInt(lefttime / 60 % 60)
@@ -339,11 +269,23 @@ export default {
       this.timeCnt.s = this.addZero(this.timeCnt.s)
       console.log(123)
       setTimeout(() => {
-        this.countTime(time = '2020/06/16 17:20:00')
+        this.countTime(time)
       }, 1000)
+    },
+    getTaskData () {
+      this.$axios.get('/api/task/' + this.taskID)
+        .then(res => {
+          this.taskDATA = res.data.data
+          console.log('获取考试数据成功')
+          this.countTime(res.data.data.time_end)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取考试数据失败')
+        })
     }
   },
   mounted () {
+    this.getTaskData()
     this.countTime()
   }
 }
@@ -409,33 +351,22 @@ export default {
       width: 300px;
       font-size: 16px;
       .messageShow {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        .headerNum{
-          width: 23px;
-          height: 15px;
-          position: absolute;
-          background-color: #f04134;
-          color: white;
-          font-size: 12px;
-          border-radius: 50px;
-          position: relative;
-          left: 100%;
-          top: 0;
-          transform: translate(-50%, -20%);
-          text-align: center;
+        width:50px;
+        height: 35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        >div{
+          cursor: pointer;
+          font-size: 14px;
         }
-        >span.messageIcon {
-          position: relative;
-          left: 0;
-          top: -15px;
-          /*transform: translate(-50%, -50%);*/
-          font-size: 25px;
-          color: #61c7fc;
+        >div:hover {
+          font-size: 15px;
         }
-        >span.messageIcon:hover {
-          color: #2492eb;
+        >div:active {
+          font-size: 14px;
+          text-decoration: underline;
         }
       }
       .btn01{

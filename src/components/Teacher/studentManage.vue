@@ -12,13 +12,11 @@
         <div class="btn01" @click="pcBtn()">个人中心</div>
         <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
           <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" src="../../assets/avatar02.png">
+            <img class="avatarI" :src="currentUser.avatar">
           </a>
         </v-dropdown>
         <div class="messageShow">
-          <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-          <div class="headerNum" v-show="isCnt99">99+</div>
-          <span class="iconfont messageIcon">&#xe606;</span>
+          <div @click="exit">退出</div>
         </div>
       </div>
     </nav>
@@ -37,7 +35,7 @@
       <div class="topBox">
         <div class="tips">
           <div>上传至分组：</div>
-          <div>第一章：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div>
+          <div>{{courseInfo.name}}</div>
         </div>
         <div class="upLoadBox" id="drag_box" ref="dopbox" :class=" { borderhover: borderhover } ">
           <div class="uploadIcon">
@@ -52,61 +50,8 @@
           </div>
         </div>
       </div>
-      <div class="courseCheck"
-           :class="{ toggled : open === false ? true : false}">
-        <div class="zhankai" @click="toggle">
-          <div v-show="!open">
-            <v-icon type="right"></v-icon>
-          </div>
-          <div v-show="open">
-            <v-icon type="down"></v-icon>
-          </div>
-        </div>
-        <div class="courseItem" :class=" { choosed : '12' === '12' ? true : false } ">
-          <div>
-            <div>熬夜秃头学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
-        <div class="courseItem">
-          <div>
-            <div>自闭学</div>
-          </div>
-        </div>
+      <div id="checkcourse">
+        <my-choose-course></my-choose-course>
       </div>
       <div class="student">
         <div class="studentTitle">
@@ -123,18 +68,20 @@
             <div>学院</div>
           </div>
         </div>
-        <div class="studentItem">
+        <div class="studentItem"
+             v-for="(item, index) in students"
+             :key="index">
           <div class="item01">
-            <div>林炜</div>
+            <div>{{item.nickname}}</div>
           </div>
           <div class="item01">
-            <div>男</div>
+            <div>{{item.gender}}</div>
           </div>
           <div class="item01">
-            <div>031902321</div>
+            <div>{{item.uid}}</div>
           </div>
           <div class="item01">
-            <div>数学与计算机科学学院</div>
+            <div>{{item.school}}</div>
           </div>
         </div>
         <div class="studentItem">
@@ -188,6 +135,7 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider.vue'
+import chooseCourse from './chooseCourse/chooseCourse'
 
 export default {
   name: 'studentManage.vue',
@@ -197,21 +145,27 @@ export default {
       isCnt99: false,
       open: false,
       borderhover: false,
-      data: [
-        { content: '1st item' },
-        { content: '2nd item' },
-        { content: '3rd item' }
-      ]
+      formdata: '',
+      students: ''
+      // data: [
+      //   { content: '1st item' },
+      //   { content: '2nd item' },
+      //   { content: '3rd item' }
+      // ]
     }
   },
   computed: {
     ...mapState([
-      'leftSiderActive'
+      'leftSiderActive',
+      'currentCourse',
+      'courseInfo',
+      'currentUser'
     ])
   },
   methods: {
     ...mapMutations([
-      'setLeftSider'
+      'setLeftSider',
+      'setcourseInfo'
     ]),
     toggle () {
       this.open = !this.open
@@ -221,6 +175,10 @@ export default {
     },
     tostudent () {
       this.$router.push('/index')
+    },
+    exit () {
+      window.localStorage.setItem('access_token', null)
+      this.$router.push('/unindex')
     },
     clickUpload () {
       this.$refs.upload_btn.click()
@@ -232,7 +190,18 @@ export default {
         const file = files[0]
         this.file = file
         this.formdata = new FormData()
-        this.formdata.set('avatar', file)
+        this.formdata.set('excel_file', file)
+        this.$axios.post('/api/course/' + this.currentCourse + '/students/import', this.formdata, {
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then(res => {
+          this.$message.success('上传文件成功')
+          this.getStudent()
+        }).catch(error => {
+          console.log(error)
+          this.$message.warning('上传文件失败')
+        })
       }
     },
     handleFileChange () {
@@ -247,6 +216,25 @@ export default {
       const fileData = e.dataTransfer.files
       // console.log(fileData)
       this.uploadFile(fileData)
+    },
+    getStudent () {
+      this.$axios.get('/api/course/' + this.currentCourse + '/students')
+        .then(res => {
+          this.$message.success('获取学生信息成功')
+          this.students = res.data.data.students
+        }).catch(error => {
+          console.log(error)
+          this.$message.warning('获取学生信息失败')
+        })
+    },
+    getCourse () {
+      this.$axios.get('/api/course/' + this.currentCourse)
+        .then(res => {
+          this.setcourseInfo(res.data.data)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程信息失败')
+        })
     },
     chooseChater (id) {
       if (this.chapter === id) {
@@ -268,13 +256,42 @@ export default {
         },
         500
       )
+    },
+    getUserInfo () {
+      this.$axios.get('/api/user/current')
+        .then(res => {
+          console.log('已登录')
+          this.setCurrentUser(res.data.data)
+          // this.$notification.info({
+          //   message: '消息',
+          //   description: '已登录账号： ' + res.data.data.nickname,
+          //   duration: 2
+          // })
+        }).catch(() => {
+          this.$notification.warning({
+            message: '警告',
+            description: '未登录或登录过期',
+            duration: 2
+          })
+          this.$message.warning('未登录或登录过期')
+          this.$router.push('/unindex')
+        }).finally(() => {
+        })
+    }
+  },
+  watch: {
+    currentCourse (val) {
+      this.getCourse()
     }
   },
   components: {
-    'my-left': LeftSider
+    'my-left': LeftSider,
+    'my-choose-course': chooseCourse
   },
   mounted () {
     this.setLeftSider(5)
+    this.getCourse()
+    this.getStudent()
     const that = this
     const dropbox = document.getElementById('drag_box')
     dropbox.addEventListener('drop', this.enentDrop, false)
@@ -364,33 +381,22 @@ export default {
       width: 300px;
       font-size: 16px;
       .messageShow {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        .headerNum{
-          width: 23px;
-          height: 15px;
-          position: absolute;
-          background-color: #f04134;
-          color: white;
-          font-size: 12px;
-          border-radius: 50px;
-          position: relative;
-          left: 100%;
-          top: 0;
-          transform: translate(-50%, -20%);
-          text-align: center;
+        width:50px;
+        height: 35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        >div{
+          cursor: pointer;
+          font-size: 14px;
         }
-        >span.messageIcon {
-          position: relative;
-          left: 0;
-          top: -15px;
-          /*transform: translate(-50%, -50%);*/
-          font-size: 25px;
-          color: #61c7fc;
+        >div:hover {
+          font-size: 15px;
         }
-        >span.messageIcon:hover {
-          color: #2492eb;
+        >div:active {
+          font-size: 14px;
+          text-decoration: underline;
         }
       }
       .btn01{

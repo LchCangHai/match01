@@ -192,9 +192,9 @@
           <div class="ftItemNav">
             <div class="ftInfo">
               <div>
-                <img :src="courseDiscuss.user.avatar">
+                <img :src="item.user.avatar">
               </div>
-              <div>{{courseDiscuss.user.nickname}}</div>
+              <div>{{item.user.nickname}}</div>
             </div>
             <div class="ftIcon">
               <div>
@@ -203,133 +203,13 @@
             </div>
           </div>
           <div class="four3Context">
-            <div>{{courseDiscuss.content}}</div>
+            <div>{{item.content}}</div>
 <!--            <div>-->
 <!--              <div class="four3ItemBtn"><div>围观</div></div>-->
 <!--            </div>-->
           </div>
           <div class="four3Time">
-            <div>{{courseDiscuss.post_at}}</div>
-          </div>
-        </div>
-        <div class="four3Item" @click="toOneDiscuss('12')">
-          <div class="ftItemNav">
-            <div class="ftInfo">
-              <div>
-                <img src="../../assets/avatar01.jpg">
-              </div>
-              <div>你芃哥</div>
-            </div>
-            <div class="ftIcon">
-              <div>
-                <v-icon type="question-circle"></v-icon>
-              </div>
-            </div>
-          </div>
-          <div class="four3Context">
-            <div>为什么我作业还没写完，我都已经秃啦！是因为我还不够秃吗？</div>
-            <div>
-              <div class="four3ItemBtn"><div>围观</div></div>
-            </div>
-          </div>
-          <div class="four3Time">
-            <div>2020-6-1 23:50</div>
-          </div>
-        </div>
-        <div class="four3Item">
-          <div class="ftItemNav">
-            <div class="ftInfo">
-              <div>
-                <img src="../../assets/avatar01.jpg">
-              </div>
-              <div>你芃哥</div>
-            </div>
-            <div class="ftIcon">
-              <div>
-                <v-icon type="question-circle"></v-icon>
-              </div>
-            </div>
-          </div>
-          <div class="four3Context">
-            <div>为什么我作业还没写完，我都已经秃啦！是因为我还不够秃吗？</div>
-            <div>
-              <div class="four3ItemBtn"><div>围观</div></div>
-            </div>
-          </div>
-          <div class="four3Time">
-            <div>2020-6-1 23:50</div>
-          </div>
-        </div>
-        <div class="four3Item">
-          <div class="ftItemNav">
-            <div class="ftInfo">
-              <div>
-                <img src="../../assets/avatar01.jpg">
-              </div>
-              <div>你芃哥</div>
-            </div>
-            <div class="ftIcon">
-              <div>
-                <v-icon type="question-circle"></v-icon>
-              </div>
-            </div>
-          </div>
-          <div class="four3Context">
-            <div>为什么我作业还没写完，我都已经秃啦！是因为我还不够秃吗？</div>
-            <div>
-              <div class="four3ItemBtn"><div>围观</div></div>
-            </div>
-          </div>
-          <div class="four3Time">
-            <div>2020-6-1 23:50</div>
-          </div>
-        </div>
-        <div class="four3Item">
-          <div class="ftItemNav">
-            <div class="ftInfo">
-              <div>
-                <img src="../../assets/avatar01.jpg">
-              </div>
-              <div>你芃哥</div>
-            </div>
-            <div class="ftIcon">
-              <div>
-                <v-icon type="question-circle"></v-icon>
-              </div>
-            </div>
-          </div>
-          <div class="four3Context">
-            <div>为什么我作业还没写完，我都已经秃啦！是因为我还不够秃吗？</div>
-            <div>
-              <div class="four3ItemBtn"><div>围观</div></div>
-            </div>
-          </div>
-          <div class="four3Time">
-            <div>2020-6-1 23:50</div>
-          </div>
-        </div>
-        <div class="four3Item">
-          <div class="ftItemNav">
-            <div class="ftInfo">
-              <div>
-                <img src="../../assets/avatar01.jpg">
-              </div>
-              <div>你芃哥</div>
-            </div>
-            <div class="ftIcon">
-              <div>
-                <v-icon type="question-circle"></v-icon>
-              </div>
-            </div>
-          </div>
-          <div class="four3Context">
-            <div>为什么我作业还没写完，我都已经秃啦！是因为我还不够秃吗？</div>
-            <div>
-              <div class="four3ItemBtn"><div>围观</div></div>
-            </div>
-          </div>
-          <div class="four3Time">
-            <div>2020-6-1 23:50</div>
+            <div>{{item.post_at}}</div>
           </div>
         </div>
       </div>
@@ -390,6 +270,7 @@ export default {
             description: '发布讨论内容',
             duration: 1
           })
+          this.getDiscuss()
         }).catch(error => {
           this.$message.error('发布讨论内容失败')
           console.log(error)
@@ -402,6 +283,7 @@ export default {
       this.$axios.get('/api/course/' + this.currentCourse + '/discussions')
         .then(res => {
           this.setcourseDiscuss(res.data.data.discussions)
+          console.log(res.data.data.discussions)
         }).catch(error => {
           console.log(error)
           this.$message.error('获取课程讨论列表失败')
@@ -824,7 +706,7 @@ export default {
         font-size: 13px;
       }
       >div:last-child {
-        width: 20%;
+        width: 90%;
         .four3ItemBtn {
           display: flex;
           flex-direction: row;

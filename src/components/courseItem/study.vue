@@ -18,47 +18,30 @@
 <!--    </div>-->
     <div id="mune01">
       <div class="studyItem01" v-for="(item, index) in courseVideo" :key="index">
-        <div class="item01Main" @click="chooseChater('one')">
+        <div class="item01Main" @click="chooseChater(item.name)">
           <div class="chapter01">
             <div>
               <v-icon type="folder"></v-icon>
             </div>
-            <div>第一章 秃头学的前世今生</div>
+            <div>{{item.name}}</div>
           </div>
           <div class="floderIcon">
-            <v-icon type="right" v-show="chapter === 'one' ? false : true"></v-icon>
-            <v-icon type="down" v-show="chapter === 'one' ? true : false"></v-icon>
+            <v-icon type="right" v-show="chapter === item.name ? false : true"></v-icon>
+            <v-icon type="down" v-show="chapter === item.name ? true : false"></v-icon>
           </div>
         </div>
-        <div class="item01Child" v-show="chapter === 'one' ? true : false">
-          <div class="studyItem02">
+        <div class="item01Child" v-show="chapter === item.name ? true : false">
+          <div class="studyItem02"
+               v-for="(item1, index1) in item.movies"
+               :key="index1"
+               @click="openVideo(item1)">
             <div class="item02Main">
               <div class="videoIcon">
                 <svg class="icon" aria-hidden="true">
                   <use xlink:href="#icon-meiti"></use>
                 </svg>
               </div>
-              <div class="videoTitle"> 秃头学的前世今生</div>
-            </div>
-          </div>
-          <div class="studyItem02" @click="openVideo('1')">
-            <div class="item02Main">
-              <div class="videoIcon">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-meiti"></use>
-                </svg>
-              </div>
-              <div class="videoTitle"> 秃头学的前世今生</div>
-            </div>
-          </div>
-          <div class="studyItem02" @click="openVideo('1')">
-            <div class="item02Main">
-              <div class="videoIcon">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-meiti"></use>
-                </svg>
-              </div>
-              <div class="videoTitle"> 秃头学的前世今生</div>
+              <div class="videoTitle">{{item1.name}}</div>
             </div>
           </div>
         </div>
@@ -263,11 +246,14 @@ export default {
   },
   computed: {
     ...mapState([
-      'courseVideo'
+      'courseVideo',
+      'currentVideo',
+      'currentCourse'
     ])
   },
   methods: {
     ...mapMutations([
+      'setcurrentVideo'
     ]),
     chooseChater (id) {
       if (this.chapter === id) {
@@ -276,9 +262,11 @@ export default {
         this.chapter = id
       }
     },
-    openVideo (id) {
+    openVideo (item) {
+      this.setcurrentVideo(item)
       const routeUrl = this.$router.resolve({
-        path: '/video'
+        path: `/video/${this.currentCourse}`,
+        query: { url: item.url }
       })
       window.open(routeUrl.href, '_blank')
     }

@@ -154,14 +154,14 @@
               <div>
                 <v-icon type="folder"></v-icon>
               </div>
-              <div>第一章 秃头学的前世今生</div>
+              <div>{{item.name}}</div>
             </div>
             <div class="floderIcon">
-              <v-icon type="right" v-show="chapter === 'one' ? false : true"></v-icon>
-              <v-icon type="down" v-show="chapter === 'one' ? true : false"></v-icon>
+              <v-icon type="right" v-show="chapter === item.name ? false : true"></v-icon>
+              <v-icon type="down" v-show="chapter === item.name ? true : false"></v-icon>
             </div>
           </div>
-          <div class="item01Child" v-show="chapter === 'one' ? true : false">
+          <div class="item01Child" v-show="chapter === item.name ? true : false">
             <div class="studyItem02"
                  @click="openDocument(item1)"
                  v-for="(item1, index1) in item.documents" :key="index1">
@@ -380,11 +380,13 @@ export default {
   },
   computed: {
     ...mapState([
-      'courseFile'
+      'courseFile',
+      'currentCourse'
     ])
   },
   methods: {
     ...mapMutations([
+      'setcurrentCourse'
     ]),
     setCourseId (id) {
       if (this.courseId === id) {
@@ -419,8 +421,17 @@ export default {
     },
     openDocument (item1) {
       let base1 = 'http://view.officeapps.live.com/op/view.aspx'
-      base1 = base1 + '?src=http://thunderclass.mr-lin.site/api' + item1.url
+      base1 = base1 + '?src=' + item1.url
       window.open(base1)
+    },
+    getCourseFile () {
+      this.$axios.get('/api/course/' + this.currentCourse + '/documents')
+        .then(res => {
+          this.setcourseFile(res.data.data.chapters)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程章节课件失败')
+        })
     }
   },
   components: {

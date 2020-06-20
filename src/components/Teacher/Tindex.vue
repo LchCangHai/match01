@@ -56,10 +56,11 @@
             <div>课程管理</div>
           </div>
           <div class="BtnBox">
+            <div class="item" @click="totcourseManage()">课程管理</div>
             <div class="item" @click="totcourseWare()">课件管理</div>
             <div class="item" @click="totcourseVideo()">视频管理</div>
             <div class="item" @click="totcourseDiscuss()">讨论管理</div>
-            <div class="item" @click="totcourseSignIn()">课程签到</div>
+<!--            <div class="item" @click="totcourseSignIn()">课程签到</div>-->
           </div>
         </div>
         <div class="Exam">

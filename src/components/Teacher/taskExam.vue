@@ -77,7 +77,8 @@ export default {
       'leftSiderActive',
       'addTEPop',
       'TEPopType',
-      'addTEPop'
+      'addTEPop',
+      'currentCourse'
     ])
   },
   methods: {
@@ -85,7 +86,8 @@ export default {
       'setLeftSider',
       'chooseTEPop',
       'openAddTEPop',
-      'closeAddTEPop'
+      'closeAddTEPop',
+      'setcourseInfo'
     ]),
     openPop (type) {
       if (this.addTEPop === false || this.TEPopType !== type) {
@@ -100,6 +102,15 @@ export default {
     },
     tostudent () {
       this.$router.push('/index')
+    },
+    getCourse () {
+      this.$axios.get('/api/course/' + this.currentCourse)
+        .then(res => {
+          this.setcourseInfo(res.data.data)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程信息失败')
+        })
     }
   },
   components: {
@@ -111,6 +122,7 @@ export default {
   },
   mounted () {
     this.setLeftSider(4)
+    this.getCourse()
   }
 }
 </script>
