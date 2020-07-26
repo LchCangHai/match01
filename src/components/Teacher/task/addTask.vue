@@ -13,20 +13,20 @@
           <v-input v-model="ruleForm.content" type="textarea" class="contentArea"></v-input>
         </v-form-item>
       </v-form>
+      <v-form :model="ruleForm" :rules="rules" ref="ruleForm">
+        <v-form-item label="开始日期" prop="startDate">
+          <v-date-picker v-model="ruleForm.startDate"></v-date-picker>
+        </v-form-item>
+        <v-form-item label="开始时间" prop="startTime">
+          <v-time-picker v-model="ruleForm.startTime"></v-time-picker>
+        </v-form-item>
+      </v-form>
       <v-form :model="ruleForm" :rules="rules" ref="ruleForm2">
         <v-form-item label="截止日期" prop="deadDate">
           <v-date-picker v-model="ruleForm.deadDate"></v-date-picker>
         </v-form-item>
         <v-form-item label="截止时间" prop="deadTime">
           <v-time-picker v-model="ruleForm.deadTime"></v-time-picker>
-        </v-form-item>
-      </v-form>
-      <v-form :model="ruleForm" :rules="rules" ref="ruleForm">
-        <v-form-item label="开始日期" prop="deadDate">
-          <v-date-picker v-model="ruleForm.startDate"></v-date-picker>
-        </v-form-item>
-        <v-form-item label="开始时间" prop="deadTime">
-          <v-time-picker v-model="ruleForm.startTime"></v-time-picker>
         </v-form-item>
       </v-form>
       <v-form class="lastItem" direction="vertical" :model="ruleForm" :rules="rules" ref="ruleForm3">

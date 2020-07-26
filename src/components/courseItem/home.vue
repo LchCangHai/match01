@@ -16,18 +16,20 @@
                 </div>
               </div>
               <div class="oneavatarBox">
-                <img class="onavatarImg" :src="courseInfo.teacher.avatar">
+                <img class="onavatarImg" :src="courseInfo.teacher.avatar" @error="imgerror()">
               </div>
               <div class="oneName">
-                <div>{{courseInfo.teacher.nickname}}</div>
+                <div v-show="courseInfo.teacher.name === null">{{courseInfo.teacher.nickname}}</div>
+                <div v-show="courseInfo.teacher.name !== null">{{courseInfo.teacher.name}}</div>
               </div>
               <div class="oneCollege">
                 <div>所属院系：{{courseInfo.teacher.school}}
-                <span v-show="courseInfo.teacher.shool === null">未认证</span></div>
+                <span v-show="courseInfo.teacher.school === null">未认证</span></div>
               </div>
               <div class="oneIntro">
-                <div>个人简介</div>
-                <div>暂无</div>
+                <div>个人简介：</div>
+                <div v-show="courseInfo.teacher.introduce === null">暂无</div>
+                <div v-show="courseInfo.teacher.introduce !== null">{{courseInfo.teacher.introduce}}</div>
               </div>
             </div>
           </vue-scroll>
@@ -88,78 +90,23 @@
                 </div>
               </div>
               <div class="one3item"
-                   @click="openPop(index)"
+                   @click="openPop(item)"
                    v-for="(item, index) in courseInform"
                    :key="index">
                 <div class="one3">
-                  <div class="one3icon"></div>
+                  <div class="one3icon" v-show="item.read === 0"></div>
+                  <div class="one3iconed" v-show="item.read === 1"></div>
                   <div class="one3info">{{item.title}}</div>
                 </div>
-                <div class="one3time">2020.6.1</div>
+                <div class="one3time">{{item.create_at}}</div>
               </div>
-              <div class="one3item" @click="openPop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openPop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openCoursePop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openCoursePop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openCoursePop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openCoursePop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openCoursePop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openCoursePop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
-              <div class="one3item" @click="openCoursePop()">
-                <div class="one3">
-                  <div class="one3icon"></div>
-                  <div class="one3info">关于熬夜秃头实验的通知</div>
-                </div>
-                <div class="one3time">2020.6.1</div>
-              </div>
+<!--              <div class="one3item" @click="openCoursePop()">-->
+<!--                <div class="one3">-->
+<!--                  <div class="one3icon"></div>-->
+<!--                  <div class="one3info">关于熬夜秃头实验的通知</div>-->
+<!--                </div>-->
+<!--                <div class="one3time">2020.6.1</div>-->
+<!--              </div>-->
             </div>
           </vue-scroll>
         </div>
@@ -182,41 +129,6 @@
               <div>
                 {{item.name}}
               </div>
-            </div>
-              <div class="one4item">
-                <div>
-                  第一周 秃头学的前世今生
-                </div>
-              </div>
-              <div class="one4item">
-                <div>
-                  第一周 秃头学的前世今生
-                </div>
-              </div>
-              <div class="one4item">
-                <div>
-                  第一周 秃头学的前世今生
-                </div>
-              </div>
-              <div class="one4item">
-                <div>
-                  第一周 秃头学的前世今生
-                </div>
-              </div>
-              <div class="one4item">
-                <div>
-                  第一周 秃头学的前世今生
-                </div>
-              </div>
-              <div class="one4item">
-                <div>
-                  第一周 秃头学的前世今生
-                </div>
-              </div>
-              <div class="one4item">
-                <div>
-                  第一周 秃头学的前世今生
-                </div>
               </div>
             </div>
           </vue-scroll>
@@ -228,11 +140,13 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+// import courseSignIn from '../Teacher/courseSignIn'
 
 export default {
   name: 'home.vue',
   data () {
     return {
+      errorImg: require('../../assets/errorAvatar01.png')
     }
   },
   computed: {
@@ -248,11 +162,20 @@ export default {
     ...mapMutations([
       'openCoursePop',
       'closeCoursePop',
-      'chooseCourseType'
+      'chooseCourseType',
+      'setcourseInfo',
+      'setcurrentInform'
     ]),
-    openPop () {
+    openPop (item) {
+      this.setcurrentInform(item)
       this.chooseCourseType(1)
       this.openCoursePop()
+    },
+    imgerror () {
+      // eslint-disabled
+      const tem = this.courseInfo
+      tem.teacher.avatar = this.errorImg
+      this.setcourseInfo(tem)
     }
   },
   components: {
@@ -402,7 +325,7 @@ export default {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: transparent;
+            background-color: #00a854;
           }
           .one3info {
             margin: 2px 0;

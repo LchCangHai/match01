@@ -1,46 +1,34 @@
 <template>
     <div id="personalCenter">
       <div id="header">
-        <img id="bc01" src="../assets/headImg.png">
-        <nav>
-          <div class="navlogo">
-            <img id="logo" src="../assets/logotem.jpg"/>
-            <div>
-              <span>这里是名字</span>
-              <span>English Name</span>
-            </div>
-          </div>
-          <div class="navbtn">
-            <div class="btn01" @click="courseBtn()">课程</div>
-            <div class="btn01 tabActive">个人中心</div>
-            <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
-              <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-                <img class="avatarI" :src="this.currentUser.avatar">
-              </a>
-            </v-dropdown>
-            <div class="messageShow">
-              <div @click="exit">退出</div>
-            </div>
-          </div>
-        </nav>
+        <img id="bc01" src="../assets/headbc2.jpg">
+        <div id="Nav">
+          <my-nav :type="2"></my-nav>
+        </div>
+        <div id="rightSider" @click="tostudent()">
+          <div>教师主页</div>
+        </div>
         <div id="personInfo">
           <div class="avatarC">
-            <img class="avatarI" src="../assets/avatar01.jpg">
+            <img class="avatarI" :src="this.currentUser.avatar">
           </div>
           <div class="info">
-            <span class="college">数学与计算机科学学院</span>
-            <span class="iden">学生</span>
+            <span class="college">{{currentUser.nickname}}</span>
+            <span class="iden">{{currentUser.school}}</span>
             <div class="editBtn">
-              <div class="Btn01" @click="openPop01()">
+              <div class="Btn01" @click="openEdit()">
+                <div>编辑资料</div>
+              </div>
+              <div class="Btn01" @click="openPop01()" v-show="false">
                 <div>编辑资料</div>
               </div>
               <div class="Btn01"
-                v-show="!isComfirmed"
+                v-show="false"
                    @click="openPop02()">
                 <div>学校认证</div>
               </div>
               <div class="Btn02"
-                v-show="isComfirmed">
+                v-show="false">
                 <div>
                   <span class="iconfont icon-zhengshu"></span>
                 </div>
@@ -99,6 +87,7 @@ import Course from '../views/personalcenter/courses.vue'
 import Task from '../views/personalcenter/tasks.vue'
 import SetInfo from '../views/personalcenter/PopOfPensonCenter/setInfo.vue'
 import Confirm from '../views/personalcenter/PopOfPensonCenter/confirm.vue'
+import myNav from '../views/navs/s_nav2.vue'
 
 // import Chart from '../views/charts/try01.vue'
 export default {
@@ -139,6 +128,9 @@ export default {
     courseBtn () {
       this.$router.push('/courses')
     },
+    tostudent () {
+      this.$router.push('/tindex')
+    },
     exit () {
       window.localStorage.setItem('access_token', null)
       this.$router.push('/unindex')
@@ -157,41 +149,23 @@ export default {
         that.confirmResult.show = false
       }, 2000)
     },
-    getUserInfo () {
-      this.$axios.get('/api/user/current')
-        .then(res => {
-          console.log('已登录!!!!!!!!!!!!!!!!!!!!111111111')
-          this.setCurrentUser(res.data.data)
-          // this.$notification.info({
-          //   message: '消息',
-          //   description: '已登录账号： ' + res.data.data.nickname,
-          //   duration: 2
-          // })
-          if (res.data.data.school === null) {
-            this.isComfirmed = false
-          } else {
-            this.isComfirmed = true
-          }
-        }).catch(() => {
-          this.$notification.warning({
-            message: '警告',
-            description: '未登录或登录过期',
-            duration: 10
-          })
-          this.$message.warning('未登录或登录过期')
-          this.$router.push('/unindex')
-        }).finally(() => {
-        })
+    openEdit () {
+      const routeUrl = this.$router.resolve({
+        path: '/studentInfo',
+        query: { id: this.currentUser.uid }
+      })
+      window.open(routeUrl.href, '_blank')
     }
   },
   mounted () {
-    this.getUserInfo()
   },
   components: {
     'my-course': Course,
     'my-task': Task,
     'my-setinfo': SetInfo,
-    'my-confirm': Confirm
+    'my-confirm': Confirm,
+    'my-nav': myNav
+
   }
 }
 </script>
@@ -294,105 +268,46 @@ export default {
     }
   }
 
-  nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    /*position: fixed;*/
+  #Nav {
     top: 0;
     width:100%;
     height: 60px;
     margin: 0;
     padding: 0;
-    color: white;
-    box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
-    .navlogo {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 200px;
-      height:100%;
-      color: white;
-      #logo{
-        width:100px;
-        height:50px;
-      }
-      > div{
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        span {
-          font-size: 14px;
-        }
-        span:last-child {
-          font-size: 10px;
-        }
-      }
-    }
-    .navbtn {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 250px;
-      font-size: 16px;
-      .messageShow {
-        width:50px;
-        height: 35px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-end;
-        >div{
-          cursor: pointer;
-          font-size: 14px;
-        }
-        >div:hover {
-          font-size: 15px;
-        }
-        >div:active {
-          font-size: 14px;
-          text-decoration: underline;
-        }
-      }
-      .btn01{
-        cursor: pointer;
-      }
-      .btn01:hover {
-        font-weight: 600;
-        /*color:*/
-      }
-      .btn01:active{
-        text-decoration: underline;
-      }
-      .avatarC1{
-        width: 50px;
-        height: 50px;
-        border: white 2px solid;
-        border-radius: 50%;
-        .avatarA {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 50%;
-        }
-        .avatarI {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
-    .tabActive {
+    /*overflow:;*/
+  }
+
+  #rightSider {
+    z-index: 2030;
+    cursor: pointer;
+    width: 60px;
+    height: 100px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #ebf9ff;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    >div {
+      color: #61c7fc;
       font-weight: 600;
-      border-bottom: 2px solid white;
+      font-size: 13px;
+      max-width: 90%;
     }
+  }
+  #rightSider:hover {
+    background-color: #61c7fc;
+    >div {
+      color: #ebf9ff;
+    }
+  }
+  #rightSider:active {
+    background-color: #2492eb;
   }
 
   .course {

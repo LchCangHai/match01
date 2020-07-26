@@ -62,18 +62,18 @@
       </div>
       <div></div>
     </div>
-    <div class="siderItem"
-         :class=" { siderActive : leftSiderActive === 6 ? true : false} "
-    @click="totdataManage()"
-    v-show="leftSiderActive === 6 ? true : false">
-      <div class="icon">
-        <div>
-          <v-icon type="line-chart"></v-icon>
-        </div>
-        <div>数据中心</div>
-      </div>
-      <div></div>
-    </div>
+<!--    <div class="siderItem"-->
+<!--         :class=" { siderActive : leftSiderActive === 6 ? true : false} "-->
+<!--    @click="totdataManage()"-->
+<!--    v-show="leftSiderActive === 6 ? true : false">-->
+<!--      <div class="icon">-->
+<!--        <div>-->
+<!--          <v-icon type="line-chart"></v-icon>-->
+<!--        </div>-->
+<!--        <div>数据中心</div>-->
+<!--      </div>-->
+<!--      <div></div>-->
+<!--    </div>-->
   </div>
 </template>
 

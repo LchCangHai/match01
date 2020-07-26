@@ -17,7 +17,7 @@ module.exports = {
   // 查阅 https://github.com/vuejs/vue-doc-zh-cn/vue-cli/webpack.md
   // webpack配置
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
-  chainWebpack: () => {},
+  chainWebpack: config => {},
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
@@ -121,9 +121,9 @@ module.exports = {
     // 开启 CSS source maps?
     sourceMap: false,
     // css预设器配置项
-    loaderOptions: {},
+    loaderOptions: {}
     // 启用 CSS modules for all css / pre-processor files.
-    modules: false
+    // modules: false
   },
   // use thread-loader for babel & TS in production build
   // enabled by default if the machine has more than 1 cores
@@ -133,7 +133,15 @@ module.exports = {
   // dll: false,
   // PWA 插件相关配置
   // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-  pwa: {},
+  pwa: {
+    iconPaths: {
+      favicon32: './logo.png',
+      favicon16: './logo.png',
+      appleTouchIcon: './logo.png',
+      maskIcon: './logo.png',
+      msTileImage: './logo.png'
+    }
+  },
   // webpack-dev-server 相关配置
   devServer: {
     /* 自动打开浏览器 */

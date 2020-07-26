@@ -2,59 +2,32 @@
   <div id="chat">
     <div id="messages">
       <vue-scroll>
-        <div class="item my text">
+        <div class="item my text" v-for="(item, index) in messages"
+             :class="{my: currentUser.uid === item.uid,
+             other: currentUser.uid !== item.uid}"
+             :key="index">
           <div class="userInfo">
-            <div>林炜</div>
+            <div>{{item.user.nickname}}</div>
           </div>
           <div class="contentInfo">
-            <div class="Text">我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了</div>
-          </div>
-        </div>
-        <div class="item other img">
-          <div class="userInfo">
-            <div>乐芃</div>
-          </div>
-          <div class="contentInfo">
-            <div class="Img">
-              <img src="../../assets/avatar02.png">
-            </div>
-          </div>
-        </div>
-        <div class="item my img">
-          <div class="userInfo">
-            <div>林炜</div>
-          </div>
-          <div class="contentInfo">
-            <div class="Img">
-              <img src="../../assets/avatar02.png">
-            </div>
-          </div>
-        </div>
-        <div class="item other text">
-          <div class="userInfo">
-            <div>乐芃</div>
-          </div>
-          <div class="contentInfo">
-            <div class="contentInfo">
-              <div class="Text">我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了我要秃了</div>
-            </div>
+            <div class="Text">{{item.content}}</div>
           </div>
         </div>
       </vue-scroll>
     </div>
     <div id="inputBox">
       <div class="BoxTop">
-        <v-input type="textarea"></v-input>
+        <v-input type="textarea" v-model="inText" @keyup.enter="submit()"></v-input>
       </div>
       <div class="BoxBottom">
         <div class="BoxIcon">
-          <div>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-tupian1"></use>
-            </svg></div>
+<!--          <div>-->
+<!--            <svg class="icon" aria-hidden="true">-->
+<!--              <use xlink:href="#icon-tupian1"></use>-->
+<!--            </svg></div>-->
         </div>
         <div class="BoxBtn">
-          <v-button type="primary">发送</v-button>
+          <v-button type="primary" @click="submit">发送</v-button>
         </div>
       </div>
     </div>
@@ -70,17 +43,74 @@ export default {
   },
   data () {
     return {
+      inText: ''
     }
   },
   computed: {
     ...mapState([
+      'currentUser',
+      'currentUser',
+      'messages'
     ])
   },
   methods: {
     ...mapMutations([
-    ])
+      'setcourseInfo'
+    ]),
+    submit () {
+      console.log('submitSend')
+      console.log('cid ' + this.$route.params.id)
+      console.log('uid ' + this.currentUser.uid)
+      this.$socket.emit('send_message', {
+        cid: this.$route.params.id,
+        uid: this.currentUser.uid,
+        content: this.inText
+      })
+      this.inText = ''
+    },
+    joinRoom () {
+      console.log('joinRoom')
+      this.$socket.emit('join_room', {
+        cid: this.$route.params.id,
+        nickname: this.currentUser.nickname
+      })
+    },
+    getCourse () {
+      console.log(this.$route.params.id)
+      this.$axios.get('/api/course/' + this.$route.params.id)
+        .then(res => {
+          this.setcourseInfo(res.data.data)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程信息失败')
+        })
+    }
+  },
+  sockets: {
+    connect: function () {
+      console.log('socket connected,心跳包在这？')
+    },
+    customEmit: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    },
+    new_message: function (data) {
+      console.log('joinroom' + data)
+    },
+    join_room: function (data) {
+      this.$message('[' + data + ']加入房间')
+    },
+    leave_room: function (data) {
+      this.$message('[' + data + ']离开房间')
+    },
+    get: function (data) {
+      console.log('触发了socket事件:' + data)
+    }
   },
   mounted () {
+    this.getCourse()
+    setTimeout(() => {
+      this.joinRoom()
+    }, 2000)
   }
 }
 </script>

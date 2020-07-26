@@ -1,25 +1,8 @@
 <template>
   <div id="studentManage">
-    <nav>
-      <div class="navlogo">
-        <img id="logo" src="../../assets/logotem.jpg"/>
-        <div>
-          <span>教务管理中心</span>
-        </div>
-      </div>
-      <div class="navbtn">
-        <div class="btn01 tabActive">课程</div>
-        <div class="btn01" @click="pcBtn()">个人中心</div>
-        <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
-          <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" :src="currentUser.avatar">
-          </a>
-        </v-dropdown>
-        <div class="messageShow">
-          <div @click="exit">退出</div>
-        </div>
-      </div>
-    </nav>
+    <div id="Nav">
+      <my-nav :type="1"></my-nav>
+    </div>
     <div id="rightSider" @click="tostudent()">
       <div>学生主页</div>
     </div>
@@ -53,7 +36,19 @@
       <div id="checkcourse">
         <my-choose-course></my-choose-course>
       </div>
-      <div class="student">
+      <div id="handle">
+        <div>
+          <v-button
+            :type="type === 1 ? 'primary' : ''"
+            @click="toggleType(1)">学生列表</v-button>
+        </div>
+        <div>
+          <v-button
+            :type="type === 2 ? 'primary' : ''"
+            @click="toggleType(2)">学生学习情况</v-button>
+        </div>
+      </div>
+      <div class="student" v-show="type === 1">
         <div class="studentTitle">
           <div class="item01">
             <div>姓名</div>
@@ -127,7 +122,57 @@
           </div>
         </div>
       </div>
-      <v-pagination show-quick-jumper :total="500"></v-pagination>
+      <div id="detailTable" v-show="type === 2">
+        <div class="item title">
+          <div><div>姓名</div></div>
+          <div><div>学号</div></div>
+          <div><div>通知确认次数</div></div>
+          <div><div>课程讨论次数</div></div>
+          <div><div>分数</div></div>
+        </div>
+        <div class="item">
+          <div><div>林炜</div></div>
+          <div><div>00013589</div></div>
+          <div><div>15</div></div>
+          <div><div>5</div></div>
+          <div><div>3</div></div>
+        </div>
+        <div class="item">
+          <div><div>炜炜</div></div>
+          <div><div>00013589</div></div>
+          <div><div>12</div></div>
+          <div><div>8</div></div>
+          <div><div>0</div></div>
+        </div>
+        <div class="item">
+          <div><div>芃芃</div></div>
+          <div><div>158765230</div></div>
+          <div><div>16</div></div>
+          <div><div>50</div></div>
+          <div><div>12</div></div>
+        </div>
+        <div class="item">
+          <div><div>林炜</div></div>
+          <div><div>00013589</div></div>
+          <div><div>15</div></div>
+          <div><div>5</div></div>
+          <div><div>3</div></div>
+        </div>
+        <div class="item">
+          <div><div>炜炜</div></div>
+          <div><div>00013589</div></div>
+          <div><div>12</div></div>
+          <div><div>8</div></div>
+          <div><div>0</div></div>
+        </div>
+        <div class="item">
+          <div><div>芃芃</div></div>
+          <div><div>158765230</div></div>
+          <div><div>16</div></div>
+          <div><div>50</div></div>
+          <div><div>12</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -136,7 +181,7 @@
 import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider.vue'
 import chooseCourse from './chooseCourse/chooseCourse'
-
+import myNav from '../../views/navs/s_nav1.vue'
 export default {
   name: 'studentManage.vue',
   data () {
@@ -146,12 +191,8 @@ export default {
       open: false,
       borderhover: false,
       formdata: '',
-      students: ''
-      // data: [
-      //   { content: '1st item' },
-      //   { content: '2nd item' },
-      //   { content: '3rd item' }
-      // ]
+      students: '',
+      type: 1
     }
   },
   computed: {
@@ -179,6 +220,9 @@ export default {
     exit () {
       window.localStorage.setItem('access_token', null)
       this.$router.push('/unindex')
+    },
+    toggleType (type) {
+      this.type = type
     },
     clickUpload () {
       this.$refs.upload_btn.click()
@@ -282,16 +326,20 @@ export default {
   watch: {
     currentCourse (val) {
       this.getCourse()
+      this.getStudent()
     }
   },
   components: {
     'my-left': LeftSider,
-    'my-choose-course': chooseCourse
+    'my-choose-course': chooseCourse,
+    'my-nav': myNav
   },
   mounted () {
-    this.setLeftSider(5)
-    this.getCourse()
-    this.getStudent()
+    setTimeout(() => {
+      this.setLeftSider(5)
+      this.getCourse()
+      this.getStudent()
+    }, 1000)
     const that = this
     const dropbox = document.getElementById('drag_box')
     dropbox.addEventListener('drop', this.enentDrop, false)
@@ -330,11 +378,7 @@ export default {
     color: black;
   }
 
-  nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+  #Nav {
     position: relative;
     top: 0;
     left:0;
@@ -343,96 +387,10 @@ export default {
     height: 60px;
     margin: 0;
     padding: 0;
-    color: black;
     border-bottom: 1px solid lightgrey;
     box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
     background-color: white;
-    z-index: 2020;
-    .navlogo {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 200px;
-      height:100%;
-      color: black;
-      #logo{
-        width:100px;
-        height:50px;
-      }
-      > div{
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        span {
-          font-size: 16px;
-          color: #61c7fc;
-          font-weight: 600;
-        }
-      }
-    }
-    .navbtn {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 300px;
-      font-size: 16px;
-      .messageShow {
-        width:50px;
-        height: 35px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-end;
-        >div{
-          cursor: pointer;
-          font-size: 14px;
-        }
-        >div:hover {
-          font-size: 15px;
-        }
-        >div:active {
-          font-size: 14px;
-          text-decoration: underline;
-        }
-      }
-      .btn01{
-        cursor: pointer;
-      }
-      .btn01:hover {
-        font-weight: 600;
-        /*color:*/
-      }
-      .btn01:active{
-        color: #83bafc;
-      }
-      .btn01.tabActive {
-        text-decoration: none;
-        color:black;
-        cursor: default;
-      }
-      .avatarC1{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border: white 2px solid;
-        border-radius: 50%;
-        .avatarI {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
-    .tabActive {
-      font-weight: 600;
-      border-bottom: 3px solid #83bafc;
-    }
+    z-index: 20;
   }
 
   #rightSider {
@@ -646,7 +604,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin: 30px 0;
+    /*margin: 30px 0;*/
     margin-bottom: 50px;
     .studentTitle {
       width: 100%;
@@ -689,6 +647,71 @@ export default {
       justify-content: center;
       align-items: center;
     }
+  }
+
+  #handle {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    >div {
+      margin: 0 10px;
+    }
+  }
+
+  #detailTable {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .item {
+    width: 100%;
+    min-height: 40px;
+    margin: 3px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+    >div {
+      width: 20%;
+      margin: 2px 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      >div {
+        font-size: 15px;
+      }
+    }
+  }
+  .title {
+    cursor: default;
+    margin: 5px 0;
+    background-color: transparent;
+    >div{
+      >div{
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+  }
+  .item:hover {
+    box-shadow: 1px 1px 5px 1px rgba(213,213,213,0.6);
+    font-size: 15px;
+  }
+  .item:active {
+    font-size: 14px;
+  }
+  .title:hover {
+    box-shadow: none;
+  }
+  .title:active {
+    box-shadow: none;
   }
 
   img {

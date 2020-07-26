@@ -8,32 +8,31 @@
     </div>
     <div id="focTitle">
       <div class="onetitle">
-        <div>为什么我作业还没写完，我都已经秃啦！是因为我还不够秃吗？
-          为什么我作业还没写完，我都已经秃啦！是因为我还不够秃吗？</div>
+        <div>{{courseDiscussone.content}}</div>
       </div>
       <div class="oneUser">
         <div class="oneUserAvatar">
-          <img src="../../../assets/avatar02.png">
+          <img :src="courseDiscussone.user.avatar">
         </div>
         <div class="oneUserInfo">
-          <div>张乐芃</div>
-          <div>福州大学</div>
+          <div>{{courseDiscussone.user.nickname}}</div>
+          <div>{{courseDiscussone.user.school}}</div>
         </div>
       </div>
       <div class="oneTips">
-        <div class="oneleft">
-          <div><span>434</span> 人围观</div>
-          <div><span>999+</span> 回答</div>
-          <div>03月06日</div>
-        </div>
-        <div class="oneright">
-          <div class="Btn01" v-show="!isweig">
-            <div>围观</div>
-          </div>
-          <div class="Btn01-1" v-show="isweig">
-            <div>已围观</div>
-          </div>
-        </div>
+<!--        <div class="oneleft">-->
+<!--          <div><span>434</span> 人围观</div>-->
+<!--          <div><span>999+</span> 回答</div>-->
+<!--          <div>03月06日</div>-->
+<!--        </div>-->
+<!--        <div class="oneright">-->
+<!--          <div class="Btn01" v-show="!isweig">-->
+<!--            <div>围观</div>-->
+<!--          </div>-->
+<!--          <div class="Btn01-1" v-show="isweig">-->
+<!--            <div>已围观</div>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
     </div>
     <div id="four4">
@@ -50,7 +49,7 @@
       </div>
     </div>
     <div id="focNum">
-      <div>999+ 条回答</div>
+      <div>回答</div>
     </div>
     <div id="focReply">
       <div class="focRitem01">
@@ -700,12 +699,12 @@ export default {
   },
   computed: {
     ...mapState([
-      'courseDiscussID'
+      'courseDiscussone'
     ])
   },
   methods: {
     ...mapMutations([
-      'setcourseDiscussID'
+      'setcourseDiscussone'
     ]),
     toBack () {
       this.$router.go(-1)

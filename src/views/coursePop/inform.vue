@@ -4,15 +4,15 @@
     <div id="cP01Title">
       <div class="cPNavLeft">
         <div class="cPAvatarBox">
-          <img src="../../assets/avatar02.png">
+          <img :src="courseInfo.teacher.avatar" @error="imgerror()">
         </div>
         <div class="cPTitle">
-          <div class="cPname">小芃</div>
-          <div class="cPtitle">关于熬夜秃头实验的通知</div>
+          <div class="cPname">{{courseInfo.teacher.name}}</div>
+          <div class="cPtitle">{{currentInform.title}}</div>
         </div>
       </div>
       <div class="cPNavRight">
-        <div>发布时间：<span>2020.6.6 20:56</span></div>
+        <div>发布时间：<span>{{currentInform.create_at}}</span></div>
       </div>
     </div>
     <div id="cP01hr"></div>
@@ -20,16 +20,21 @@
       <vue-scroll>
         <div id="cP01Content01">
           <div class="contentText">
-            本周为实践课\n程，学生应该多多观察林炜同学每天熬夜过程中黑眼圈\n与头皮的变化，
-            设置单一变量重复实验，排除偶然\t\r情况XXXXXXXXXXXXXXXXXXXXXXXX\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            XXXXXXXXXXXXXXXXXXXXX\nXXXXXX\t\rXXXXXXXXXXXXXXXXXXXXXXXXXX\nXXXXXXXXXXXXXXXXx
-            XXXXXXXXXXXXXXXXXXXXXXXXXX\t\rXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+            {{currentInform.content}}
           </div>
         </div>
       </vue-scroll>
     </div>
     <div id="cP01Btn">
-      <v-button class="Btn03" type="primary" size="large">确认</v-button>
+      <v-button class="Btn03"
+                type="primary"
+                size="large"
+                @click="confirmIn()"
+                v-show="currentInform.read === 0">确认收到</v-button>
+      <v-button class="Btn03"
+                type="primary"
+                size="large"
+                disabled  v-show="currentInform.read === 1">已阅读</v-button>
     </div>
   </div>
 </template>
@@ -43,19 +48,50 @@ export default {
   },
   data () {
     return {
+      errorImg: require('../../assets/errorAvatar01.png')
     }
   },
   computed: {
     ...mapState([
       'coursePop',
-      'coursePopType'
+      'coursePopType',
+      'courseInfo',
+      'currentInform'
     ])
   },
   methods: {
     ...mapMutations([
       'openCoursePop',
-      'closeCoursePop'
-    ])
+      'closeCoursePop',
+      'setcourseInfo',
+      'setcurrentInform',
+      'setcourseInform'
+    ]),
+    imgerror () {
+      // eslint-disabled
+      const tem = this.currentInform
+      tem.teacher.avatar = this.errorImg
+      this.setcurrentInform(tem)
+    },
+    confirmIn () {
+      this.closeCoursePop()
+      this.$axios.post('/api/course/' + this.courseInfo.id + '/notices/' + this.currentInform.id)
+        .then(res => {
+          console.log(res.data)
+          this.getCourseInform()
+        }).catch(error => {
+          console.log(error.response)
+        })
+    },
+    getCourseInform () {
+      this.$axios.get('/api/course/' + this.courseInfo.id + '/notices')
+        .then(res => {
+          this.setcourseInform(res.data.data.notices)
+        }).catch(error => {
+          console.log(error)
+          this.$message.error('获取课程公告失败')
+        })
+    }
   },
   mounted () {
   }

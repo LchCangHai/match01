@@ -1,9 +1,5 @@
 <template>
   <div id="sourse">
-    <div>
-      <v-button @click="changetype(1)">现用版</v-button>
-      <v-button @click="changetype(2)">待开发版</v-button>
-    </div>
     <div id="old" v-show="type === 2">
       <div id="fiveNav">
         <div class="three1icon">
@@ -149,7 +145,7 @@
     <div id="new" v-show="type === 1">
       <div id="mune01">
         <div class="studyItem01" v-for="(item, index) in courseFile" :key="index">
-          <div class="item01Main" @click="chooseChater('one')">
+          <div class="item01Main" @click="chooseChater(item.name)">
             <div class="chapter01">
               <div>
                 <v-icon type="folder"></v-icon>
@@ -176,191 +172,11 @@
             </div>
           </div>
         </div>
-        <div class="studyItem01">
-          <div class="item01Main" @click="chooseChater('two')">
-            <div class="chapter01">
-              <div>
-                <v-icon type="folder"></v-icon>
-              </div>
-              <div>第一章 秃头学的前世今生</div>
-            </div>
-            <div class="floderIcon">
-              <v-icon type="right" v-show="chapter === 'two' ? false : true"></v-icon>
-              <v-icon type="down" v-show="chapter === 'two' ? true : false"></v-icon>
-            </div>
-          </div>
-          <div class="item01Child" v-show="chapter === 'two' ? true : false">
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="studyItem01">
-          <div class="item01Main" @click="chooseChater('three')">
-            <div class="chapter01">
-              <div>
-                <v-icon type="folder"></v-icon>
-              </div>
-              <div>第一章 秃头学的前世今生</div>
-            </div>
-            <div class="floderIcon">
-              <v-icon type="right" v-show="chapter === 'three' ? false : true"></v-icon>
-              <v-icon type="down" v-show="chapter === 'three' ? true : false"></v-icon>
-            </div>
-          </div>
-          <div class="item01Child" v-show="chapter === 'three' ? true : false">
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="studyItem01">
-          <div class="item01Main" @click="chooseChater('four')">
-            <div class="chapter01">
-              <div>
-                <v-icon type="folder"></v-icon>
-              </div>
-              <div>第一章 秃头学的前世今生</div>
-            </div>
-            <div class="floderIcon">
-              <v-icon type="right" v-show="chapter === 'four' ? false : true"></v-icon>
-              <v-icon type="down" v-show="chapter === 'four' ? true : false"></v-icon>
-            </div>
-          </div>
-          <div class="item01Child" v-show="chapter === 'four' ? true : false">
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="studyItem01">
-          <div class="item01Main" @click="chooseChater('five')">
-            <div class="chapter01">
-              <div>
-                <v-icon type="folder"></v-icon>
-              </div>
-              <div>第一章 秃头学的前世今生</div>
-            </div>
-            <div class="floderIcon">
-              <v-icon type="right" v-show="chapter === 'five' ? false : true"></v-icon>
-              <v-icon type="down" v-show="chapter === 'five' ? true : false"></v-icon>
-            </div>
-          </div>
-          <div class="item01Child" v-show="chapter === 'five' ? true : false">
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-            <div class="studyItem02" @click="openVideo('1')">
-              <div class="item02Main">
-                <div class="videoIcon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-meiti"></use>
-                  </svg>
-                </div>
-                <div class="videoTitle"> 秃头学的前世今生</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
+    </div>
+    <div>
+      <v-button @click="changetype(1)">现用版</v-button>
+      <v-button @click="changetype(2)">待开发版</v-button>
     </div>
   </div>
 </template>

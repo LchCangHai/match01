@@ -6,26 +6,9 @@
         ref="upload_file"
         @change="handleFileChange">
     </div>
-    <nav>
-      <div class="navlogo">
-        <img id="logo" src="../../assets/logotem.jpg"/>
-        <div>
-          <span>教务管理中心</span>
-        </div>
-      </div>
-      <div class="navbtn">
-        <div class="btn01 tabActive">课程</div>
-        <div class="btn01" @click="pcBtn()">个人中心</div>
-        <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
-          <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" :src="currentUser.avatar">
-          </a>
-        </v-dropdown>
-        <div class="messageShow">
-          <div @click="exit()">退出</div>
-        </div>
-      </div>
-    </nav>
+    <div id="Nav">
+      <my-nav :type="1"></my-nav>
+    </div>
     <div id="rightSider" @click="tostudent()">
       <div>学生主页</div>
     </div>
@@ -85,17 +68,6 @@
             <div class="item" @click="totstudentManage()">学生管理</div>
           </div>
         </div>
-        <div class="dataCenter">
-          <div class="icon">
-            <div>
-              <v-icon type="line-chart"></v-icon>
-            </div>
-            <div>数据中心</div>
-          </div>
-          <div class="BtnBox">
-            <div class="item" @click="totdataManage()">数据中心</div>
-          </div>
-        </div>
       </div>
     </div>
     <div id="myCourse">
@@ -144,6 +116,8 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 import courseCenter from '../../views/homepage/courseCenter.vue'
+import myNav from '../../views/navs/s_nav1.vue'
+
 /* Eslit disabled */
 const formdata = new FormData()
 export default {
@@ -360,7 +334,8 @@ export default {
     this.getUserInfo()
   },
   components: {
-    'my-course-center': courseCenter
+    'my-course-center': courseCenter,
+    'my-nav': myNav
   }
 }
 </script>
@@ -380,11 +355,7 @@ export default {
     /*margin-bottom: 50px;*/
   }
 
-  nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+  #Nav {
     position: relative;
     top: 0;
     left:0;
@@ -393,96 +364,10 @@ export default {
     height: 60px;
     margin: 0;
     padding: 0;
-    color: black;
     border-bottom: 1px solid lightgrey;
     box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
     background-color: white;
-    z-index: 2020;
-    .navlogo {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 200px;
-      height:100%;
-      color: black;
-      #logo{
-        width:100px;
-        height:50px;
-      }
-      > div{
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        span {
-          font-size: 16px;
-          color: #61c7fc;
-          font-weight: 600;
-        }
-      }
-    }
-    .navbtn {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 300px;
-      font-size: 16px;
-      .messageShow {
-        width:50px;
-        height: 35px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-end;
-        >div{
-          cursor: pointer;
-          font-size: 14px;
-        }
-        >div:hover {
-          font-size: 15px;
-        }
-        >div:active {
-          font-size: 14px;
-          text-decoration: underline;
-        }
-      }
-      .btn01{
-        cursor: pointer;
-      }
-      .btn01:hover {
-        font-weight: 600;
-        /*color:*/
-      }
-      .btn01:active{
-        color: #83bafc;
-      }
-      .btn01.tabActive {
-        text-decoration: none;
-        color:black;
-        cursor: default;
-      }
-      .avatarC1{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border: white 2px solid;
-        border-radius: 50%;
-        .avatarI {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
-    .tabActive {
-      font-weight: 600;
-      border-bottom: 3px solid #83bafc;
-    }
+    z-index: 20;
   }
 
   #rightSider {

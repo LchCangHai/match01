@@ -8,19 +8,19 @@
       <span>课程中心</span>
     </div>
     <div>
-      <v-carousel vertical
+      <v-carousel
       autoplay
-      dots="outside">
-        <v-carousel-item v-for="item in allcourse" :key="id">
+      dots="none">
+        <v-carousel-item v-for="(item, index) in allcourse" :key="index">
           <div class="demo-carousel oneItem">
             <div class="oneContent">
               <div class="onepanel1">
                 <div class="oneImg">
-                  <img class="Img1" width="100%" :src="item.avatar">
+                  <img class="Img1" width="100%" :src="item.avatar" @error="imgerror(item)">
                 </div>
                 <div class="oneContext">
                   <div class="context1">{{item.name}}</div>
-                  <div class="context2">Are we done with the code</div>
+                  <div class="context2">{{showtext[index]}}</div>
                 </div>
               </div>
               <div class="coverpanel1"></div>
@@ -31,14 +31,14 @@
                 </div>
                 <div class="ttitle">
                   <div class="shuxian"></div>
-                  <div>{{item.teacher_name}} 老师最新的课程</div>
+                  <div>{{item.teacher_name}} 老师的最新课程</div>
                 </div>
                 <div class="tcontext">
                   {{item.introduce}}
                 </div>
                 <div class="ttime">
                   <div>开课时间</div>
-                  <div>{{item.start_at}}</div>
+                  <div>{{item.stat_at}}</div>
                 </div>
               </div>
             </div>
@@ -50,78 +50,6 @@
               <div class="onepanel1">
                 <div class="oneImg">
                   <img class="Img1" width="100%" src="../../assets/headImg.png">
-                </div>
-                <div class="oneContext">
-                  <div class="context1">今天你代码打完了吗？？</div>
-                  <div class="context2">Are we done with the code</div>
-                </div>
-              </div>
-              <div class="coverpanel1"></div>
-              <div class="onepanel2">
-                <div class="ttag1">
-                  <span class="iconfont">&#xe708;</span>
-                  <span>编辑推荐</span>
-                </div>
-                <div class="ttitle">
-                  <div class="shuxian"></div>
-                  <div>林炜同学呕心沥血谋来的福利</div>
-                </div>
-                <div class="tcontext">
-                  让熬夜成为现实。秃头成为奢
-                  侈，想像林炜同学一样996似
-                  呼吸一般轻松吗，开来看看吧
-                  哦吼吼吼吼
-                </div>
-                <div class="ttime">
-                  <div>开课时间</div>
-                  <div>2020.6.1-2020.6.20</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </v-carousel-item>
-        <v-carousel-item>
-          <div class="demo-carousel oneItem">
-            <div class="oneContent">
-              <div class="onepanel1">
-                <div class="oneImg">
-                  <img class="Img1" width="100%" src="../../assets/headImg2.png">
-                </div>
-                <div class="oneContext">
-                  <div class="context1">今天你代码打完了吗？？</div>
-                  <div class="context2">Are we done with the code</div>
-                </div>
-              </div>
-              <div class="coverpanel1"></div>
-              <div class="onepanel2">
-                <div class="ttag1">
-                  <span class="iconfont">&#xe708;</span>
-                  <span>编辑推荐</span>
-                </div>
-                <div class="ttitle">
-                  <div class="shuxian"></div>
-                  <div>林炜同学呕心沥血谋来的福利</div>
-                </div>
-                <div class="tcontext">
-                  让熬夜成为现实。秃头成为奢
-                  侈，想像林炜同学一样996似
-                  呼吸一般轻松吗，开来看看吧
-                  哦吼吼吼吼
-                </div>
-                <div class="ttime">
-                  <div>开课时间</div>
-                  <div>2020.6.1-2020.6.20</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </v-carousel-item>
-        <v-carousel-item>
-          <div class="demo-carousel oneItem">
-            <div class="oneContent">
-              <div class="onepanel1">
-                <div class="oneImg">
-                  <img class="Img1" width="100%" src="../../assets/bc01.jpg">
                 </div>
                 <div class="oneContext">
                   <div class="context1">今天你代码打完了吗？？</div>
@@ -164,7 +92,25 @@ export default {
   name: 'courseCenter.vue',
   data () {
     return {
-      allcourse: []
+      allcourse: [],
+      showtext: [
+        '加油！努力学习吧。',
+        '有智者立长志',
+        '成功永远属于一直在跑的人',
+        '又努力就会成功',
+        '人若有志，万事可为',
+        '志不可一日坠，心不可一日放',
+        '目标越接近，困难越增加',
+        '人之所以能，是相信能',
+        '只为成功找理由！',
+        '自古成功在尝试',
+        '苦想没盼头，苦干有奔头',
+        '年轻人应当由朝气，敢作为',
+        '工欲善其事，必先利其器',
+        '相信自己，你能行',
+        '虽然过去不能改变，未来可以'
+      ],
+      errorImg: require('../../assets/imgError01.jpg')
     }
   },
   computed: {
@@ -176,7 +122,9 @@ export default {
     ]),
     getAllCourse () {
       this.$axios.get('/api/course/recommend', {
-        params: 6
+        params: {
+          count_items: 8
+        }
       })
         .then(res => {
           console.log('获取课程信息成功')
@@ -185,6 +133,9 @@ export default {
           this.$message.warning('获取课程信息出错')
           console.log(error)
         })
+    },
+    imgerror (item) {
+      item.avatar = this.errorImg
     }
   },
   mounted () {
@@ -292,6 +243,9 @@ export default {
           position: relative;
           left: 10px;
         }
+        >div:last-child {
+          font-size: 18px;
+        }
       }
     }
     .coverpanel1 {
@@ -366,6 +320,7 @@ export default {
         word-spacing: 2px;
         font-size: 14px;
         color: #a29f9f;
+        overflow: hidden;
       }
       .ttime {
         width: 250px;
@@ -376,8 +331,13 @@ export default {
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
+        margin: 5px 0;
+        >div:first-child {
+          font-weight: 600;
+        }
         >div {
           font-size: 15px;
+          font-weight: 500;
         }
       }
     }

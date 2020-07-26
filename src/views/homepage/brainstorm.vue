@@ -120,54 +120,6 @@
                 <span>人参与讨论</span>
               </div>
             </div>
-            <div class="thItem">
-              <div class="nav1">
-                <div class="thfont">
-                  <div class="avatarBox">
-                    <img class="avatarImg1" src="../../assets/avatar01.jpg">
-                  </div>
-                  <div class="thName">林炜</div>
-                  <div class="thIden">学生</div>
-                </div>
-                <div class="thback">
-                  <span>来自</span>
-                  <span class="fromCourse">熬夜秃头学</span>
-                </div>
-              </div>
-              <div class="thdcontext">
-                <div>
-                  我是怎样秃头的？我又是怎样变强的？我，又是如何让996如呼吸一般自然的？
-                </div>
-              </div>
-              <div class="thfooter">
-                <span>9999+</span>
-                <span>人参与讨论</span>
-              </div>
-            </div>
-            <div class="thItem">
-              <div class="nav1">
-                <div class="thfont">
-                  <div class="avatarBox">
-                    <img class="avatarImg1" src="../../assets/avatar01.jpg">
-                  </div>
-                  <div class="thName">林炜</div>
-                  <div class="thIden">学生</div>
-                </div>
-                <div class="thback">
-                  <span>来自</span>
-                  <span class="fromCourse">熬夜秃头学</span>
-                </div>
-              </div>
-              <div class="thdcontext">
-                <div>
-                  我是怎样秃头的？我又是怎样变强的？我，又是如何让996如呼吸一般自然的？
-                </div>
-              </div>
-              <div class="thfooter">
-                <span>9999+</span>
-                <span>人参与讨论</span>
-              </div>
-            </div>
           </div>
         </vue-scroll>
       </div>
@@ -226,14 +178,16 @@ export default {
       )
     },
     getAllDiscuss () {
-      this.$axios.get('/api/discussions/recommend', {
-        params: 6
+      this.$axios.get('/api/course/discussions/recommend', {
+        params: {
+          count_items: 6
+        }
       })
         .then(res => {
           console.log('获取讨论推荐信息成功')
           this.alldiscuss = res.data.data.discussions
         }).catch(error => {
-          this.$message.warning('获取讨论推荐信息出错')
+          console.log('获取讨论推荐信息出错')
           console.log(error)
         })
     }
@@ -356,7 +310,7 @@ export default {
   color: black;
   .nav1 {
     width: 100%;
-    height: 50px;
+    height: 60px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -371,8 +325,8 @@ export default {
         margin: 3px;
       }
       .avatarBox {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         .avatarImg1 {
           width: 100%;
@@ -381,7 +335,7 @@ export default {
         }
       }
       .thName {
-        font-size: 12px;
+        font-size: 13px;
       }
       .thIden {
         background-color: #ffd740;
@@ -412,7 +366,7 @@ export default {
 
   .thdcontext {
     width: 100%;
-    height: 150px;
+    height: 140px;
     >div {
       width: 80%;
       word-break: break-all;
@@ -422,6 +376,7 @@ export default {
       font-size: 14px;
       font-weight: 600;
       text-indent: 2em;
+      overflow: hidden;
     }
   }
 

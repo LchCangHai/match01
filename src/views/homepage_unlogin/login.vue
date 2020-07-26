@@ -41,13 +41,14 @@ export default {
       'signUpPop',
       'retrievePop',
       'otherWayPop',
-      'setCurrentUser'
+      'setCurrentUser',
+      'setisSignUp'
     ]),
     login () {
       if (this.account === '' && this.password === '') {
         this.$notification.warning({
           message: '警告',
-          description: '请输入内容',
+          description: '请输入昵称和密码',
           duration: 1
         })
         return
@@ -67,25 +68,53 @@ export default {
         })
         return
       }
-      this.$axios.post('/api/auth/login', {
-        method: 0,
-        username: this.account,
-        password: this.password
-      }, {
-        header: {
-          'Content-Type': 'application/json' // 如果写成contentType会报错
+      this.$axios('/api/auth/check/nickname', {
+        params: {
+          nickname: this.account
         }
       }).then(res => {
-        this.$message.success('登录成功')
-        this.setCurrentUser(res.data.data.user_info)
-        window.localStorage.setItem('access_token', res.data.data.access_token)
-        this.$router.push('/index')
+        if (res.data.status === 0) {
+          this.$notification.error({
+            message: '错误',
+            description: '该用户不存在',
+            duration: 1
+          })
+        } else if (res.data.status === 1) {
+          this.$axios.post('/api/auth/login', {
+            method: 0,
+            username: this.account,
+            password: this.password
+          }, {
+            header: {
+              'Content-Type': 'application/json' // 如果写成contentType会报错
+            }
+          }).then(res => {
+            this.$message.success('登录成功')
+            this.setisSignUp(true)
+            this.setCurrentUser(res.data.data.user_info)
+            window.localStorage.setItem('access_token', res.data.data.access_token)
+            this.$router.push('/index')
+          }).catch(error => {
+            this.$notification.error({
+              message: '错误',
+              description: '登录失败，请检查网络，密码',
+              duration: 2
+            })
+            this.account = ''
+            this.password = ''
+            console.log(error)
+          }).finally(() => {
+            this.account = ''
+            this.password = ''
+          })
+        }
       }).catch(error => {
-        this.$message.error('登录失败')
+        this.$notification.warning({
+          message: '出问题啦',
+          description: '登录过程出现问题，请再次尝试',
+          duration: 2
+        })
         console.log(error)
-      }).finally(() => {
-        this.account = ''
-        this.password = ''
       })
     }
   }

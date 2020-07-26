@@ -1,16 +1,21 @@
 <template>
   <div id="confirm">
-    <div class="Ticon">
-      <!--      <div id="backIcon" class="iconBtn" @click="loginPop()"><v-icon class="my-icon1" type="left"></v-icon></div>-->
-      <div id="closeIcon" class="iconBtn" @click="closePop02()"><v-icon class="my-icon1" type="close"></v-icon></div>
-    </div>
-    <div id="title">学校认证</div>
+    <div class="title" v-show="currentUser.school === null">学校认证</div>
+    <div class="title" v-show="currentUser.school !== null">已认证</div>
     <div class="hrr"></div>
-    <div id="content">
+    <div id="content" v-show="currentUser.school === null">
       <v-input class="loginIn" placeholder="学校" v-model="school"></v-input>
       <v-input class="loginIn" placeholder="学号" v-model="student_id"></v-input>
       <v-input class="loginIn" placeholder="认证码" v-model="certificate_code"></v-input>
       <v-button class="loginBtn" type="primary" @click="certificate()">认证</v-button>
+    </div>
+    <div id="contented" v-show="currentUser.school !== null">
+      <div><span>学校：</span><div>{{this.currentUser.school}}</div></div>
+      <div><span>在校信息：</span><div>{{this.currentUser.school_id}}</div></div>
+      <div><span>昵称：</span><div>{{this.currentUser.nickname}}</div></div>
+      <div><span>真实姓名：</span><div>{{this.currentUser.name}}</div></div>
+      <div><span>年级：</span><div>{{this.currentUser.grade}}</div></div>
+      <div><span>班级：</span><div>{{this.currentUser.class}}</div></div>
     </div>
   </div>
 </template>
@@ -65,7 +70,7 @@ export default {
           duration: 1
         })
       } else {
-        this.$axios.post('/api/user/current/certificate', {
+        this.$axios.post('/api/user/certificate', {
           school: this.school,
           student_id: this.student_id,
           certificate_code: this.certificate_code
@@ -85,7 +90,7 @@ export default {
           console.log(error)
           this.$notification.warning({
             message: '警告',
-            description: '验证失败',
+            description: error.response.message,
             duration: 2
           })
         })
@@ -136,7 +141,7 @@ export default {
 .iconBtn:active {
   background-color: #49a9ee;
 }
-#title{
+.title{
   color: black;
   font-size: 16px;
   font-weight: 700;
@@ -151,7 +156,7 @@ export default {
 }
 
 #content{
-  width: 100%;
+  width: 70%;
   margin: 5px 0;
   display: flex;
   flex-direction: column;
@@ -183,6 +188,34 @@ export default {
     }
     >span:active {
       text-decoration: underline;
+    }
+  }
+}
+
+#contented {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  >div{
+    height: 50px;
+    width: 100%;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid #f8f8f8;
+    >span {
+      font-size: 15px;
+      font-weight: 600;
+      width: 100px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 10px;
     }
   }
 }

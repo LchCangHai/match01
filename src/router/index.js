@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// 未登录
 import unHomePage from '../components/homePage_unlogin'
-import homepage from '../components/homePage.vue'
+
+// 学生
+import homepage from '../components/s_homePage.vue'
 import personalCenter from '../components/personalCenter'
+/* 答题卡 */
+import Answer from '../components/answersheet/answer.vue'
+import Answered from '../components/answersheet/answered.vue'
 import coursePage from '../components/coursePage.vue'
 import Video from '../components/video.vue'
-import Answer from '../components/answer.vue'
-import Answered from '../components/answered.vue'
+/* 课程选项 */
 import Home from '../components/courseItem/home.vue'
 import Study from '../components/courseItem/study.vue'
 import Exam from '../components/courseItem/exam.vue'
@@ -14,6 +19,7 @@ import Discuss from '../components/courseItem/discuss.vue'
 import Sourse from '../components/courseItem/sourse.vue'
 import OneDiscuss from '../components/courseItem/discuss/oneDiscuss.vue'
 
+// 教师1
 import Tindex from '../components/Teacher/Tindex.vue'
 import CourseManage from '../components/Teacher/courseManage.vue'
 import CourseWare from '../components/Teacher/courseWare.vue'
@@ -22,9 +28,23 @@ import CourseDiscuss from '../components/Teacher/courseDiscuss.vue'
 import CourseSignIn from '../components/Teacher/courseSignIn.vue'
 import StudentManage from '../components/Teacher/studentManage.vue'
 import TaskExam from '../components/Teacher/taskExam.vue'
-import DataManage from '../components/Teacher/dataManage.vue'
+import DataCenter from '../components/Teacher/dataCenter.vue'
 import addExam01 from '../components/Teacher/task/addExam01.vue'
 import addTask01 from '../components/Teacher/task/addTask01.vue'
+import studentInfo from '../components/studentInfo.vue'
+
+// 教师2
+import indext from '../components/Teacher1/t_homepage.vue'
+import createCourse from '../components/Teacher1/createCourse.vue'
+import setCourse from '../components/Teacher1/t_setCourse.vue'
+import tCourseManage from '../components/Teacher1/setCourse/t_coursemanage.vue'
+import tCourseWare from '../components/Teacher1/setCourse/t_courseware.vue'
+import tCourseVideo from '../components/Teacher1/setCourse/t_coursevideo.vue'
+import tCourseDiscuss from '../components/Teacher1/setCourse/t_courseDiscuss.vue'
+import tCourseExam from '../components/Teacher1/setCourse/t_taskexam.vue'
+
+// 管理员
+
 // import
 
 Vue.use(VueRouter)
@@ -32,7 +52,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/index'
+    redirect: '/pCenter'
   },
   {
     path: '/index',
@@ -58,6 +78,11 @@ const routes = [
     path: '/answered',
     component: Answered
   },
+  {
+    path: '/studentInfo',
+    component: studentInfo
+  },
+  // 课程界面
   {
     path: '/courses',
     component: coursePage,
@@ -89,6 +114,7 @@ const routes = [
       }
     ]
   },
+  // 教师界面
   {
     path: '/tindex',
     component: Tindex
@@ -122,8 +148,8 @@ const routes = [
     component: TaskExam
   },
   {
-    path: '/dataManage',
-    component: DataManage
+    path: '/dataCenter',
+    component: DataCenter
   },
   {
     path: '/addexam',
@@ -132,6 +158,42 @@ const routes = [
   {
     path: '/addtask',
     component: addTask01
+  },
+  // 教师界面2
+  {
+    path: '/indext',
+    component: indext
+  },
+  {
+    path: '/createCourse',
+    component: createCourse
+  },
+  {
+    path: '/setCourse',
+    component: setCourse,
+    redirect: '/setCourse/courseManage',
+    children: [
+      {
+        path: 'courseManage',
+        component: tCourseManage
+      },
+      {
+        path: 'courseWare',
+        component: tCourseWare
+      },
+      {
+        path: 'courseVideo',
+        component: tCourseVideo
+      },
+      {
+        path: 'courseDiscuss',
+        component: tCourseDiscuss
+      },
+      {
+        path: 'courseExam',
+        component: tCourseExam
+      }
+    ]
   }
 ]
 

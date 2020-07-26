@@ -38,67 +38,13 @@
               <vue-scroll>
                 <div class="tasksItem01" @click="showTask(item.id)">
                   <div class="taskTitle">{{item.task_name}}</div>
-                  <div class="taskMajor">满分：{{item.max_score}}</div>
+                  <div class="taskMajor">总分：{{item.max_score}}</div>
                   <div class="taskInfo">创建时间： {{item.time_begin}}</div>
-                  <div class="taskInfo">截止时间： {{item.time_excess}}</div>
+                  <div class="taskInfo">截止时间： {{item.time_end}}</div>
 <!--                  <div class="taskEnd">-->
 <!--                    <v-icon type="pushpin-o"></v-icon>-->
 <!--                    <div>截止时间： 2020.05.20  2020.05.20</div>-->
 <!--                  </div>-->
-                </div>
-              </vue-scroll>
-            </div>
-            <div class="tasksItem">
-              <vue-scroll>
-                <div class="tasksItem01">
-                  <div class="taskTitle">9.6 傅里叶级数</div>
-                  <div class="taskMajor">高等数学</div>
-<!--                  <div class="taskInfo">作业要求:XXXXXXXXXXXXXXXXXXXXXX</div>-->
-                  <div class="taskInfo">截止时间： 2020.05.20  2020.05.20</div>
-                  <div class="taskInfo">截止时间： 2020.05.20  2020.05.20</div>
-<!--                  <div class="taskEnd">-->
-<!--                    <v-icon type="question-circle"></v-icon>-->
-<!--                    <div>截止时间： 2020.05.20  2020.05.20</div>-->
-<!--                  </div>-->
-                </div>
-              </vue-scroll>
-            </div>
-            <div class="tasksItem">
-              <vue-scroll>
-                <div class="tasksItem01">
-                  <div class="taskTitle">9.6 傅里叶级数</div>
-                  <div class="taskMajor">高等数学</div>
-                  <div class="taskInfo">作业要求:XXXXXXXXXXXXXXXXXXXXXX</div>
-                  <div class="taskEnd">
-                    <v-icon type="question-circle"></v-icon>
-                    <div>截止时间： 2020.05.20</div>
-                  </div>
-                </div>
-              </vue-scroll>
-            </div>
-            <div class="tasksItem">
-              <vue-scroll>
-                <div class="tasksItem01">
-                  <div class="taskTitle">9.6 傅里叶级数</div>
-                  <div class="taskMajor">高等数学</div>
-                  <div class="taskInfo">作业要求:XXXXXXXXXXXXXXXXXXXXXX</div>
-                  <div class="taskEnd">
-                    <v-icon type="question-circle"></v-icon>
-                    <div>截止时间： 2020.05.20</div>
-                  </div>
-                </div>
-              </vue-scroll>
-            </div>
-            <div class="tasksItem">
-              <vue-scroll>
-                <div class="tasksItem01">
-                  <div class="taskTitle">9.6 傅里叶级数</div>
-                  <div class="taskMajor">高等数学</div>
-                  <div class="taskInfo">作业要求:XXXXXXXXXXXXXXXXXXXXXX</div>
-                  <div class="taskEnd">
-                    <v-icon type="question-circle"></v-icon>
-                    <div>截止时间： 2020.05.20</div>
-                  </div>
                 </div>
               </vue-scroll>
             </div>
@@ -200,9 +146,13 @@ export default {
       )
     },
     showTask (id) {
-      this.$message.info(id)
-      this.setcurrentTask(id)
-      this.$router.push('/answer')
+      // this.$message.info(id)
+      // this.setcurrentTask(id)
+      // this.$router.push('/answer')
+      const routeUrl = this.$router.resolve({
+        path: `/Answer/${id}`
+      })
+      window.open(routeUrl.href, '_blank')
     },
     getAllTasks () {
       this.$axios.get('/api/user/current/tasks')
@@ -349,6 +299,8 @@ export default {
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
+    /*background-color: snow;*/
+    border-radius: 4px;
     .tasksItem {
       width: 150px;
       height: 150px;

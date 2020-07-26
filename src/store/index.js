@@ -14,20 +14,22 @@ export default new Vuex.Store({
     addTEPop: false, // 教师添加作业，考试弹窗
     TEPopType: 1, // 教师添加作业 弹窗类型
     leftSiderActive: 1, // 教师界面左侧边栏选中项目
+    isSignUp: false, // 用户是否登录
     currentUser: {}, // 当前登录的用户信息
-    currentTask: '',
-    currentCourse: 2,
+    currentTask: '', // 当前选中的作业
+    currentCourse: 6,
     courseInfo: { // 学生所选的课程信息
     },
     courseInform: { // 当前课程公告
     },
+    currentInform: '',
     courseFile: { // 当前课程章节 文件
     },
     courseVideo: { // 当前课程 章节 视频
     },
     courseDiscuss: { // 当前课程 讨论列表
     },
-    courseDiscussID: '', // 当前选中的讨论的id
+    courseDiscussone: {}, // 当前选中的讨论的id
     currentVideo: {},
     informs: { // 通知信息
     },
@@ -101,7 +103,10 @@ export default new Vuex.Store({
       start: '2020/2/3 23:12:12',
       end: '2020/5/3 23:12:12',
       dexpires: ''
-    }
+    },
+    tasks: [],
+    exams: [],
+    messages: []
   },
   mutations: {
     openLogin (state) {
@@ -109,6 +114,7 @@ export default new Vuex.Store({
     },
     closeLogin (state) {
       state.showPopUp = false
+      state.popUpType = 1
     },
     loginPop (state) {
       state.popUpType = 1
@@ -122,11 +128,17 @@ export default new Vuex.Store({
     otherWayPop (state) {
       state.popUpType = 4
     },
+    errorAvatar (state, url) {
+      state.currentUser.avatar = url
+    },
     setcourseInfo (state, val) {
       state.courseInfo = val
     },
     setcourseInform (state, val) {
       state.courseInform = val
+    },
+    setcurrentInform (state, val) {
+      state.currentInform = val
     },
     setcourseFile (state, val) {
       state.courseFile = val
@@ -137,8 +149,8 @@ export default new Vuex.Store({
     setcourseDiscuss (state, val) {
       state.courseDiscuss = val
     },
-    setcourseDiscussID (state, val) {
-      state.courseDiscussID = val
+    setcourseDiscussone (state, val) {
+      state.courseDiscussone = val
     },
     openPop01 (state) {
       state.showPopUp01 = true
@@ -170,6 +182,9 @@ export default new Vuex.Store({
     chooseCourseType (state, type) {
       state.coursePopType = type
     },
+    setisSignUp (state, status) {
+      state.isSignUp = status
+    },
     setLeftSider (state, item) {
       state.leftSiderActive = item
     },
@@ -197,9 +212,27 @@ export default new Vuex.Store({
     },
     setcurrentVideo (state, id) {
       state.currentVideo = id
+    },
+    addMessage (state, data) {
+      state.messages.push(data)
     }
   },
   actions: {
+    SOCKET_send_message (state, data) {
+      console.log('添加了一条消息:')
+      console.log(data)
+      // state.dispatch('waitClose')
+      state.commit('addMessage', data)
+    },
+    SOCKET_join_room (state, data) {
+      console.log(data + '加入啦。。')
+    },
+    SOCKET_leace_room (state, data) {
+      console.log('有人离开啦。。')
+    },
+    SOCKET_get (state, data) {
+      console.log(data)
+    }
   },
   modules: {
   }

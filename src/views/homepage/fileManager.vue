@@ -18,13 +18,6 @@
             <div class="item1"
                  :class="{ foActive: courseid === 'try2' ? true : false}"
                  @click="setcourseId('try2')"><div>高等数学（下）</div></div>
-            <div class="item1"></div>
-            <div class="item1"></div>
-            <div class="item1"></div>
-            <div class="item1"></div>
-            <div class="item1"></div>
-            <div class="item1"></div>
-            <div class="item1"></div>
           </div>
         </vue-scroll>
       </div>

@@ -15,6 +15,11 @@ body{
     src: url("./font/kaiti.ttf")
 }
 
+@font-face {
+    font-family: "longmenshibei";
+    src: url("./font/shouzha.ttf")
+}
+
 .__view {
     height: 100%;
     width: 100%;

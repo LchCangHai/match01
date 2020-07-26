@@ -8,158 +8,160 @@
       </div>
       <div class="fo1Navtitle"><div>问答讨论</div></div>
     </div>
-<!--    <div id="four2">-->
-<!--      <div class="four2Img">-->
-<!--        <v-carousel arrow="never" autoplay >-->
-<!--          <v-carousel-item>-->
-<!--            <div class="demo-carousel four2ImgItem">-->
-<!--              <img class="tItemImg" src="../../assets/brain1.png">-->
-<!--              <div class="tItemTitle">-->
-<!--                <div>关于林炜的秃头奥秘</div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </v-carousel-item>-->
-<!--          <v-carousel-item>-->
-<!--            <div class="demo-carousel four2ImgItem">-->
-<!--              <img class="2ItemImg" src="../../assets/avatar02.png">-->
-<!--              <div class="tItemTitle">-->
-<!--                <div>关于林炜的秃头奥秘</div>-->
-<!--              </div></div>-->
-<!--          </v-carousel-item>-->
-<!--          <v-carousel-item>-->
-<!--            <div class="demo-carousel four2ImgItem">-->
-<!--              <img class="2ItemImg" src="../../assets/avatar01.jpg">-->
-<!--              <div class="tItemTitle">-->
-<!--                <div>关于林炜的秃头奥秘</div>-->
-<!--              </div></div>-->
-<!--          </v-carousel-item>-->
-<!--          <v-carousel-item>-->
-<!--            <div class="demo-carousel four2ImgItem">-->
-<!--              <img class="2ItemImg" src="../../assets/bc01.jpg">-->
-<!--              <div class="tItemTitle">-->
-<!--                <div>关于林炜的秃头奥秘</div>-->
-<!--              </div></div>-->
-<!--          </v-carousel-item>-->
-<!--        </v-carousel>-->
-<!--        <div class="four2Cover"></div>-->
-<!--      </div>-->
-<!--      <div class="four2Content">-->
-<!--        <div class="four22Nav">-->
-<!--          <div>-->
-<!--            <svg class="icon" aria-hidden="true">-->
-<!--              <use xlink:href="#icon-fire"></use>-->
-<!--            </svg>-->
-<!--          </div>-->
-<!--          <div>hot discussion</div>-->
-<!--        </div>-->
-<!--        <div class="four22Info">-->
-<!--          <vue-scroll>-->
-<!--            <div class="four22Info1">-->
-<!--              <div class="four2Item">-->
-<!--                <div class="ftItemNav">-->
-<!--                  <div class="ftInfo">-->
-<!--                    <div>-->
-<!--                      <img src="../../assets/avatar01.jpg">-->
-<!--                    </div>-->
-<!--                    <div>你芃哥</div>-->
-<!--                  </div>-->
-<!--                  <div class="ftIcon">-->
-<!--                    <div>-->
-<!--                      <v-icon type="question-circle"></v-icon>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemContent">-->
-<!--                  <div>-->
-<!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemTime">-->
-<!--                  <div>2020.6.0 23:50</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="four2Item">-->
-<!--                <div class="ftItemNav">-->
-<!--                  <div class="ftInfo">-->
-<!--                    <div>-->
-<!--                      <img src="../../assets/avatar01.jpg">-->
-<!--                    </div>-->
-<!--                    <div>你芃哥</div>-->
-<!--                  </div>-->
-<!--                  <div class="ftIcon">-->
-<!--                    <div>-->
-<!--                      <v-icon type="question-circle"></v-icon>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemContent">-->
-<!--                  <div>-->
-<!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemTime">-->
-<!--                  <div>2020.6.0 23:50</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="four2Item">-->
-<!--                <div class="ftItemNav">-->
-<!--                  <div class="ftInfo">-->
-<!--                    <div>-->
-<!--                      <img src="../../assets/avatar01.jpg">-->
-<!--                    </div>-->
-<!--                    <div>你芃哥</div>-->
-<!--                  </div>-->
-<!--                  <div class="ftIcon">-->
-<!--                    <div>-->
-<!--                      <v-icon type="question-circle"></v-icon>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemContent">-->
-<!--                  <div>-->
-<!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemTime">-->
-<!--                  <div>2020.6.0 23:50</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="four2Item">-->
-<!--                <div class="ftItemNav">-->
-<!--                  <div class="ftInfo">-->
-<!--                    <div>-->
-<!--                      <img src="../../assets/avatar01.jpg">-->
-<!--                    </div>-->
-<!--                    <div>你芃哥</div>-->
-<!--                  </div>-->
-<!--                  <div class="ftIcon">-->
-<!--                    <div>-->
-<!--                      <v-icon type="question-circle"></v-icon>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemContent">-->
-<!--                  <div>-->
-<!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="ftItemTime">-->
-<!--                  <div>2020.6.0 23:50</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </vue-scroll>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div>
+      <!--    <div id="four2">-->
+      <!--      <div class="four2Img">-->
+      <!--        <v-carousel arrow="never" autoplay >-->
+      <!--          <v-carousel-item>-->
+      <!--            <div class="demo-carousel four2ImgItem">-->
+      <!--              <img class="tItemImg" src="../../assets/brain1.png">-->
+      <!--              <div class="tItemTitle">-->
+      <!--                <div>关于林炜的秃头奥秘</div>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--          </v-carousel-item>-->
+      <!--          <v-carousel-item>-->
+      <!--            <div class="demo-carousel four2ImgItem">-->
+      <!--              <img class="2ItemImg" src="../../assets/avatar02.png">-->
+      <!--              <div class="tItemTitle">-->
+      <!--                <div>关于林炜的秃头奥秘</div>-->
+      <!--              </div></div>-->
+      <!--          </v-carousel-item>-->
+      <!--          <v-carousel-item>-->
+      <!--            <div class="demo-carousel four2ImgItem">-->
+      <!--              <img class="2ItemImg" src="../../assets/avatar01.jpg">-->
+      <!--              <div class="tItemTitle">-->
+      <!--                <div>关于林炜的秃头奥秘</div>-->
+      <!--              </div></div>-->
+      <!--          </v-carousel-item>-->
+      <!--          <v-carousel-item>-->
+      <!--            <div class="demo-carousel four2ImgItem">-->
+      <!--              <img class="2ItemImg" src="../../assets/bc01.jpg">-->
+      <!--              <div class="tItemTitle">-->
+      <!--                <div>关于林炜的秃头奥秘</div>-->
+      <!--              </div></div>-->
+      <!--          </v-carousel-item>-->
+      <!--        </v-carousel>-->
+      <!--        <div class="four2Cover"></div>-->
+      <!--      </div>-->
+      <!--      <div class="four2Content">-->
+      <!--        <div class="four22Nav">-->
+      <!--          <div>-->
+      <!--            <svg class="icon" aria-hidden="true">-->
+      <!--              <use xlink:href="#icon-fire"></use>-->
+      <!--            </svg>-->
+      <!--          </div>-->
+      <!--          <div>hot discussion</div>-->
+      <!--        </div>-->
+      <!--        <div class="four22Info">-->
+      <!--          <vue-scroll>-->
+      <!--            <div class="four22Info1">-->
+      <!--              <div class="four2Item">-->
+      <!--                <div class="ftItemNav">-->
+      <!--                  <div class="ftInfo">-->
+      <!--                    <div>-->
+      <!--                      <img src="../../assets/avatar01.jpg">-->
+      <!--                    </div>-->
+      <!--                    <div>你芃哥</div>-->
+      <!--                  </div>-->
+      <!--                  <div class="ftIcon">-->
+      <!--                    <div>-->
+      <!--                      <v-icon type="question-circle"></v-icon>-->
+      <!--                    </div>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemContent">-->
+      <!--                  <div>-->
+      <!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemTime">-->
+      <!--                  <div>2020.6.0 23:50</div>-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--              <div class="four2Item">-->
+      <!--                <div class="ftItemNav">-->
+      <!--                  <div class="ftInfo">-->
+      <!--                    <div>-->
+      <!--                      <img src="../../assets/avatar01.jpg">-->
+      <!--                    </div>-->
+      <!--                    <div>你芃哥</div>-->
+      <!--                  </div>-->
+      <!--                  <div class="ftIcon">-->
+      <!--                    <div>-->
+      <!--                      <v-icon type="question-circle"></v-icon>-->
+      <!--                    </div>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemContent">-->
+      <!--                  <div>-->
+      <!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemTime">-->
+      <!--                  <div>2020.6.0 23:50</div>-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--              <div class="four2Item">-->
+      <!--                <div class="ftItemNav">-->
+      <!--                  <div class="ftInfo">-->
+      <!--                    <div>-->
+      <!--                      <img src="../../assets/avatar01.jpg">-->
+      <!--                    </div>-->
+      <!--                    <div>你芃哥</div>-->
+      <!--                  </div>-->
+      <!--                  <div class="ftIcon">-->
+      <!--                    <div>-->
+      <!--                      <v-icon type="question-circle"></v-icon>-->
+      <!--                    </div>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemContent">-->
+      <!--                  <div>-->
+      <!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemTime">-->
+      <!--                  <div>2020.6.0 23:50</div>-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--              <div class="four2Item">-->
+      <!--                <div class="ftItemNav">-->
+      <!--                  <div class="ftInfo">-->
+      <!--                    <div>-->
+      <!--                      <img src="../../assets/avatar01.jpg">-->
+      <!--                    </div>-->
+      <!--                    <div>你芃哥</div>-->
+      <!--                  </div>-->
+      <!--                  <div class="ftIcon">-->
+      <!--                    <div>-->
+      <!--                      <v-icon type="question-circle"></v-icon>-->
+      <!--                    </div>-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemContent">-->
+      <!--                  <div>-->
+      <!--                    林炜自十多岁开始秃头，XXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
+      <!--                  </div>-->
+      <!--                </div>-->
+      <!--                <div class="ftItemTime">-->
+      <!--                  <div>2020.6.0 23:50</div>-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--          </vue-scroll>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+    </div>
     <div id="four4">
       <div id="four04Title">
         <div>发起讨论</div>
@@ -174,31 +176,21 @@
       </div>
     </div>
     <div id="four3">
-<!--      <div id="fourHandle">-->
-<!--        <div>-->
-<!--          <v-button class="typeBtn" type="ghost"-->
-<!--                    :class="{ activeBtn: type === 1 ? true : false}"-->
-<!--                    @click="typeNew()">最新</v-button>-->
-<!--          <v-button  class="typeBtn" type="ghost"-->
-<!--                     :class="{ activeBtn: type === 2 ? true : false}"-->
-<!--                     @click="typeMypart()">我参与的</v-button>-->
-<!--        </div>-->
-<!--      </div>-->
       <div id="four3Content">
         <div class="four3Item"
-             @click="toOneDiscuss(item.id)"
+             @click="toOneDiscuss(item)"
              v-for="(item, index) in courseDiscuss"
              :key="index">
           <div class="ftItemNav">
             <div class="ftInfo">
               <div>
-                <img :src="item.user.avatar">
+                <img :src="item.user.avatar"  @error="imgerror(item)">
               </div>
               <div>{{item.user.nickname}}</div>
             </div>
             <div class="ftIcon">
               <div>
-                <v-icon type="question-circle"></v-icon>
+                <v-icon type="message"></v-icon>
               </div>
             </div>
           </div>
@@ -225,20 +217,22 @@ export default {
   data () {
     return {
       type: 1,
-      content: ''
+      content: '',
+      errorImg: require('../../assets/errorAvatar01.png'),
+      coursec: this.$route.query.id
     }
   },
   computed: {
     ...mapState([
       'currentCourse',
       'courseDiscuss',
-      'courseDiscussID'
+      'courseDiscussone'
     ])
   },
   methods: {
     ...mapMutations([
       'setcourseDiscuss',
-      'setcourseDiscussID'
+      'setcourseDiscussone'
     ]),
     typeNew () {
       this.type = 1
@@ -247,8 +241,11 @@ export default {
       this.type = 2
     },
     toOneDiscuss (id) {
-      this.setcourseDiscussID(id)
-      this.$router.push('/courses/oneDiscuss')
+      this.setcourseDiscussone(id)
+      this.$router.push('/courses/oneDiscuss?id=' + this.$route.query.id)
+    },
+    imgerror (item) {
+      item.user.avatar = this.errorImg
     },
     publishDiscuss () {
       if (this.content === '') {
@@ -258,7 +255,7 @@ export default {
           duration: 2
         })
       } else {
-        this.$axios.post('/api/course/' + this.currentCourse + '/discussions', {
+        this.$axios.post('/api/course/' + this.coursec + '/discussions', {
           content: this.content
         }, {
           header: {
@@ -280,7 +277,7 @@ export default {
       }
     },
     getDiscuss () {
-      this.$axios.get('/api/course/' + this.currentCourse + '/discussions')
+      this.$axios.get('/api/course/' + this.coursec + '/discussions')
         .then(res => {
           this.setcourseDiscuss(res.data.data.discussions)
           console.log(res.data.data.discussions)

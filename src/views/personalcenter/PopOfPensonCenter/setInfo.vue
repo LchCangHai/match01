@@ -1,10 +1,6 @@
 <template>
 <div id="setInfo">
   <div id="setInfoMain">
-    <div class="Ticon">
-<!--      <div id="backIcon" class="iconBtn" @click="loginPop()"><v-icon class="my-icon1" type="left"></v-icon></div>-->
-      <div id="closeIcon" class="iconBtn" @click="closePop01()"><v-icon class="my-icon1" type="close"></v-icon></div>
-    </div>
     <div id="title">资料设置</div>
     <div id="info">
       <div class="tips">绝不会以任何形式向他人透露你的信息</div>
@@ -12,7 +8,7 @@
         <v-form-item label="头像" :label-col="labelCol" :wrapper-col="wrapperCol">
           <div class="avatar1">
             <div class="imgBox">
-              <img :src="imgUrl">
+              <img :src="currentUser.avatar">
             </div>
             <div class="modifyAvatar">
               <a class="btn" @click="toggleShow">编辑头像</a>
@@ -23,13 +19,17 @@
           <v-input placeholder="请输入昵称" size="large"  v-model="ruleForm.name" @blur="valiName()"></v-input>
           <div class="tip1">{{tip1}}</div>
         </v-form-item>
+        <v-form-item label="学校" :label-col="labelCol" :wrapper-col="wrapperCol" prop="school">
+          <!--          <v-input size="large" v-model="ruleForm.school"></v-input>-->
+          <div class="disabledInfo">{{ruleForm.school}}</div>
+        </v-form-item>
         <v-form-item label="在校信息" :label-col="labelCol" :wrapper-col="wrapperCol" prop="studentID">
 <!--          <v-input size="large"  v-model="ruleForm.studentID"></v-input>-->
           <div class="disabledInfo">{{ruleForm.studentID}}</div>
         </v-form-item>
-        <v-form-item label="学校" :label-col="labelCol" :wrapper-col="wrapperCol" prop="school">
-<!--          <v-input size="large" v-model="ruleForm.school"></v-input>-->
-          <div class="disabledInfo">{{ruleForm.school}}</div>
+        <v-form-item label="真实姓名" :label-col="labelCol" :wrapper-col="wrapperCol" prop="school">
+          <!--          <v-input size="large" v-model="ruleForm.school"></v-input>-->
+          <div class="disabledInfo">{{ruleForm.realName}}</div>
         </v-form-item>
 <!--        <v-form-item label="真实姓名" :label-col="labelCol" :wrapper-col="wrapperCol" prop="realName">-->
 <!--          <v-input placeholder="请输入真实姓名" size="large" v-model="ruleForm.realName"></v-input>-->
@@ -185,12 +185,13 @@ export default {
       console.log(this.imgBlob)
       const formdata = new FormData()
       formdata.set('avatar', this.imgBlob)
-      this.$axios.post('/api/avatars/course/' + this.currentUser.uid, formdata, {
+      this.$axios.post('/api/avatars/user/' + this.currentUser.uid, formdata, {
         header: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(res => {
         this.$message.success('用户头像上传成功')
+        this.getUserInfo()
         this.imgUrl = imgDataUrl
       }).catch(error => {
         console.log(error)
@@ -232,57 +233,53 @@ export default {
     modify () {
       if (this.tip1 !== '') return
       const data = {}
-      if (this.ruleForm.name !== '') {
+      if (this.ruleForm.name !== '' && this.ruleForm.name !== this.currentUser.nickname) {
         data.nickname = this.ruleForm.name
       }
       if (this.ruleForm.sex !== '') {
         data.gender = this.ruleForm.sex
       }
-      this.$axios.put('/api/auser/current', {
-        nickname: this.ruleForm.name,
-        gender: this.ruleForm.sex
-      }, {
+      this.$axios.put('/api/user/current', data, {
         header: {
           'Content-Type': 'application/json' // 如果写成contentType会报错
         }
       }).then(res => {
-        this.$message.success('登录成功')
-        this.setCurrentUser(res.data.data.user_info)
-        window.localStorage.setItem('access_token', res.data.data.access_token)
-        this.$router.push('/index')
+        this.$message.success('修改成功')
+        this.setCurrentUser(res.data.data)
       }).catch(error => {
-        this.$message.error('登录失败')
+        this.$message.error('修改失败')
+        this.getUserInfo()
         console.log(error)
       }).finally(() => {
-        this.account = ''
-        this.password = ''
       })
     },
     getUserInfo () {
       this.$axios.get('/api/user/current')
         .then(res => {
-          console.log('已登录!!!!!!!!!!!!!!!!!!!!111111111')
           this.setCurrentUser(res.data.data)
           // this.$notification.info({
           //   message: '消息',
           //   description: '已登录账号： ' + res.data.data.nickname,
           //   duration: 2
           // })
-        }).catch(() => {
+        }).catch((error) => {
           this.$notification.warning({
             message: '警告',
-            description: '未登录或登录过期',
+            description: '获取用户信息失败' + error.response.message,
             duration: 10
           })
-          this.$message.warning('未登录或登录过期')
-          this.$router.push('/unindex')
         }).finally(() => {
           this.setInfo()
         })
     },
     setInfo () {
-      console.log(this.currentUser)
-      this.imgupURL = 'http://thunderclass.mr-lin.site/api/avatars/user/' + this.currentUser.uid
+      this.ruleForm.name = this.currentUser.nickname
+      this.ruleForm.sex = this.currentUser.gender
+      if (this.currentUser.name === null) {
+        this.ruleForm.realName = '未导入'
+      } else {
+        this.ruleForm.realName = this.currentUser.name
+      }
       if (this.currentUser.school === null) {
         this.ruleForm.school = '未认证'
       } else {
@@ -305,7 +302,13 @@ export default {
       }
     },
     valiName () {
-      if (this.nickname === '') {
+      if (this.ruleForm.name === '') {
+        return
+      }
+      if (this.ruleForm.name === this.currentUser.nickname) {
+        return
+      }
+      if (this.ruleForm.name === '') {
         this.tip1 = ''
       } else {
         this.tip1 = ''
@@ -346,20 +349,15 @@ export default {
     align-items: center;
   }
   #setInfoMain {
-    z-index: 2001;
-    position: absolute;
-    /*top: 50%;*/
-    left: 50%;
-    transform: translate(-50%, -10%);
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 600px;
-    height: 800px;
     background-color: white;
     border-radius: 4px;
-    box-shadow: 0px 2px 10px 1px rgba(150,150,150,0.51);
+    /*box-shadow: 0px 2px 10px 1px rgba(150,150,150,0.51);*/
     color: black;
   }
   .Ticon {

@@ -60,7 +60,7 @@
     </div>
     <div class="threeContent" v-show="type === 2 ? true : false">
       <div class="three3Item" @click="openExam(item.id)"
-           v-for="(item, index) in tasks" :key="index">
+           v-for="(item, index) in exams" :key="index">
         <div class="three3Nav">
           <div class="three3header">
             <div class="three3type examType"
@@ -206,12 +206,13 @@ export default {
       if (this.type === 1) {
         this.gettask(this.pageVal)
       } else if (this.type === 2) {
-        this.gettask(this.pageVal)
+        this.getexam(this.pageVal)
       }
     }
   },
   mounted () {
-    this.getData()
+    this.gettask(this.pageVal)
+    this.getexam(this.pageVal)
   },
   components: {
   }

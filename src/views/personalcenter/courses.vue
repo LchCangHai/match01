@@ -19,13 +19,13 @@
         <div class="content2">
           <div class="courseItem"
                v-for="item in allcourse"
-               :key="item.id" @click="toCourse(item.id)">
+               :key="item.id">
             <div class="course02">
               <div class="info02">
                 <div class="courseImg02">
-                  <img class="img02" :src="item.avatar">
+                  <img class="img02" :src="item.avatar" @error="imgerror(item)">
                 </div>
-                <div class="courseinfo02">
+                <div class="courseinfo02"  @click="toCourse(item.id)">
                   <div class="courseTitle02">{{item.name}}</div>
                   <div class="courseCollege02">{{item.teacher_name}}</div>
                   <div class="courseRate02">{{item.stat_at}} 开始</div>
@@ -39,69 +39,18 @@
                   </div>
                   <div @click="cinfo(item.name, item.introduce)">课程介绍</div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="courseItem">
-            <div class="course02">
-              <div class="info02">
-                <div class="courseImg02">
-                  <img class="img02" src="../../assets/course01.jpg">
-                </div>
-                <div class="courseinfo02">
-                  <div class="courseTitle02">国防教育-军事理论</div>
-                  <div class="courseCollege02">福州大学</div>
-                  <div class="courseRate02">已完成100%</div>
-                  <div class="courseEnd02">2020年6月20日 截止</div>
-                </div>
-              </div>
-              <div class="handle02">
-                <div class="handleitem">
-                  <div class="icon02">
-                    <v-icon class="infoicon" type="caret-right"></v-icon>
-                  </div>
-                  <div>课程介绍</div>
-                </div>
                 <div class="handleitem">
                   <div class="icon02">
                     <v-icon class="exiticon" type="caret-right"></v-icon>
                   </div>
-                  <div>退出课程</div>
+                  <div>
+                    <v-popconfirm  title="确定删除吗?" placement="left" @confirm="deleteCourse(item.id, item.name)">
+                      删除课程
+                    </v-popconfirm>
+                  </div>
                 </div>
-
               </div>
             </div>
-          </div>
-          <div class="courseItem">
-            <div class="info02">
-              <div class="courseImg02">
-                <img class="img02" src="../../assets/course01.jpg">
-              </div>
-              <div class="courseinfo02">
-                <div class="courseTitle02">国防教育-军事理论</div>
-                <div class="courseCollege02">福州大学</div>
-                <div class="courseRate02">已完成100%</div>
-                <div class="courseEnd02">2020年6月20日 截止</div>
-              </div>
-            </div>
-            <div class="handle02">
-              <div class="handleitem">
-                <div class="icon02">
-                  <v-icon class="infoicon" type="caret-right"></v-icon>
-                </div>
-                <div>课程介绍</div>
-              </div>
-              <div class="handleitem">
-                <div class="icon02">
-                  <v-icon class="exiticon" type="caret-right"></v-icon>
-                </div>
-                <div>退出课程</div>
-              </div>
-
-            </div>
-          </div>
-          <div class="courseItem">
-            <my-course></my-course>
           </div>
         </div>
       </vue-scroll>
@@ -111,14 +60,14 @@
         <div class="content2">
           <div class="courseItem"
                v-for="item in currentUser.courses"
-               :key="item.id"
-               @click="toCourse(item.id)">
+               :key="item.id" v-show="item.create_status === 0"
+               >
             <div class="course02">
               <div class="info02">
                 <div class="courseImg02">
                   <img class="img02" :src="item.avatar">
                 </div>
-                <div class="courseinfo02">
+                <div class="courseinfo02" @click="toCourse(item.id)">
                   <div class="courseTitle02">{{item.name}}</div>
                   <div class="courseCollege02">{{item.teacher_name}}</div>
                   <div class="courseRate02">{{item.stat_at}} 开始</div>
@@ -135,31 +84,6 @@
               </div>
             </div>
           </div>
-          <div class="courseItem">
-            <div class="info02">
-              <div class="courseImg02">
-                <img class="img02" src="../../assets/headImg.png">
-              </div>
-              <div class="courseinfo02">
-                <div class="courseTitle02">国防教育-军事理论</div>
-                <div class="courseCollege02">福州大学</div>
-                <div class="courseRate02">已完成100%</div>
-                <div class="courseEnd02">2020年6月20日 截止</div>
-              </div>
-            </div>
-            <div class="handle02">
-              <div class="handleitem">
-                <div class="icon02">
-                  <v-icon class="infoicon" type="caret-right"></v-icon>
-                </div>
-                <div>课程介绍</div>
-              </div>
-
-            </div>
-          </div>
-          <div class="courseItem">
-            <my-course></my-course>
-          </div>
         </div>
       </vue-scroll>
     </div>
@@ -168,14 +92,14 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import Course from './courses/course'
 
 export default {
   name: 'courses',
   data () {
     return {
       courseType: 2,
-      allcourse: []
+      allcourse: [],
+      errorImg: require('../../assets/imgError01.jpg')
     }
   },
   computed: {
@@ -203,56 +127,60 @@ export default {
       this.courseType = 2
     },
     cinfo (name, introduce) {
-      this.$notification.info({
-        message: name,
-        description: introduce
+      this.$notification.open({
+        message: '《' + name + '》的介绍',
+        description: introduce,
+        duration: 4.8
       })
+    },
+    deleteCourse (id, name) {
+      console.log('deleteCourse')
+      this.$axios.delete('/api/course/' + id)
+        .then(res => {
+          this.$notification.success({
+            message: '成功',
+            description: '成功删除课程' + '《' + name + '》',
+            duration: 1
+          })
+          this.getAllCourse()
+        }).catch(error => {
+          console.log(error)
+          this.$notification.error({
+            message: '出错',
+            description: '删除课程' + '《' + name + '》' + '出错，检查网络或通知管理员',
+            duration: 2
+          })
+        })
     },
     binfo (name, id) {},
     getAllCourse () {
-      this.$axios.get('/api/course/course_list', {
-        params: {
-          teacher_id: this.currentUser.uid
-        }
-      })
+      this.$axios.get('/api/user/teacher/current/courses')
         .then(res => {
-          console.log('获取课程信息成功')
+          console.log('获取导入课程信息成功')
           this.allcourse = res.data.data.courses
         }).catch(error => {
-          this.$message.warning('获取课程信息出错')
+          this.$message.warning('获取导入课程信息出错')
           console.log(error)
         })
     },
     toCourse (id) {
+      const routeUrl = this.$router.resolve({
+        path: '/courses',
+        query: {
+          id: id
+        }
+      })
       this.setcurrentCourse(id)
-      this.$router.push('/courses')
+      window.open(routeUrl.href, '_blank')
     },
-    getUserInfo () {
-      this.$axios.get('/api/user/current')
-        .then(res => {
-          console.log('已登录')
-          this.setCurrentUser(res.data.data)
-          // this.$notification.info({
-          //   message: '消息',
-          //   description: '已登录账号： ' + res.data.data.nickname,
-          //   duration: 2
-          // })
-        }).catch(() => {
-          this.$notification.warning({
-            message: '警告',
-            description: '未登录或登录过期',
-            duration: 2
-          })
-        }).finally(() => {
-        })
+    imgerror (item) {
+      item.avatar = this.errorImg
     }
   },
   mounted () {
-    this.getUserInfo()
     this.getAllCourse()
   },
   components: {
-    'my-course': Course
   }
 }
 </script>
@@ -372,6 +300,9 @@ export default {
         height: 100%;
         position: relative;
         left: 0px;
+        background: url("../../assets/noImgBc.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
         .img02 {
           width: 100%;
           height: 100%;
@@ -381,6 +312,7 @@ export default {
         /*height: 100%;*/
         position: relative;
         left: 15px;
+        cursor: pointer;
         >div {
           margin: 5px 0;
         }
@@ -449,6 +381,10 @@ export default {
     border-radius: 5px;
     background-color: rgba(248,248,248,0.4);
     box-shadow: 1px -1px 10px 1px rgba(213,213,213,0.6);
+  }
+
+  img {
+    object-fit: cover;
   }
 
 </style>

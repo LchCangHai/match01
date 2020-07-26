@@ -18,46 +18,6 @@
           <div>{{item.name}}</div>
         </div>
       </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
-      <div class="courseItem">
-        <div>
-          <div>自闭学</div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -88,13 +48,10 @@ export default {
       this.open = !this.open
     },
     getAllCourse () {
-      this.$axios.get('/api/course/course_list', {
-        params: {
-          teacher_id: this.currentUser.uid
-        }
-      })
+      this.$axios.get('/api/user/teacher/current/courses')
         .then(res => {
           console.log('获取课程信息成功')
+          this.setcurrentCourse(res.data.data.courses[0].id)
           this.allcourse = res.data.data.courses
         }).catch(error => {
           this.$message.warning('获取课程信息出错')
@@ -107,7 +64,7 @@ export default {
   },
   components: {
   },
-  mounted () {
+  beforeMount () {
     this.getAllCourse()
   }
 }

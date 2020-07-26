@@ -1,25 +1,8 @@
 <template>
   <div id="courseWare">
-    <nav>
-      <div class="navlogo">
-        <img id="logo" src="../../assets/logotem.jpg"/>
-        <div>
-          <span>教务管理中心</span>
-        </div>
-      </div>
-      <div class="navbtn">
-        <div class="btn01 tabActive">课程</div>
-        <div class="btn01" @click="pcBtn()">个人中心</div>
-        <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
-          <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" src="../../assets/avatar02.png">
-          </a>
-        </v-dropdown>
-        <div class="messageShow">
-          <div @click="exit">退出</div>
-        </div>
-      </div>
-    </nav>
+    <div id="Nav">
+      <my-nav :type="1"></my-nav>
+    </div>
     <div id="rightSider" @click="tostudent()">
       <div>学生主页</div>
     </div>
@@ -39,9 +22,10 @@
         </div>
         <div class="upLoadBox" id="drag_box" ref="dopbox" :class=" { borderhover: borderhover } ">
           <div class="uploadIcon">
-            <v-icon type="cloud-upload-o"></v-icon>
+            <v-icon type="cloud-upload-o" v-show="!loading"></v-icon>
+            <v-icon type="loading" v-show="loading"></v-icon>
           </div>
-          <div class="Btn01"
+          <div class="Btn01" v-show="!loading"
                @click="clickUpload">
             <div>上传课件</div>
           </div>
@@ -100,223 +84,6 @@
                 </div>
               </div>
             </div>
-            <div class="studyItem01">
-              <div class="item01Main" @click="chooseChater('two')">
-                <div class="chapter01">
-                  <div>
-                    <v-icon type="folder"></v-icon>
-                  </div>
-                  <div>第一章 秃头学的前世今生</div>
-                </div>
-                <div class="floderIcon">
-                  <v-icon type="right" v-show="chapter === 'two' ? false : true"></v-icon>
-                  <v-icon type="down" v-show="chapter === 'two' ? true : false"></v-icon>
-                </div>
-              </div>
-              <div class="item01Child" v-show="chapter === 'two' ? true : false">
-                <div class="studyItem02">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right" @click="deleteVideo('1')">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="studyItem02">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right" @click="deleteVideo('1')">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="studyItem02">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right" @click="deleteVideo('1')">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="studyItem01">
-              <div class="item01Main" @click="chooseChater('three')">
-                <div class="chapter01">
-                  <div>
-                    <v-icon type="folder"></v-icon>
-                  </div>
-                  <div>第一章 秃头学的前世今生</div>
-                </div>
-                <div class="floderIcon">
-                  <v-icon type="right" v-show="chapter === 'three' ? false : true"></v-icon>
-                  <v-icon type="down" v-show="chapter === 'three' ? true : false"></v-icon>
-                </div>
-              </div>
-              <div class="item01Child" v-show="chapter === 'three' ? true : false">
-                <div class="studyItem02" @click="openVideo('1')">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="studyItem02" @click="openVideo('1')">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="studyItem01">
-              <div class="item01Main" @click="chooseChater('four')">
-                <div class="chapter01">
-                  <div>
-                    <v-icon type="folder"></v-icon>
-                  </div>
-                  <div>第一章 秃头学的前世今生</div>
-                </div>
-                <div class="floderIcon">
-                  <v-icon type="right" v-show="chapter === 'four' ? false : true"></v-icon>
-                  <v-icon type="down" v-show="chapter === 'four' ? true : false"></v-icon>
-                </div>
-              </div>
-              <div class="item01Child" v-show="chapter === 'four' ? true : false">
-                <div class="studyItem02" @click="openVideo('1')">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="studyItem02" @click="openVideo('1')">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="studyItem01">
-              <div class="item01Main" @click="chooseChater('five')">
-                <div class="chapter01">
-                  <div>
-                    <v-icon type="folder"></v-icon>
-                  </div>
-                  <div>第一章 秃头学的前世今生</div>
-                </div>
-                <div class="floderIcon">
-                  <v-icon type="right" v-show="chapter === 'five' ? false : true"></v-icon>
-                  <v-icon type="down" v-show="chapter === 'five' ? true : false"></v-icon>
-                </div>
-              </div>
-              <div class="item01Child" v-show="chapter === 'five' ? true : false">
-                <div class="studyItem02" @click="openVideo('1')">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="studyItem02" @click="openVideo('1')">
-                  <div class="item02Main">
-                    <div class="item02left">
-                      <div class="videoIcon">
-                        <svg class="icon" aria-hidden="true">
-                          <use xlink:href="#icon-meiti"></use>
-                        </svg>
-                      </div>
-                      <div class="videoTitle"> 秃头学的前世今生</div>
-                    </div>
-                    <div class="item02right">
-                      <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-shanchu"></use>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </vue-scroll>
       </div>
@@ -328,6 +95,7 @@
 import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider.vue'
 import chooseCourse from './chooseCourse/chooseCourse'
+import myNav from '../../views/navs/s_nav1.vue'
 const formdata = new FormData()
 export default {
   name: 'courseWare.vue',
@@ -336,12 +104,8 @@ export default {
       open: false,
       chapter: '',
       chapter1: '',
-      formdata
-      // data: [
-      //   { content: '1st item' },
-      //   { content: '2nd item' },
-      //   { content: '3rd item' }
-      // ]
+      formdata,
+      loading: false
     }
   },
   computed: {
@@ -392,6 +156,7 @@ export default {
         } else {
           console.log(3)
           this.formdata.set('chapter', this.chapter)
+          this.loading = true
           this.$axios.post('/api/course/' + this.currentCourse + '/documents/upload', formdata, {
             header: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -402,6 +167,8 @@ export default {
           }).catch(error => {
             console.log(error)
             this.$message.warning('上传文件失败')
+          }).finally(() => {
+            this.loading = false
           })
         }
       }
@@ -461,11 +228,14 @@ export default {
   },
   components: {
     'my-left': LeftSider,
-    'my-choose-course': chooseCourse
+    'my-choose-course': chooseCourse,
+    'my-nav': myNav
   },
   mounted () {
     this.setLeftSider(1)
-    this.getCourseFile()
+    setTimeout(() => {
+      this.getCourseFile()
+    }, 1500)
     const that = this
     const dropbox = document.getElementById('drag_box')
     dropbox.addEventListener('drop', this.enentDrop, false)
@@ -503,11 +273,7 @@ export default {
     background-color: #f6f6f6;
   }
 
-  nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+  #Nav {
     position: relative;
     top: 0;
     left:0;
@@ -516,96 +282,10 @@ export default {
     height: 60px;
     margin: 0;
     padding: 0;
-    color: black;
     border-bottom: 1px solid lightgrey;
     box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
     background-color: white;
     z-index: 20;
-    .navlogo {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 200px;
-      height:100%;
-      color: black;
-      #logo{
-        width:100px;
-        height:50px;
-      }
-      > div{
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        span {
-          font-size: 16px;
-          color: #61c7fc;
-          font-weight: 600;
-        }
-      }
-    }
-    .navbtn {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 300px;
-      font-size: 16px;
-      .messageShow {
-        width:50px;
-        height: 35px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-end;
-        >div{
-          cursor: pointer;
-          font-size: 14px;
-        }
-        >div:hover {
-          font-size: 15px;
-        }
-        >div:active {
-          font-size: 14px;
-          text-decoration: underline;
-        }
-      }
-      .btn01{
-        cursor: pointer;
-      }
-      .btn01:hover {
-        font-weight: 600;
-        /*color:*/
-      }
-      .btn01:active{
-        color: #83bafc;
-      }
-      .btn01.tabActive {
-        text-decoration: none;
-        color:black;
-        cursor: default;
-      }
-      .avatarC1{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border: white 2px solid;
-        border-radius: 50%;
-        .avatarI {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
-    .tabActive {
-      font-weight: 600;
-      border-bottom: 3px solid #83bafc;
-    }
   }
 
   #rightSider {

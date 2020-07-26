@@ -1,27 +1,8 @@
 <template>
   <div id="courseManage">
-    <nav>
-      <div class="navlogo">
-        <img id="logo" src="../../assets/logotem.jpg"/>
-        <div>
-          <span>教务管理中心</span>
-        </div>
-      </div>
-      <div class="navbtn">
-        <div class="btn01 tabActive">课程</div>
-        <div class="btn01" @click="pcBtn()">个人中心</div>
-        <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
-          <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" src="../../assets/avatar02.png">
-          </a>
-        </v-dropdown>
-        <div class="messageShow">
-          <div class="headerNum" v-show="!isCnt99">{{counter}}</div>
-          <div class="headerNum" v-show="isCnt99">99+</div>
-          <span class="iconfont messageIcon">&#xe606;</span>
-        </div>
-      </div>
-    </nav>
+    <div id="Nav">
+      <my-nav :type="1"></my-nav>
+    </div>
     <div id="rightSider" @click="tostudent()">
       <div>学生主页</div>
     </div>
@@ -47,7 +28,7 @@
       </div>
       <div class="pubInform">
         <div class="title03">发布公告</div>
-        <v-input class="in2" placeholder="基本使用" v-model="title" ></v-input>
+        <v-input class="in2" placeholder="公告题目" v-model="title" ></v-input>
         <v-input class="in3" type="textarea" value="这是一个textarea" v-model="content"></v-input>
         <v-button class="in4" type="primary" @click="pubInform()">发布公告</v-button>
       </div>
@@ -72,17 +53,13 @@
 import { mapMutations, mapState } from 'vuex'
 import LeftSider from './leftSider/leftSider'
 import chooseCourse from './chooseCourse/chooseCourse'
+import myNav from '../../views/navs/s_nav1.vue'
 const formdata = new FormData()
 
 export default {
   name: 'courseManage.vue',
   data () {
     return {
-      // data: [
-      //   { content: '1st item' },
-      //   { content: '2nd item' },
-      //   { content: '3rd item' }
-      // ],
       expires: '',
       signInInfo: {},
       title: '',
@@ -241,12 +218,15 @@ export default {
   },
   components: {
     'my-left': LeftSider,
-    'my-choose-course': chooseCourse
+    'my-choose-course': chooseCourse,
+    'my-nav': myNav
   },
   mounted () {
     this.setLeftSider(0)
-    this.checkSignIn()
-    this.getCourse()
+    setTimeout(() => {
+      this.checkSignIn()
+      this.getCourse()
+    }, 1500)
   }
 }
 </script>
@@ -266,11 +246,7 @@ export default {
     background-color: #f6f6f6;
   }
 
-  nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+  #Nav {
     position: relative;
     top: 0;
     left:0;
@@ -279,107 +255,10 @@ export default {
     height: 60px;
     margin: 0;
     padding: 0;
-    color: black;
     border-bottom: 1px solid lightgrey;
     box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
     background-color: white;
     z-index: 20;
-    .navlogo {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 200px;
-      height:100%;
-      color: black;
-      #logo{
-        width:100px;
-        height:50px;
-      }
-      > div{
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        span {
-          font-size: 16px;
-          color: #61c7fc;
-          font-weight: 600;
-        }
-      }
-    }
-    .navbtn {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
-      width: 300px;
-      font-size: 16px;
-      .messageShow {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        .headerNum{
-          width: 23px;
-          height: 15px;
-          position: absolute;
-          background-color: #f04134;
-          color: white;
-          font-size: 12px;
-          border-radius: 50px;
-          position: relative;
-          left: 100%;
-          top: 0;
-          transform: translate(-50%, -20%);
-          text-align: center;
-        }
-        >span.messageIcon {
-          position: relative;
-          left: 0;
-          top: -15px;
-          /*transform: translate(-50%, -50%);*/
-          font-size: 25px;
-          color: #61c7fc;
-        }
-        >span.messageIcon:hover {
-          color: #2492eb;
-        }
-      }
-      .btn01{
-        cursor: pointer;
-      }
-      .btn01:hover {
-        font-weight: 600;
-        /*color:*/
-      }
-      .btn01:active{
-        color: #83bafc;
-      }
-      .btn01.tabActive {
-        text-decoration: none;
-        color:black;
-        cursor: default;
-      }
-      .avatarC1{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border: white 2px solid;
-        border-radius: 50%;
-        .avatarI {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
-    .tabActive {
-      font-weight: 600;
-      border-bottom: 3px solid #83bafc;
-    }
   }
 
   #rightSider {

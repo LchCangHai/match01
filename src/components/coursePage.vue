@@ -1,30 +1,18 @@
 <template>
   <div id="coursePage">
     <div id="header">
-      <nav>
-        <div class="navlogo">
-          <img id="logo" src="../assets/logotem.jpg"/>
-          <div>
-            <span>这里是名字</span>
-            <span>English Name</span>
-          </div>
-        </div>
-        <div class="navbtn">
-          <div class="btn01 tabActive">课程</div>
-          <div class="btn01" @click="toPCBtn()">个人中心</div>
-          <div class="avatarC1">
-            <img class="avatarI" :src="this.currentUser.avatar">
-          </div>
-          <div class="messageShow">
-            <div @click="exit">退出</div>
-          </div>
-        </div>
-      </nav>
+      <div id="Nav">
+        <my-nav :type="1"></my-nav>
+      </div>
+    </div>
+    <div id="rightSider" @click="tostudent()">
+      <div>教师主页</div>
     </div>
     <div id="body01">
-      <div style="  width:100%; height: 60px"></div>
       <div class="menu01">
-        <div class="title01">{{courseInfo1.name}}</div>
+        <div class="title01">
+          <div>{{courseInfo1.name}}</div>
+        </div>
         <div class="menu02">
           <div class="item01" @click="BtnHome()">
             <div :class="{ itemActive: item === 1 ? true : false}"> 首页 </div>
@@ -43,8 +31,6 @@
           </div>
         </div>
       </div>
-      <div></div>
-      <div></div>
     </div>
     <div id="footer">
       <transition name="coursePage">
@@ -65,6 +51,7 @@
 import { mapMutations, mapState } from 'vuex'
 import Inform from '../views/coursePop/inform.vue'
 import TaskDetail from '../views/coursePop/taskDetail.vue'
+import myNav from '../views/navs/s_nav1.vue'
 /* eslint-disable */
 let vm
 function getHash () {
@@ -86,7 +73,8 @@ export default {
       isCnt99: false,
       item: 1,
       courseInfo1: {},
-      courseInfo2: {}
+      courseInfo2: {},
+      currentc: this.$route.query.id
     }
   },
   computed: {
@@ -111,6 +99,7 @@ export default {
       'otherWayPop',
       'openCoursePop',
       'closeCoursePop',
+      'setcurrentCourse',
       'setCurrentUser',
       'setcourseInfo',
       'setcourseInform',
@@ -120,32 +109,65 @@ export default {
     toPCBtn () {
       this.$router.push('/pCenter')
     },
+    tostudent () {
+      this.$router.push('/tindex')
+    },
     exit () {
       window.localStorage.setItem('access_token', null)
       this.$router.push('/unindex')
     },
     BtnHome () {
       this.item = 1
-      this.$router.push('/courses/home')
+      this.$router.push(
+      {
+        path: '/courses/home',
+          query: {
+        id: this.currentc
+      }
+      })
     },
     BtnStudy () {
       this.item = 2
-      this.$router.push('/courses/study')
+      this.$router.push(
+      {
+        path: '/courses/study',
+          query: {
+        id: this.currentc
+      }
+      })
     },
     BtnExam () {
       this.item = 3
-      this.$router.push('/courses/exam')
+      this.$router.push(
+      {
+        path: '/courses/exam',
+          query: {
+        id: this.currentc
+      }
+      })
     },
     BtnDiscuss () {
       this.item = 4
-      this.$router.push('/courses/discuss')
+      this.$router.push(
+      {
+        path: '/courses/discuss',
+          query: {
+        id: this.currentc
+      }
+      })
     },
     BtnSourse () {
       this.item = 5
-      this.$router.push('/courses/sourse')
+      this.$router.push(
+      {
+        path: '/courses/sourse',
+          query: {
+        id: this.currentc
+      }
+      })
     },
     getCourse () {
-      this.$axios.get('/api/course/' + this.currentCourse)
+      this.$axios.get('/api/course/' + this.currentc)
       .then(res => {
         this.courseInfo1 = res.data.data
         this.setcourseInfo(res.data.data)
@@ -155,7 +177,7 @@ export default {
       })
     },
     getCourseInform () {
-      this.$axios.get('/api/course/' + this.currentCourse + '/notices')
+      this.$axios.get('/api/course/' + this.currentc + '/notices')
         .then(res => {
           this.setcourseInform(res.data.data.notices)
         }).catch(error => {
@@ -164,7 +186,7 @@ export default {
         })
     },
     getCourseFile () {
-      this.$axios.get('/api/course/' + this.currentCourse + '/documents')
+      this.$axios.get('/api/course/' + this.currentc + '/documents')
         .then(res => {
           this.setcourseFile(res.data.data.chapters)
         }).catch(error => {
@@ -173,61 +195,37 @@ export default {
       })
     },
     getCourseVideo () {
-      this.$axios.get('/api/course/' + this.currentCourse + '/movies')
+      this.$axios.get('/api/course/' + this.currentc + '/movies')
         .then(res => {
           this.setcourseVideo(res.data.data.chapters)
         }).catch(error => {
         console.log(error)
         this.$message.error('获取课程章节视频失败')
       })
-    },
-    getUserInfo () {
-      this.$axios.get('/api/user/current')
-        .then(res => {
-          console.log('已登录!!!!!!!!!!!!!!!!!!!!111111111')
-          this.setCurrentUser(res.data.data)
-          // this.$notification.info({
-          //   message: '消息',
-          //   description: '已登录账号： ' + res.data.data.nickname,
-          //   duration: 2
-          // })
-          if (res.data.data.school === null) {
-            this.isComfirmed = false
-          } else {
-            this.isComfirmed = true
-          }
-        }).catch(() => {
-        this.$notification.warning({
-          message: '警告',
-          description: '未登录或登录过期',
-          duration: 10
-        })
-        this.$message.warning('未登录或登录过期')
-        this.$router.push('/unindex')
-      }).finally(() => {
-      })
     }
   },
   components: {
     'my-inform': Inform,
-    'my-taskDetail': TaskDetail
+    'my-taskDetail': TaskDetail,
+    'my-nav': myNav
   },
   watch: {
     $route: {
       handler: (val, oldVal) => {
         const that = vm
         const hash = getHash()
-        if (hash === '#/courses/home') {
+        console.log(hash)
+        if (hash === '#/courses/home?id=' + that.currentc) {
           that.item = 1
-        } else if (hash === '#/courses/study') {
+        } else if (hash === '#/courses/study?id=' + that.currentc) {
           that.item = 2
-        } else if (hash === '#/courses/exam') {
+        } else if (hash === '#/courses/exam?id=' + that.currentc) {
           that.item = 3
-        } else if (hash === '#/courses/discuss') {
+        } else if (hash === '#/courses/discuss?id=' + that.currentc) {
           that.item = 4
-        } else if (hash === '#/courses/sourse') {
+        } else if (hash === '#/courses/sourse?id=' + that.currentc) {
           that.item = 5
-        } else if (hash === '#/courses/oneDiscuss') {
+        } else if (hash === '#/courses/oneDiscuss?id=' + that.currentc) {
           that.item = 4
         }
       },
@@ -236,21 +234,21 @@ export default {
     }
   },
   mounted: function () {
-    this.getUserInfo()
+    this.setcurrentCourse(this.$route.query.id)
     this.getCourse()
     const that = this
     const hash = getHash()
     if (hash === '#/courses/home') {
       that.item = 1
-    } else if (hash === '#/courses/study') {
+    } else if (hash === '#/courses/study?id=' + that.currentc) {
       that.item = 2
-    } else if (hash === '#/courses/exam') {
+    } else if (hash === '#/courses/exam?id=' + that.currentc) {
       that.item = 3
-    } else if (hash === '#/courses/discuss') {
+    } else if (hash === '#/courses/discuss?id=' + that.currentc) {
       that.item = 4
-    } else if (hash === '#/courses/sourse') {
+    } else if (hash === '#/courses/sourse?id=' + that.currentc) {
       that.item = 5
-    } else if (hash === '#/courses/oneDiscuss') {
+    } else if (hash === '#/courses/oneDiscuss?id=' + that.currentc) {
       that.item = 4
     }
     vm = this
@@ -268,108 +266,52 @@ export default {
   min-width: 1060px;
 }
 
-nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+#Nav {
   position: relative;
   top: 0;
+  left:0;
   width:100%;
+  min-width: 1000px;
   height: 60px;
   margin: 0;
   padding: 0;
-  color: black;
   border-bottom: 1px solid lightgrey;
-  background-color: white;
-  z-index: 2020;
   box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
-  .navlogo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 200px;
-    height:100%;
-    color: black;
-    #logo{
-      width:100px;
-      height:50px;
-    }
-    > div{
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      span {
-        font-size: 14px;
-      }
-      span:last-child {
-        font-size: 10px;
-      }
-    }
-  }
-  .navbtn {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 300px;
-    font-size: 16px;
-    .messageShow {
-      width:50px;
-      height: 35px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-end;
-      >div{
-        cursor: pointer;
-        font-size: 14px;
-      }
-      >div:hover {
-        font-size: 15px;
-      }
-      >div:active {
-        font-size: 14px;
-        text-decoration: underline;
-      }
-    }
-    .btn01{
-      cursor: pointer;
-    }
-    .btn01:hover {
-      font-weight: 600;
-      /*color:*/
-    }
-    .btn01:active{
-      color: #83bafc;
-    }
-    .btn01.tabActive {
-      text-decoration: none;
-      color:black;
-      cursor: default;
-    }
-    .avatarC1{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 50px;
-      height: 50px;
-      border: white 2px solid;
-      border-radius: 50%;
-      .avatarI {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-      }
-    }
-  }
-  .tabActive {
+  background-color: white;
+  z-index: 20;
+}
+
+#rightSider {
+  z-index: 2030;
+  cursor: pointer;
+  width: 60px;
+  height: 100px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: #ebf9ff;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  >div {
+    color: #61c7fc;
     font-weight: 600;
-    border-bottom: 3px solid #83bafc;
+    font-size: 13px;
+    max-width: 90%;
   }
+}
+#rightSider:hover {
+  background-color: #61c7fc;
+  >div {
+    color: #ebf9ff;
+  }
+}
+#rightSider:active {
+  background-color: #2492eb;
 }
 
 #body01 {

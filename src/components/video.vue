@@ -1,26 +1,8 @@
 <template>
   <div id="video">
-    <nav>
-      <div class="navlogo">
-        <img id="logo" src="../assets/logotem.jpg"/>
-        <div>
-          <span>这里是名字</span>
-          <span>English Name</span>
-        </div>
-      </div>
-      <div class="navbtn">
-        <div class="btn01 tabActive">课程</div>
-        <div class="btn01" @click="toPCBtn()">个人中心</div>
-        <v-dropdown class="avatarC1" :data="data" @item-click="itemClick">
-          <a href="javascript:void(0)" class="avatarA ant-dropdown-link ant-dropdown-trigger">
-            <img class="avatarI" src="../assets/avatar01.jpg">
-          </a>
-        </v-dropdown>
-        <div class="messageShow">
-          <div @click="exit">退出</div>
-        </div>
-      </div>
-    </nav>
+    <div id="Nav">
+      <my-nav :type="1"></my-nav>
+    </div>
     <div id="video01">
       <div id="oneVideo">
         <div class="oneInfo">
@@ -143,6 +125,7 @@
 import { mapMutations, mapState } from 'vuex'
 import Player from 'xgplayer'
 import Chat from '../views/videoChat/chat.vue'
+import myNav from '../views/navs/s_nav1.vue'
 // import './.xgplayer/skin/index.js'
 // import 'xgplayer-mp4'
 // eslint-disable-next-line no-unused-vars
@@ -151,7 +134,8 @@ window.addEventListener('resize', function () { document.getElementById('vs').st
 export default {
   name: 'video.vue',
   components: {
-    'my-chat': Chat
+    'my-chat': Chat,
+    'my-nav': myNav
   },
   data () {
     return {
@@ -253,7 +237,7 @@ export default {
       this.$message.warning('您已签到成功')
     },
     signInthree () {
-      this.$axios.put('/api/course/' + this.currentCourse + '/commit')
+      this.$axios.put('/api/course/' + this.$route.params.id + '/commit')
         .then(res => {
           console.log('签到成功')
           this.checkSignIn()
@@ -263,7 +247,7 @@ export default {
         })
     },
     checkSignIn () {
-      this.$axios.get('/api/course/' + this.currentCourse + '/commit')
+      this.$axios.get('/api/course/' + this.$route.params.id + '/commit')
         .then(res => {
           console.log('查看签到信息成功')
           this.signInInfo = res.data.data
@@ -279,7 +263,6 @@ export default {
     this.checkSignIn()
     this.setcurrentCourse(this.$route.params.id)
     this.url = this.$route.query.url
-    console.log('55555555555555555555')
     console.log(this.$route.query.url)
   }
 }
@@ -295,108 +278,19 @@ export default {
   justify-content: flex-start;
   align-items: center;
 }
-nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+#Nav {
   position: relative;
   top: 0;
+  left:0;
   width:100%;
+  min-width: 1000px;
   height: 60px;
   margin: 0;
   padding: 0;
-  color: black;
   border-bottom: 1px solid lightgrey;
+  box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
   background-color: white;
   z-index: 20;
-  box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
-  .navlogo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 200px;
-    height:100%;
-    color: black;
-    #logo{
-      width:100px;
-      height:50px;
-    }
-    > div{
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      span {
-        font-size: 14px;
-      }
-      span:last-child {
-        font-size: 10px;
-      }
-    }
-  }
-  .navbtn {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 300px;
-    font-size: 16px;
-    .messageShow {
-      width:50px;
-      height: 35px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-end;
-      >div{
-        cursor: pointer;
-        font-size: 14px;
-      }
-      >div:hover {
-        font-size: 15px;
-      }
-      >div:active {
-        font-size: 14px;
-        text-decoration: underline;
-      }
-    }
-    .btn01{
-      cursor: pointer;
-    }
-    .btn01:hover {
-      font-weight: 600;
-      /*color:*/
-    }
-    .btn01:active{
-      color: #83bafc;
-    }
-    .btn01.tabActive {
-      text-decoration: none;
-      color:black;
-      cursor: default;
-    }
-    .avatarC1{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 50px;
-      height: 50px;
-      border: white 2px solid;
-      border-radius: 50%;
-      .avatarI {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-      }
-    }
-  }
-  .tabActive {
-    font-weight: 600;
-    border-bottom: 3px solid #83bafc;
-  }
 }
 
 #video01 {
