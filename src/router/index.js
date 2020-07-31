@@ -42,8 +42,14 @@ import tCourseWare from '../components/Teacher1/setCourse/t_courseware.vue'
 import tCourseVideo from '../components/Teacher1/setCourse/t_coursevideo.vue'
 import tCourseDiscuss from '../components/Teacher1/setCourse/t_courseDiscuss.vue'
 import tCourseExam from '../components/Teacher1/setCourse/t_taskexam.vue'
+import tStartExam from '../components/Teacher1/setCourse/t_startexam.vue'
+import tCourseStudent from '../components/Teacher1/setCourse/t_courseStudent.vue'
+import teditInfo from '../components/Teacher1/t_editInfo.vue'
 
 // 管理员
+
+// 答题卡
+import answer01 from '../components/answersheet01/answer01.vue'
 
 // import
 
@@ -169,6 +175,10 @@ const routes = [
     component: createCourse
   },
   {
+    path: '/editInfo',
+    component: teditInfo
+  },
+  {
     path: '/setCourse',
     component: setCourse,
     redirect: '/setCourse/courseManage',
@@ -192,8 +202,21 @@ const routes = [
       {
         path: 'courseExam',
         component: tCourseExam
+      },
+      {
+        path: 'startExam',
+        component: tStartExam
+      },
+      {
+        path: 'courseStudent',
+        component: tCourseStudent
       }
     ]
+  },
+  // 答题卡
+  {
+    path: '/answer01',
+    component: answer01
   }
 ]
 

@@ -42,11 +42,11 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import myNav from '../views/navs/nav3.vue'
-import setInfo from '../views/personalcenter/PopOfPensonCenter/setInfo.vue'
-import confirm from '../views/personalcenter/PopOfPensonCenter/confirm.vue'
-import password from '../views/personalcenter/PopOfPensonCenter/setPassword.vue'
-import tel from '../views/personalcenter/PopOfPensonCenter/changeTel.vue'
+import myNav from '../../views/navs/t_nav4.vue'
+import setInfo from './t_info/t_setInfo.vue'
+import confirm from './t_info/t_confirm.vue'
+import password from './t_info/t_setPassword.vue'
+import tel from './t_info/t_changeTel.vue'
 
 export default {
   name: 'studentInfo.vue',

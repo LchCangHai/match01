@@ -5,9 +5,6 @@
         <my-nav :type="1"></my-nav>
       </div>
     </div>
-    <div id="rightSider" @click="tostudent()">
-      <div>教师主页</div>
-    </div>
     <div id="body01">
       <div class="menu01">
         <div class="title01">
@@ -279,39 +276,6 @@ export default {
   box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
   background-color: white;
   z-index: 20;
-}
-
-#rightSider {
-  z-index: 2030;
-  cursor: pointer;
-  width: 60px;
-  height: 100px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  background-color: #ebf9ff;
-  position: fixed;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  >div {
-    color: #61c7fc;
-    font-weight: 600;
-    font-size: 13px;
-    max-width: 90%;
-  }
-}
-#rightSider:hover {
-  background-color: #61c7fc;
-  >div {
-    color: #ebf9ff;
-  }
-}
-#rightSider:active {
-  background-color: #2492eb;
 }
 
 #body01 {

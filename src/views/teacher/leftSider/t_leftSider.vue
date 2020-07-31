@@ -49,6 +49,17 @@
       <div></div>
     </div>
     <div class="siderItem"
+         :class=" { siderActive : leftSiderActive === 6 ? true : false} "
+         @click="tostarttask()">
+      <div class="icon">
+        <div>
+          <v-icon type="edit"></v-icon>
+        </div>
+        <div>布置作业考试</div>
+      </div>
+      <div></div>
+    </div>
+    <div class="siderItem"
          :class=" { siderActive : leftSiderActive === 5 ? true : false} "
          @click="totstudentManage()">
       <div class="icon">
@@ -119,14 +130,14 @@ export default {
     totcourseSignIn () {
       this.$router.push('/setCourse/courseExam')
     },
-    totstudentManage () {
-      this.$router.push('/studentManage')
+    tostarttask () {
+      this.$router.push('/setCourse/startExam')
     },
     tottaskExam () {
       this.$router.push('/setCourse/courseExam')
     },
-    totdataManage () {
-      this.$router.push('/dataManage')
+    totstudentManage () {
+      this.$router.push('/setCourse/courseStudent')
     }
   },
   components: {
@@ -146,8 +157,10 @@ export default {
           that.leftSiderActive = 3
         } else if (hash === '#/setCourse/courseExam') {
           that.leftSiderActive = 4
-        } else if (hash === '#/courses/oneDiscuss?id=' + that.currentc) {
-          that.leftSiderActive = 4
+        } else if (hash === '#/setCourse/courseStudent') {
+          that.leftSiderActive = 5
+        } else if (hash === '#/setCourse/startExam') {
+          that.leftSiderActive = 6
         }
       }
     }
@@ -166,8 +179,10 @@ export default {
       that.leftSiderActive = 3
     } else if (hash === '#/setCourse/courseExam') {
       that.leftSiderActive = 4
-    } else if (hash === '#/courses/oneDiscuss?id=' + that.currentc) {
-      that.leftSiderActive = 4
+    } else if (hash === '#/setCourse/courseStudent') {
+      that.leftSiderActive = 5
+    } else if (hash === '#/setCourse/startExam') {
+      that.leftSiderActive = 6
     }
     vm = this
   }

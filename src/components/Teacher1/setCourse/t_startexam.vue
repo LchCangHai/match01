@@ -1,6 +1,6 @@
 <template>
   <div id="courseWare">
-    <div id="Content01">
+    <div class="Content01" v-show="isPublishTask === false">
       <div class="publish">
         <div>
           <div class="addTask Btn02" @click="openPop(1)">
@@ -18,6 +18,19 @@
         </div>
       </div>
     </div>
+    <div class="Content01" v-show="isPublishTask === true">
+      <div class="title00">
+        <v-icon type="file-add"></v-icon>
+        <div>创建题目</div>
+        <v-button type="warning" @click="rePublic" class="reBtn" >重置布置</v-button>
+      </div>
+      <create-test></create-test>
+      <div class="title00">
+        <v-icon type="file-text"></v-icon>
+        <div>题目预览</div>
+      </div>
+      <show-test></show-test>
+    </div>
   </div>
 </template>
 
@@ -25,6 +38,8 @@
 import { mapMutations, mapState } from 'vuex'
 import addTask from './taskexam/addTask.vue'
 import addExam from './taskexam/addExam.vue'
+import showTest from './public/t_showTest.vue'
+import createTest from './public/t_createTest.vue'
 
 export default {
   name: 'courseWare.vue',
@@ -39,7 +54,8 @@ export default {
       'addTEPop',
       'TEPopType',
       'addTEPop',
-      'currentCourse'
+      'currentCourse',
+      'isPublishTask'
     ])
   },
   methods: {
@@ -48,7 +64,10 @@ export default {
       'chooseTEPop',
       'openAddTEPop',
       'closeAddTEPop',
-      'setcourseInfo'
+      'setcourseInfo',
+      'closePublishTask',
+      'openPublishTask',
+      'clsTask'
     ]),
     openPop (type) {
       if (this.addTEPop === false || this.TEPopType !== type) {
@@ -71,11 +90,17 @@ export default {
           console.log(error)
           console.log('获取课程信息失败')
         })
+    },
+    rePublic () {
+      this.clsTask()
+      this.closePublishTask()
     }
   },
   components: {
     'my-addtask': addTask,
-    'my-addexam': addExam
+    'my-addexam': addExam,
+    'show-test': showTest,
+    'create-test': createTest
   },
   mounted () {
     this.getCourse()
@@ -97,13 +122,34 @@ export default {
     /*background-color: #f6f6f6;*/
   }
 
-  #Content01 {
+  .Content01 {
     width: 100%;
     min-height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+  }
+  .reBtn {
+    margin-left: 20px;
+  }
+  .title00 {
+    height: 50px;
+    font-size: 15px;
+    margin: 10px 0 5px 0;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    i {
+      font-size: 22px;
+      margin-left: 10px;
+      color: #006bff;
+    }
+    >div {
+      margin-left: 10px;
+    }
   }
   .publish {
     margin-top: 10px;

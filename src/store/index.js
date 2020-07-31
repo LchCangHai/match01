@@ -11,7 +11,7 @@ export default new Vuex.Store({
     showPopUp02: false, // 学生学校认证弹窗
     coursePop: false, // 课程界面弹窗
     coursePopType: 1, // 课程界面弹窗类型
-    addTEPop: false, // 教师添加作业，考试弹窗
+    addTEPop: true, // 教师添加作业，考试弹窗
     TEPopType: 1, // 教师添加作业 弹窗类型
     leftSiderActive: 1, // 教师界面左侧边栏选中项目
     isSignUp: false, // 用户是否登录
@@ -37,7 +37,8 @@ export default new Vuex.Store({
       id: '',
       name: ''
     },
-    currentEditTaskExam: {
+    isPublishTask: false, // 是否开始布置题目
+    currentEditTaskExam: { // 布置作业的信息储存
       type: 'exam',
       t_begin: '',
       t_end: '',
@@ -104,6 +105,7 @@ export default new Vuex.Store({
       end: '2020/5/3 23:12:12',
       dexpires: ''
     },
+    taskformdata: new FormData(),
     tasks: [],
     exams: [],
     messages: []
@@ -188,6 +190,12 @@ export default new Vuex.Store({
     setLeftSider (state, item) {
       state.leftSiderActive = item
     },
+    closePublishTask (state) {
+      state.isPublishTask = false
+    },
+    openPublishTask (state) {
+      state.isPublishTask = true
+    },
     addTasks (state, info) { // 添加作业
       state.currentEditTaskExam.type = info.type
       state.currentEditTaskExam.t_begin = info.start
@@ -199,7 +207,15 @@ export default new Vuex.Store({
       state.currentEditTaskExam.expires = info.duration
     },
     addTask (state, info) { // 添加作业题目
-      // this.currentEditTaskExam.problem.push(info.)
+      state.currentEditTaskExam.problems.push(info)
+    },
+    clsTask (state) {
+      state.currentEditTaskExam.problems = {}
+    },
+    addTaskImg (state, temp) {
+      console.log('state存入：')
+      console.log(temp)
+      state.taskformdata.set(temp.name, temp.file)
     },
     setCurrentUser (state, info) {
       state.currentUser = info

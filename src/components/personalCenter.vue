@@ -277,39 +277,6 @@ export default {
     /*overflow:;*/
   }
 
-  #rightSider {
-    z-index: 2030;
-    cursor: pointer;
-    width: 60px;
-    height: 100px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    background-color: #ebf9ff;
-    position: fixed;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    >div {
-      color: #61c7fc;
-      font-weight: 600;
-      font-size: 13px;
-      max-width: 90%;
-    }
-  }
-  #rightSider:hover {
-    background-color: #61c7fc;
-    >div {
-      color: #ebf9ff;
-    }
-  }
-  #rightSider:active {
-    background-color: #2492eb;
-  }
-
   .course {
     width: 100%;
     height: 320px;

@@ -26,3 +26,6 @@ body{
     /*max-width: 100%;*/
 }
 
+.el-checkbox, .el-checkbox__label {  white-space: normal;  word-break: break-all;
+}
+

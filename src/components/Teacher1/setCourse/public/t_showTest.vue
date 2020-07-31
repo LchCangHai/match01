@@ -1,43 +1,23 @@
 <template>
-  <div id="addExam01">
+  <div id="addTask01">
     <div class="none">
       <input
         type="file"
         ref="upload_file"
         @change="handleFileChange">
     </div>
-    <div id="Nav">
-      <my-nav :type="1"></my-nav>
-    </div>
     <div id="answer01">
-      <div id="topNav">
-        <div class="three3Nav">
-          <div class="three3header">
-            <div class="three3type examType"
-            ><div>考试</div></div>
-            <div class="three3Title1">{{this.currentEditTaskExam.name}}</div>
-          </div>
-          <div class="three3Info">
-            <div class="start">
-              <span>开始时间：</span><span>{{this.currentEditTaskExam.start}}</span>
-            </div>
-            <div class="end">
-              <span>结束时间：</span><span>{{this.currentEditTaskExam.end}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
       <div id="Content">
         <div class="Item"
-        v-for="(item, index) in currentEditTaskExam.problems"
-        :key="item.order">
-          <div class="select item" v-show=" item.type === 'select' ? true : false">
+             v-for="(item, index) in currentEditTaskExam.problems"
+             :key="item.order">
+          <div class="select item" v-if=" item.type === 'select' ? true : false">
             <div class="qText">
               <div class="type">
                 <span>{{index + 1}}. </span>[<span>单选题</span>](<span>{{item.max_score}}分</span>)
               </div>
               <div class="text">{{item.content.text}}</div>
-              <img src="../../../assets/headImg2.png">
+              <img v-if="taskformdata.has('problem' + (index +1))" :src="window.URL.createObjectURL(taskformdata.get('problem' + (index +1)))">
             </div>
             <div class="answerSheet">
               <el-radio-group v-model="radio">
@@ -51,12 +31,13 @@
 
             </div>
           </div>
-          <div class="mselect item" v-show=" item.type === 'mselect' ? true : false">
+          <div class="mselect item" v-if=" item.type === 'mselect' ? true : false">
             <div class="qText">
               <div class="type">
                 <span>{{index + 1}}. </span>[<span>多选题</span>](<span>{{item.max_score}}分</span>)
               </div>
               <div class="text">{{item.content.text}}</div>
+              <img v-if="taskformdata.has('problem' + (index +1))" :src="window.URL.createObjectURL(taskformdata.get('problem' + (index +1)))">
             </div>
             <div class="answerSheet">
               <el-checkbox-group v-model="checkList">
@@ -69,12 +50,13 @@
               </el-checkbox-group>
             </div>
           </div>
-          <div class="judge item" v-show=" item.type === 'judge' ? true : false">
+          <div class="judge item" v-if=" item.type === 'judge' ? true : false">
             <div class="qText">
               <div class="type">
                 <span>{{index + 1}}. </span>[<span>判断题</span>](<span>{{item.max_score}}分</span>)
               </div>
               <div class="text">{{item.content.text}}</div>
+              <img v-if="taskformdata.has('problem' + (index +1))" :src="window.URL.createObjectURL(taskformdata.get('problem' + (index +1)))">
             </div>
             <div class="answerSheet">
               <el-radio-group v-model="radio">
@@ -88,12 +70,13 @@
 
             </div>
           </div>
-          <div class="blank item" v-show=" item.type === 'blank' ? true : false">
+          <div class="blank item" v-if=" item.type === 'blank' ? true : false">
             <div class="qText">
               <div class="type">
                 <span>{{index + 1}}. </span>[<span>填空题</span>](<span>{{item.max_score}}分</span>)
               </div>
               <div class="text">{{item.content.text}}</div>
+              <img v-if="taskformdata.has('problem' + (index +1))" :src="window.URL.createObjectURL(taskformdata.get('problem' + (index +1)))">
             </div>
             <div class="answerSheet">
               <div class="uploadIcon" @click="clickUpLoad(item.order)">
@@ -107,12 +90,13 @@
               <div class="fileName">文件名</div>
             </div>
           </div>
-          <div class="question item" v-show=" item.type === 'subjective' ? true : false">
+          <div class="question item" v-if=" item.type === 'subjective' ? true : false">
             <div class="qText">
               <div class="type">
                 <span>{{index + 1}}. </span>[<span>论述题</span>](<span>{{item.max_score}}分</span>)
               </div>
               <div class="text">{{item.content.text}}</div>
+              <img v-if="taskformdata.has('problem' + (index +1))" :src="window.URL.createObjectURL(taskformdata.get('problem' + (index +1)))">
             </div>
             <div class="answerSheet">
               <div class="uploadIcon" @click="clickUpLoad(item.order)">
@@ -126,30 +110,18 @@
               <div class="fileName">文件名</div>
             </div>
           </div>
-          <div class="Img item" v-show=" item.type === 'Img' ? true : false">
-            <div class="qText">
-              <div class="type">
-                <span>{{index + 1}}. </span>[<span>论述题</span>](<span>{{item.max_score}}分</span>)
-              </div>
-              <img src="../../../assets/headImg2.png">
+          <div class="answers">
+            <div>
+              <div class="title04">答案</div>
+              <div class="content04">{{item.answer}}</div>
             </div>
-            <div class="answerSheet">
-              <div class="uploadIcon" @click="clickUpLoad(item.order)">
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-fujian"></use>
-                </svg>
-              </div>
-              <div class="replyArea">
-                <v-input class="imgArea Area" type="textarea"></v-input>
-              </div>
-              <div class="fileName">文件名</div>
+            <div>
+              <div class="title04">解析</div>
+              <div class="content04" v-if="item.answer_detail">{{item.answer_detail}}</div>
+              <div class="content04" v-if="!item.answer_detail">无解析</div>
             </div>
           </div>
         </div>
-      </div>
-      <div id="create">
-        <my-create></my-create>
-<!--        <v-button type="primary" @click="addItem()">addddddddd</v-button>-->
       </div>
     </div>
   </div>
@@ -157,16 +129,11 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import Create from '../../../views/createTE/createExam.vue'
-import myNav from '../../../views/navs/s_nav1.vue'
 export default {
-  name: 'addExam01.vue',
-  components: {
-    'my-create': Create,
-    'my-nav': myNav
-  },
+  name: 'addTask01.vue',
   data () {
     return {
+      window: window,
       radio: '',
       radio01: '',
       checkList: [],
@@ -181,7 +148,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'currentEditTaskExam'
+      'currentEditTaskExam',
+      'taskformdata'
     ])
   },
   methods: {
@@ -247,45 +215,23 @@ export default {
   },
   mounted () {
     // this.countTime()
-    if (this.currentEditTaskExam.name === '') {
-      this.$router.push('/taskExam')
-    }
   }
 }
 </script>
 
 <style scoped lang="less">
-  #addExam01 {
+  #addTask01 {
     color: black;
-    min-width: 1000px;
+    width: 100%;
   }
 
   .none {
     display: none;
   }
 
-  #Nav {
-    position: relative;
-    top: 0;
-    left:0;
-    width:100%;
-    min-width: 1000px;
-    height: 60px;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid lightgrey;
-    box-shadow: 1px 0px 10px 1px rgba(213,213,213,0.6);
-    background-color: white;
-    z-index: 20;
-  }
-
   #answer01 {
     position: relative;
-    width: 75%;
-    min-width: 800px;
-    /*max-width: 950px;*/
-    left: 50%;
-    transform: translate(-50%);
+    width: 100%;
     /*background-color: #3d84ff;*/
     margin-bottom: 50px;
   }
@@ -366,8 +312,12 @@ export default {
     justify-content: flex-start;
     align-items: flex-start;
     .Item {
-      margin: 10px 0;
-      width: 100%
+      width: 100%;
+      /*margin: 10px 0;*/
+      background-color: white;
+      box-shadow: 1px 1px 5px 2px rgba(213, 213, 213, 0.8), -1px -1px 5px 2px rgba(213, 213, 213, 0.8);
+      padding: 10px 5px;
+      min-height: 200px;
     }
   }
   .item {
@@ -395,7 +345,9 @@ export default {
       }
       img {
         max-width: 90%;
-        max-height: 100px;
+        max-height: 300px;
+        min-width: 200px;
+        border-radius: 4px;
       }
     }
   }
@@ -467,6 +419,30 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     margin: 20px 0;
+  }
+
+  .answers {
+    width: 90%;
+    min-height: 100px;
+    border: 1px solid rgba(213, 213, 213, 0.8);
+    border-radius: 4px;
+    margin: 10px 0;
+    background-color: #f6f6f6;
+    box-shadow: inset 1px 1px 2px 1px rgba(213, 213, 213, 0.3), inset -1px -1px 2px 1px rgba(213, 213, 213, 0.3);
+    >div {
+      width: 100%;
+    }
+    .title04 {
+      font-weight: 600;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    .content04 {
+      width: 100%;
+      text-indent: 2em;
+      font-size: 13px;
+      word-break: break-all;
+    }
   }
 
   #create {
